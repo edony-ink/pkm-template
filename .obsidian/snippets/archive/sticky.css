@@ -1,0 +1,205 @@
+.theme-dark {
+  /* stickies */
+  --stickies-color-1: #84c584;
+  --stickies-color-2: #c7a3cf;
+  --tape-color: #99999967;
+  --radius-l: 0.625em; /*10px*/
+}
+.theme-light {
+  /* stickies */
+  --stickies-color-1: #b3e2b3;
+  --stickies-color-2: #e9c6f1;
+  --tape-color: #acacac65;
+  --radius-l: 0.625em; /*10px*/
+}
+
+/* =========================================*/
+/* =========tapes pins and stickies=========*/
+/* =========================================*/
+/* thanks to death_au, Gabroel and Lithou from Obsidian Members Group on Discord */
+.stickies {
+  text-align: center;
+  transition: width 2s;
+  padding: 5px;
+  margin: 18px;
+  position: relative;
+  float: right;
+  right: -10px;
+  width: max(180px, 30%);
+  max-width: 50%;
+  background-color: var(--stickies-color-1);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(2deg);
+  transition: all 2s ease;
+  z-index: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0px;
+  color: black;
+}
+
+.stickies::after {
+  content: "";
+  left: -5%;
+  top: -10px;
+  height: 40px;
+  width: 15px;
+  border-radius: var(--radius-l);
+  border: 3px solid #979797;
+  display: inline-block;
+  position: absolute;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(-11deg);
+  z-index: 11;
+}
+
+.stickies::before {
+  width: 11px;
+  height: 20px;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: -3.5%;
+  top: -2px;
+  border-radius: var(--radius-l);
+  border: 3px solid #979797;
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 10;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(-11deg);
+}
+
+.stickies2 {
+  position: relative;
+  float: left;
+  box-shadow: 0 10px 10px 2px #9191912d;
+  width: max(180px, 30%);
+  max-width: 50%;
+  background-color: var(--stickies-color-2);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(-2deg);
+  transition: all 2s ease;
+  z-index: 1;
+  padding: 20px;
+  margin: 10px;
+  color: black;
+}
+
+.stickies2::after {
+  content: "";
+  display: block;
+  height: 32px;
+  width: 2px;
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  z-index: 1;
+  border-radius: 50%;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border: 1px;
+  box-shadow: inset -10px -10px 10px #f0b7a4, inset 3px 3px 5px;
+}
+
+.to-recall {
+  position: relative;
+  float: left;
+  max-width: 30%;
+  background-color: var(--text-normal);
+  border-radius: var(--radius-xs);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  z-index: 1;
+  padding: 8px;
+  margin-right: 8px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-family: Cooper;
+  color: var(--text-normal);
+}
+
+.to-recall:hover {
+  cursor: pointer;
+}
+
+.to-recall:active {
+  background-color: transparent;
+  transition: all 300ms ease;
+}
+
+.to-recall::after {
+  content: "Click";
+  position: absolute;
+  font-size: 12px;
+  top: 1px;
+  right: 5px;
+  font-weight: 600;
+  font-family: Arial;
+  color: var(--background-primary);
+}
+
+.to-recall:active:after {
+  display: none;
+}
+
+.to-recall::before {
+  content: " To Recall";
+  display: inline-block;
+  position: absolute;
+  top: -20px;
+  left: -8px;
+  border-radius: var(--radius-l);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: OCR A;
+  color: #858585;
+  white-space: pre;
+}
+
+/*=======================
+===custom buttons by cuman====
+========================*/
+/*便签动画效果*/
+@keyframes shake {
+  /* 水平抖动，核心代码 */
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(+2px, 0, 0);
+  }
+  30%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(+4px, 0, 0);
+  }
+  50% {
+    transform: translate3d(-4px, 0, 0);
+  }
+}
+.markdown-preview-view .stickies:hover {
+  animation: shake 800ms ease-in-out;
+}

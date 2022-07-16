@@ -1,0 +1,18 @@
+/* fix header4 using uppercase */
+.markdown-preview-view h4,
+.HyperMD-header-4,
+.cm-s-obsidian .cm-header-4 {
+  font-variant: normal !important;
+}
+/* fix header5 using uppercase */
+.markdown-preview-view h5,
+.HyperMD-header-5,
+.cm-s-obsidian .cm-header-5 {
+  font-variant: normal !important;
+}
+/* fix header6 using uppercase */
+.markdown-preview-view h6,
+.HyperMD-header-6,
+.cm-s-obsidian .cm-header-6 {
+  font-variant: normal !important;
+}

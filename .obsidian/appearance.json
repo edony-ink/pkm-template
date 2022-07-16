@@ -1,0 +1,32 @@
+{
+  "baseFontSize": 15,
+  "cssTheme": "Minimal",
+  "translucency": false,
+  "enabledCssSnippets": [
+    "blockquote-inline",
+    "folder",
+    "external-link",
+    "prorgress-bar",
+    "progress-bar",
+    "activity",
+    "mermaid",
+    "sticky",
+    "header",
+    "backlinks",
+    "font",
+    "right-sidebar",
+    "externel-link-icon",
+    "heatmap",
+    "memos",
+    "callout",
+    "MCL Image Gallery",
+    "MCL Wide Views",
+    "MCL Multi Column",
+    "search",
+    "blockquote"
+  ],
+  "theme": "obsidian",
+  "monospaceFontFamily": "Comic Mono",
+  "interfaceFontFamily": "Recursive Casual,Recursive Monospace Casual,Recursive Monospace",
+  "textFontFamily": "Recursive Casual,Recursive Monospace,Recursive Monospace Casual"
+}

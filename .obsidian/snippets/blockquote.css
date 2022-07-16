@@ -1,0 +1,37 @@
+/*
+blockquote:before {
+  font: 14px/20px italic Times, serif;
+  content: "“";
+  font-size: 3em;
+  line-height: 0.1em;
+  vertical-align: -0.4em;
+}
+blockquote p { display: inline; }
+*/
+blockquote {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+}
+.markdown-preview-view blockquote {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 8px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin: 1rem 0;
+  border-right-width: 0;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 7px;
+  border-color: #4eb8edd7;
+  /*background-color: var(--background-primary-alt);*/
+  border-radius: 5px;
+  font-size: 1rem;
+}
+.markdown-preview-view blockquote p {
+  margin-left: 1px;
+  margin-right: 0px;
+  font-size: var(--normal-weight);
+}

@@ -1,0 +1,23 @@
+{
+  "snippetList": [
+    {
+      "repo": "https://github.com/efemkay/obsidian-modular-css-layout",
+      "snippetsContents": [
+        {
+          "name": "MCL Image Gallery.css",
+          "lastUpdate": "2022-04-17T02:07:17Z"
+        },
+        {
+          "name": "MCL Multi Column.css",
+          "lastUpdate": "2022-04-24T03:18:44Z"
+        },
+        {
+          "name": "MCL Wide Views.css",
+          "lastUpdate": "2022-04-19T05:26:42Z"
+        }
+      ]
+    }
+  ],
+  "excludedSnippet": "",
+  "errorSnippet": ""
+}

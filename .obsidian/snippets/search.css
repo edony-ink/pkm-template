@@ -1,0 +1,26 @@
+/* Global search results */
+/* global search results: reduce gap between note title (bold) and hor. line above */
+.search-result {
+  word-break: break-word;
+  margin-bottom: -4px;
+}
+
+/* global search match highlight color */
+.search-result-file-matched-text {
+  background-color: rgba(255, 255, 0, 0.8);
+  color: rgba(255, 0, 0, 0.8);
+  font-style: italic;
+  border-radius: 0.2em;
+}
+
+/* Local search match highlight */
+/* Local (= in note) search match highlight color change in Edit mode */
+.cm-s-obsidian span.obsidian-search-match-highlight {
+  background-color: rgb(119, 136, 153, 0.5);
+  color:aliceblue;
+  font-style: italic;
+  /*color: rgba(255, 0, 0, 0.9);*/
+  mix-blend-mode: normal;
+  border-radius: 0.2em;
+  box-shadow: 0 0 0 2px var(--text-accent);
+}

@@ -1,0 +1,9 @@
+.theme-dark {
+  --font-recursive: "Recursive Casual";
+}
+.embedded-backlinks {
+  font-family: var(--font-recursive);
+}
+.tree-item-self .collapse-icon {
+  width: auto !important;
+}

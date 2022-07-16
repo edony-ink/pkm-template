@@ -1,0 +1,8 @@
+.markdown-preview-view img {
+  margin-left: auto;
+  margin-right: auto; /*以上两行代码可以让图片居中*/
+}
+.markdown-source-view img {
+  margin-left: auto;
+  margin-right: auto; /*以上两行代码可以让图片居中*/
+}

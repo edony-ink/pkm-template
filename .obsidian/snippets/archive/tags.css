@@ -1,0 +1,130 @@
+/*colorful tags*/
+:root {
+  /*tags*/
+  --tag1: #cf0000;
+  --tag2: #cf7c00;
+  --tag3: #00a71c;
+  --bqys1: #df7e7ebb;
+  --bqys2: #d39461bb;
+  --bqys3: #c7cc37bb;
+  --bqys4: #8fd389bb;
+  --bqys5: #5ccbcfbb;
+  --bqys6: #5b94d6bb;
+  --bqys7: #9859e0bb;
+  --bqys8: #cd64d6bb;
+  --bqys9: #b3b3b3bb;
+  --bqys10: #cf0000;
+  --bqys11: #cf7c00;
+  --bqys12: #00a71c;
+}
+.tag:not(.token).tag:nth-child(12n + 1) {
+  background-color: var(--bqys12);
+} /*12*/
+.tag:not(.token).tag:nth-child(12n + 2) {
+  background-color: var(--bqys6);
+} /*6*/
+.tag:not(.token).tag:nth-child(12n + 3) {
+  background-color: var(--bqys2);
+} /*2*/
+.tag:not(.token).tag:nth-child(12n + 4) {
+  background-color: var(--bqys7);
+} /*7*/
+.tag:not(.token).tag:nth-child(12n + 5) {
+  background-color: var(--bqys3);
+} /*3*/
+.tag:not(.token).tag:nth-child(12n + 6) {
+  background-color: var(--bqys8);
+} /*8*/
+.tag:not(.token).tag:nth-child(12n + 7) {
+  background-color: var(--bqys4);
+} /*4*/
+.tag:not(.token).tag:nth-child(12n + 8) {
+  background-color: var(--bqys9);
+} /*9*/
+.tag:not(.token).tag:nth-child(12n + 9) {
+  background-color: var(--bqys1);
+} /*1*/
+.tag:not(.token).tag:nth-child(12n + 10) {
+  background-color: var(--bqys12);
+} /*12*/
+.tag:not(.token).tag:nth-child(12n + 11) {
+  background-color: var(--bqys11);
+} /*11*/
+.tag:not(.token).tag:nth-child(12n) {
+  background-color: var(--bqys5);
+} /*5*/
+/* ====== Tag Pills ======== */
+.tag:not(.token) {
+  border: none;
+  color: white;
+  padding: 3px 3px 0px 3px;
+  text-align: center;
+  text-decoration: none;
+  margin: 0px 0px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: "Comic Mono";
+}
+.tag:not(.token):hover {
+  color: white;
+  background-color: var(--ztys) !important;
+}
+/*special tags*/
+.tag[href^="#important"] {
+  background-color: var(--tag1) !important;
+  font-weight: 600;
+}
+.tag[href^="#重要"] {
+  background-color: var(--tag1) !important;
+  font-weight: 600;
+}
+.tag[href^="#complete"] {
+  background-color: var(--tag3) !important;
+  font-weight: 600;
+}
+.tag[href^="#完成"] {
+  background-color: var(--tag3) !important;
+  font-weight: 600;
+}
+.tag[href^="#inprogress"] {
+  background-color: var(--tag2) !important;
+  font-weight: 600;
+}
+.tag[href^="#进行中"] {
+  background-color: var(--tag2) !important;
+  font-weight: 600;
+}
+
+/* Tag pills in tag pane */
+.tag-pane-tag-count {
+  background-color: var(--text-accent);
+  border: none;
+  color: white;
+  padding: 1px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px 0px;
+  cursor: pointer;
+  border-radius: 14px; /* change to 4px for rectangular pills */
+}
+
+.tag-pane-tag-text {
+  /*background-color: var(--text-accent);*/
+  border: none;
+  color: white;
+  padding: 1px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px 0px;
+  cursor: pointer;
+  border-radius: 14px; /* change to 4px for rectangular pills */
+  font-family: "Comic Mono";
+}
+
+/* Change color of tag count pill when hovering */
+.tag-pane-tag:hover .tag-pane-tag-count {
+  color: white;
+  background-color: var(--base2);
+}

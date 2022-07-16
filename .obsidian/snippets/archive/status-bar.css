@@ -1,0 +1,60 @@
+.status-bar {
+  background: transparent;
+  position: relative;
+  z-index: auto;
+  padding: 0px 8px 0px 3px;
+}
+
+.status-bar,
+.is-translucent .status-bar {
+  background: transparent;
+  font-size: 14px;
+  position: static;
+  /*right: 45%;*/
+  bottom: 0;
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--shade-plus-darker);
+  border-left: 1px solid var(--shade-plus-darker);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  line-height: 1;
+  padding: 8px 12px 8px 0;
+  color: var(--text-muted);
+  /*max-height: unset;*/
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+  margin: 0;
+  opacity: 0.9;
+  transition: 0.2s;
+}
+
+.status-bar:hover {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.status-bar-item {
+  padding: 0 0 0 10px;
+}
+
+/* Give this a 10px space if you don't want to hide the last indicator (section below in this code */
+.status-bar-item-segment {
+  margin-right: 0;
+}
+
+/** Hides the last indicator, whatever it is. Mind this section if you use any plugin that adds indicators to the status bar. This section will probably hide it. **/
+.status-bar-item-segment:last-child {
+  display: none;
+}
+
+.status-bar-item-icon {
+  display: block;
+}
+
+.status-bar-item-icon svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}

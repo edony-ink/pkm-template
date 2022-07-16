@@ -1,0 +1,446 @@
+{
+  "workspaces": {
+    "1-writing": {
+      "main": {
+        "id": "1961e2df585b7301",
+        "type": "split",
+        "children": [
+          {
+            "id": "36a299c180261698",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "0.unsorted/golang Map 实现原理.md",
+                "mode": "source",
+                "backlinks": true,
+                "source": false
+              }
+            }
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "32286b8250933c38",
+        "type": "split",
+        "children": [
+          {
+            "id": "ef2f365481deb638",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "571d09785639f79c",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {}
+                }
+              },
+              {
+                "id": "5d72e5193fbe3ce7",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  }
+                }
+              },
+              {
+                "id": "c3b322136a111aa3",
+                "type": "leaf",
+                "state": {
+                  "type": "starred",
+                  "state": {}
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "right": {
+        "id": "bea9559a3521d0b5",
+        "type": "split",
+        "children": [
+          {
+            "id": "98184b061035b134",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "4befd79ee6b134cc",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "0.unsorted/golang Map 实现原理.md"
+                  }
+                }
+              },
+              {
+                "id": "277a9f2c9e1d702a",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {}
+                }
+              },
+              {
+                "id": "c5434ac1378144d0",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "0.unsorted/golang Map 实现原理.md",
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  }
+                }
+              },
+              {
+                "id": "563af2d4f930cf35",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "0.unsorted/golang Map 实现原理.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  }
+                }
+              },
+              {
+                "id": "f7b38c4cf097c0f9",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300
+      },
+      "active": "4befd79ee6b134cc"
+    },
+    "2-homepage": {
+      "main": {
+        "id": "1961e2df585b7301",
+        "type": "split",
+        "children": [
+          {
+            "id": "81d069f2dac69c85",
+            "type": "split",
+            "children": [
+              {
+                "id": "93487d2103ab5209",
+                "type": "leaf",
+                "state": {
+                  "type": "kanban",
+                  "state": {
+                    "file": "4.permanent/permanent-2022/2022计划.md"
+                  }
+                }
+              },
+              {
+                "id": "88bc2f89d18f062d",
+                "type": "split",
+                "children": [
+                  {
+                    "id": "1ef80311d597eff9",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "2.fleeting/003.task-reviewer.md",
+                        "mode": "preview",
+                        "backlinks": true,
+                        "source": false
+                      }
+                    }
+                  },
+                  {
+                    "id": "bba704b6ce2c60d0",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "2.fleeting/002.工作备忘录.md",
+                        "mode": "preview",
+                        "backlinks": true,
+                        "source": false
+                      }
+                    }
+                  },
+                  {
+                    "id": "08bfd1e4f9a95f6e",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "2.fleeting/004.blog 运维日志.md",
+                        "mode": "preview",
+                        "backlinks": true,
+                        "source": false
+                      }
+                    }
+                  }
+                ],
+                "direction": "vertical"
+              }
+            ],
+            "direction": "horizontal"
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "1909665fcff6f78d",
+        "type": "split",
+        "children": [
+          {
+            "id": "6b01fc9b153c3b00",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "b44b92fd7eac37d8",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {}
+                }
+              },
+              {
+                "id": "8fccd8df83656b86",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "GOSUM",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  }
+                }
+              },
+              {
+                "id": "5e1ae9fa0c655944",
+                "type": "leaf",
+                "state": {
+                  "type": "starred",
+                  "state": {}
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "right": {
+        "id": "240edcfc63960c40",
+        "type": "split",
+        "children": [
+          {
+            "id": "31be9c6353efa1a9",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "7b0e42b0c8105feb",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {}
+                }
+              },
+              {
+                "id": "a8cdf501b5716b7f",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "2.fleeting/004.blog 运维日志.md",
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  }
+                }
+              },
+              {
+                "id": "80ac33b7120a79f4",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "2.fleeting/004.blog 运维日志.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  }
+                }
+              },
+              {
+                "id": "3ea2ea5ebd76c323",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "alphabetical",
+                    "useHierarchy": true
+                  }
+                }
+              },
+              {
+                "id": "9f659e8737184308",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "2.fleeting/004.blog 运维日志.md"
+                  }
+                }
+              }
+            ],
+            "currentTab": 4
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "active": "08bfd1e4f9a95f6e"
+    },
+    "0-memos": {
+      "main": {
+        "id": "1961e2df585b7301",
+        "type": "split",
+        "children": [
+          {
+            "id": "4b6be8275a59b05a",
+            "type": "leaf",
+            "state": {
+              "type": "memos_view",
+              "state": {}
+            }
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "7e6c045f5235be87",
+        "type": "split",
+        "children": [
+          {
+            "id": "5adb536163529417",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "65e9ffa2b6fe8499",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {}
+                }
+              },
+              {
+                "id": "056e8b2a086b1d84",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  }
+                }
+              },
+              {
+                "id": "14ebd87bf804009f",
+                "type": "leaf",
+                "state": {
+                  "type": "starred",
+                  "state": {}
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "right": {
+        "id": "81ea4ec18b6ff215",
+        "type": "split",
+        "children": [
+          {
+            "id": "8b6adf13d479b32d",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "de7b997014e671f8",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {}
+                }
+              },
+              {
+                "id": "bca4ba69476fba25",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "alphabetical",
+                    "useHierarchy": true
+                  }
+                }
+              },
+              {
+                "id": "51b446c020997ad6",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {}
+                }
+              }
+            ],
+            "currentTab": 2
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "active": "4b6be8275a59b05a"
+    }
+  },
+  "active": "1-writing"
+}

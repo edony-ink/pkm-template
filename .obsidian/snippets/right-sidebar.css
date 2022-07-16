@@ -1,0 +1,79 @@
+.theme-light {
+  --title-content-color: black;
+  --title-content-hover-color: rgb(100, 100, 100);
+  --folder-hover-color: rgba(0, 255, 255, 0.85);
+  --outline-color: rgba(99, 84, 84, 0.85);
+  --outline-hover-color: rgba(255, 0, 0, 0.9);
+  --font-ia: "iA Writer Mono S";
+  --font-recursive: "Recursive Monospace Casual";
+  --sidebar-font-size: 15.5px;
+}
+
+.theme-dark {
+  --title-content-color: white;
+  --title-content-hover-color: rgb(189, 189, 189);
+  --folder-hover-color: rgba(0, 255, 255, 0.85);
+  --outline-color: rgba(255, 255, 255, 0.85);
+  --outline-hover-color: rgba(255, 0, 0, 0.9);
+  --font-ia: "iA Writer Mono S";
+  --font-recursive: "Recursive Monospace Casual","Recursive Casual";
+  --sidebar-font-size: 15.5px;
+}
+
+/* Connectining lines for files and folders in File Explorer*/
+.nav-folder-children .nav-folder-children {
+  margin-left: 20px;
+  padding-left: 0;
+  border-left: 1px groove rgba(118, 158, 165, 0.4);
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+.nav-folder-children .nav-folder-children:hover {
+  border-left-color: rgba(255, 255, 255, 0.85);
+}
+/* RIGHT SIDEBAR */
+/* outliner for the outline */
+.outline .tree-item-children {
+  margin-left: 20px;
+  border-left: 1px groove rgba(118, 158, 165, 0.4);
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+.outline .tree-item-children:hover {
+  border-left-color: rgba(255, 255, 255, 0.85);
+  --text-normal: var(--peach);
+  --background-secondary-alt: var(--background-secondary);
+}
+.nav-file-title,
+.nav-folder-title {
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+  font-family: var(--font-recursive);
+  /* font-style: italic; */
+}
+.nav-file-title-content,
+.nav-folder-title-content {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  font-family: var(--font-recursive);
+  /* font-style: italic; */
+  font-size: var(--sidebar-font-size);
+  color: var(--title-content-color);
+}
+.nav-file-title-content:hover {
+  color: var(--title-content-hover-color);
+}
+.nav-folder-title-content:hover {
+  color: var(--folder-hover-color);
+}
+.outline .tree-item-self {
+  font-family: var(--font-recursive);
+  /* font-style: italic;*/
+  color: var(--outline-color) !important;
+}
+.outline .tree-item-self:hover {
+  color: var(--outline-hover-color) !important;
+}

@@ -1,0 +1,54 @@
+:root {
+  /* for Dark Moss */
+  --font-family-editor: "Comic Mono";
+  --font-family-preview: "Comic Mono";
+
+  /* for Things */
+  --text: "LXGW WenKai Mono", "Comic Mono", Verdana, Arial, Helvetica,
+    sans-serif !important;
+  --text-editor: "LXGW WenKai Mono", "Comic Mono", Verdana, Arial, Helvetica,
+    sans-serif !important;
+  --font-monospace: "LXGW WenKai Mono", "Comic Mono", Verdana, Arial, Helvetica,
+    sans-serif !important;
+  --font-ui: "Comic Mono", Verdana, Arial, Helvetica, sans-serif !important;
+  --font-normal: 18px !important;
+  --font-small: 16px;
+  --font-smaller: 15px;
+  --font-smallest: 14px;
+  --h1: 1.1em;
+  --h2: 1.08em;
+  --h3: 1.06em;
+  --h4: 1.05em;
+  --h5: 1.04em;
+  --h6: 1.02em;
+}
+
+/* fix Things header4 useing uppercase */
+.markdown-preview-view h4,
+.HyperMD-header-4,
+.cm-s-obsidian .cm-header-4 {
+  letter-spacing: 0.02em;
+  font-size: var(--h4);
+  color: var(--h4-color);
+  font-weight: var(--h4-weight) !important;
+  text-transform: none;
+}
+
+/* Better word and character spacing */
+body {
+  word-spacing: -0.04rem;
+  letter-spacing: 0.01rem;
+}
+/* makes type a lot sharper and clear on hires screens
+ * NOTE: disable font-smoothing setting for LXGW WenKai Mono fonts
+ */
+/*
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+*/
+/* button font-family setting */
+button {
+  font-family: var(--font-ui) !important;
+}

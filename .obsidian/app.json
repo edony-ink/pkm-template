@@ -1,0 +1,42 @@
+{
+  "strictLineBreaks": true,
+  "showFrontmatter": false,
+  "foldHeading": true,
+  "foldIndent": true,
+  "defaultViewMode": "preview",
+  "showLineNumber": false,
+  "emacsyKeys": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "0.unsorted",
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "9.src",
+  "alwaysUpdateLinks": true,
+  "autoConvertHtml": false,
+  "communityThemeSortOrder": "download",
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": true,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "vimMode": false,
+  "promptDelete": false,
+  "readableLineLength": true,
+  "legacyEditor": false,
+  "livePreview": true,
+  "spellcheck": false,
+  "fileSortOrder": "alphabetical",
+  "communityPluginSortOrder": "download",
+  "mobileToolbarCommands": [
+    "editor:set-heading",
+    "editor:insert-callout",
+    "editor:fold-all",
+    "editor:unfold-all",
+    "editor:insert-wikilink",
+    "editor:insert-embed",
+    "editor:paste"
+  ],
+  "userIgnoreFilters": [
+    "a.logseq/"
+  ]
+}

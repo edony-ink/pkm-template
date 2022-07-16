@@ -1,0 +1,100 @@
+{
+  "choices": [
+    {
+      "id": "9b54427b-4f27-4deb-8657-4554a889c7bd",
+      "name": "qcode",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "",
+      "captureToActiveFile": true,
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "```{{VALUE:shell,c,c++,rust,go,python,diff,toml,yaml,json,ad-note,ad-warning,ad-info,ad-tip,ad-abstract,ad-success,ad-question,ad-failure,ad-danger,ad-bug,ad-example,ad-quote}}\n\n```\n"
+      },
+      "insertAfter": {
+        "enabled": false,
+        "after": "",
+        "insertAtEnd": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
+    },
+    {
+      "id": "daa589dc-618d-4074-9ab5-aaf8c03c2a32",
+      "name": "storybox",
+      "type": "Template",
+      "command": true,
+      "templatePath": "8.templates/storybox-composer.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "4.permanent/permanent-storybox/{{DATE:YYYYMMDDHHmmss}}-{{NAME}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "incrementFileName": false,
+      "openFileInNewTab": {
+        "enabled": true,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": true,
+      "openFileInMode": "default"
+    },
+    {
+      "id": "94072239-be96-4930-9d2d-5d0c2932c139",
+      "name": "done",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "",
+      "captureToActiveFile": true,
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "✅"
+      },
+      "insertAfter": {
+        "enabled": true,
+        "after": "",
+        "insertAtEnd": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top"
+      },
+      "prepend": false,
+      "task": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default"
+    }
+  ],
+  "macros": [],
+  "inputPrompt": "single-line"
+}

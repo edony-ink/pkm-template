@@ -1,0 +1,1 @@
+这是预留给 logseq 的目录，logseq 在任务管理上比 obsidian 优异。后面会尝试 obsidian 和 logseq 联合使用。

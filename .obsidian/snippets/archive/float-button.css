@@ -1,0 +1,69 @@
+/* Floating Action Button (FAB)*/
+/* Advanced Mobile Toolbar Mode */
+[aria-label="Edit (⌘+Click to edit in new pane)"],
+[aria-label="Edit (Ctrl+Click to edit in new pane)"],
+[aria-label="Preview (⌘+Click to open in new pane)"],
+[aria-label="Preview (Ctrl+Click to open in new pane)"],
+.view-action:nth-last-of-type(5),
+.view-action:nth-last-of-type(4) {
+  top: calc(90vh - calc(var(--at-button-height) * var(--at-row-count)));
+}
+
+/* Advanced Mobile Toolbar Mode disabled */
+body:not(.advanced-toolbar-mode)
+  [aria-label="Edit (⌘+Click to edit in new pane)"],
+body:not(.advanced-toolbar-mode)
+  [aria-label="Edit (Ctrl+Click to edit in new pane)"],
+body:not(.advanced-toolbar-mode)
+  [aria-label="Preview (⌘+Click to open in new pane)"],
+body:not(.advanced-toolbar-mode)
+  [aria-label="Preview (Ctrl+Click to open in new pane)"],
+body:not(.advanced-toolbar-mode) .view-action:nth-last-of-type(5),
+body:not(.advanced-toolbar-mode) .view-action:nth-last-of-type(4) {
+  top: calc(90vh - 48px);
+}
+
+/* Shared styling */
+[aria-label="Edit (⌘+Click to edit in new pane)"],
+[aria-label="Edit (Ctrl+Click to edit in new pane)"],
+[aria-label="Preview (⌘+Click to open in new pane)"],
+[aria-label="Preview (Ctrl+Click to open in new pane)"],
+.view-action:nth-last-of-type(5),
+.view-action:nth-last-of-type(4) {
+  display: flex;
+  padding: 5px;
+  position: relative;
+  left: -0px;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 20px !important;
+  box-shadow: 0.9px 0.9px 3.6px rgba(0, 0, 0, 1),
+    2.5px 2.4px 10px rgba(0, 0, 0, 0.6), 6px 5.7px 24.1px rgba(0, 0, 0, 0.8),
+    20px 19px 80px rgba(0, 0, 0, 0.9);
+  opacity: 1 !important;
+  color: var(--text-color);
+  background-color: rgba(76, 120, 204, 0.3);
+}
+
+/* Preview Colours */
+[aria-label="Preview (⌘+Click to open in new pane)"],
+[aria-label="Preview (Ctrl+Click to open in new pane)"]:hover,
+.view-action:nth-last-of-type(5),
+.view-action:nth-last-of-type(4) {
+  background-color: rgba(76, 120, 204, 0.3);
+}
+
+/* Shrink FAB on small displays */
+@media screen and (max-height: 400px) {
+  [aria-label="Edit (⌘+Click to edit in new pane)"],
+  [aria-label="Edit (Ctrl+Click to edit in new pane)"],
+  [aria-label="Preview (⌘+Click to open in new pane)"],
+  [aria-label="Preview (Ctrl+Click to open in new pane)"],
+  .view-action:nth-last-of-type(5),
+  .view-action:nth-last-of-type(4) {
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+}

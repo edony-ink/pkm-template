@@ -1,0 +1,8 @@
+.callout[theme=📷] {
+    --emoji: unset;
+    --icon: "\f083"; /* copied front FontAwesome */
+    --icon-color: #c50a50;
+}
+.callout[theme=📷] {
+    --icon-font-family: FontAwesome; /* copied from https://fontawesome.com/v4.7.0/icon/camera-retro */
+}

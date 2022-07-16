@@ -1,0 +1,8 @@
+span.cm-inline-code {
+  color: #88c0d0 !important;
+}
+
+.markdown-preview-view code {
+  color: #88c0d0 !important;
+  background-color: transparent !important;
+}

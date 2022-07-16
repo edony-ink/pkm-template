@@ -1,0 +1,40 @@
+{
+  "command_timeout": 5,
+  "templates_folder": "8.templates",
+  "templates_pairs": [
+    [
+      "",
+      ""
+    ]
+  ],
+  "trigger_on_file_creation": true,
+  "auto_jump_to_cursor": true,
+  "enable_system_commands": false,
+  "shell_path": "",
+  "user_scripts_folder": "",
+  "enable_folder_templates": true,
+  "folder_templates": [
+    {
+      "folder": "",
+      "template": ""
+    }
+  ],
+  "syntax_highlighting": true,
+  "enabled_templates_hotkeys": [
+    "8.templates/computer-tech-composer.md",
+    "8.templates/soft-skills-composer.md",
+    "8.templates/readings-composer.md",
+    "8.templates/topics-composer.md",
+    "8.templates/diary-composer.md",
+    "8.templates/update.md",
+    "8.templates/update-progress.md",
+    "8.templates/time.md",
+    "8.templates/time-header.md",
+    "8.templates/storybox-composer.md",
+    "8.templates/quick-done.md",
+    "8.templates/side-project-composer.md"
+  ],
+  "startup_templates": [
+    ""
+  ]
+}

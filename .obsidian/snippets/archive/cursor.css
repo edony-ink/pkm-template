@@ -1,0 +1,17 @@
+.CodeMirror-cursor,
+.cm-s-obsidian .cm-cursor {
+  /*color: cadetblue;*/
+  /*background-color: var(--text-accent) !important;*/
+  /*border: solid;*/
+  /*border-color: cadetblue !important;*/
+  /*border-right: 2px solid var(--text-accent);*/
+  /*border-radius: 3px;*/
+  visibility: visible !important;
+  border-color: cadetblue !important;
+  opacity: 1 !important;
+}
+/* FIXME: disable live preview blink outside cursor position */
+.cm-editor .cm-active .cm-line .cm-cursorLayer {
+  visibility: visible !important;
+  animation-name: none !important;
+}

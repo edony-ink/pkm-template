@@ -1,0 +1,535 @@
+/* Coloured Folders
+a CSS snippet by Lithou
+modified by Jeremy Valentine & Mara-Li
+
+This will allow the colouring of the top level folders into sections that "drop down" when opened. 
+This is currently set to be the same colour regardless of theme, but you can change that by copy/pasting the colors from the root section into light/dark theme then changing them according to preference.
+The colours are rainbow coloured and 16 in number by default. They are shades such that white/lightgrey text shows up the best. Some have a bit let contrast (the lighter blue and the yellow) but should still be visible. Again, change them however you would like. 
+*/
+
+:root {
+  /* folder colours */
+  --bg00: #aaa5db;
+  --bg10: #f39b9b;
+  --bg20: #f0af59d2;
+  --bg30: #f1ca5dd8;
+  --bg40: #9dcd78e5;
+  --bg50: #8ab6e2bd;
+  --bg60: #df5050cb;
+  --bg70: #d399cf;
+  --bg80: #cda485;
+  --bg90: #b9c0c7;
+  --bgA0: #f0aaaa;
+  --bgB0: #f1b86f;
+  --bgC0: #7acc93;
+  --bgD0: #87c9d9;
+  --bgE0: #96abde;
+  --bgF0: #eb9fc9;
+  /*--normal-folder: rgb(255, 255, 255);*/
+}
+
+.theme-dark {
+  --root-file-color: rgba(255, 255, 255, 0.596);
+  --FoldText: rgb(75, 69, 69);
+  --text-hover-accent: rgb(248, 204, 204);
+  /*
+  --bg00: #6e6e6e2c;
+  --bg10: #bb77622c;
+  --bg20: #77664e2c;
+  --bg30: #798c642c;
+  --bg40: #4765ab2c;
+  --bg50: #8fa1cc2c;
+  --bg60: #ffffff00;
+  --bg70: #ffffff00;
+  --bg80: #ad8c332c;
+  --bg90: #ffffff00;
+  --bg100: #ffffff00;
+  --bgZZ: #617e8c2c;
+  */
+}
+
+.theme-light {
+  --root-file-color: rgb(0, 0, 0);
+  --FoldText: rgba(0, 0, 0, 0.7);
+  /*
+  --bg00: #3131312c;
+  --bg10: #bb77622c;
+  --bg20: #85adad2c;
+  --bg30: #50a6862c;
+  --bg40: #4765ab2c;
+  --bg50: #8fa1cc2c;
+  --bg60: #ffffff00;
+  --bg70: #ffffff00;
+  --bg80: #ad8c332c;
+  --bg90: #ffffff00;
+  --bg100: #b69d912c;
+  --bgZZ: #b69d912c;
+  --normal-folder: black;
+  */
+}
+
+.nav-file-title,
+.nav-folder-title {
+  color: var(--normal-folder);
+}
+
+/* SR Plugins adjust */
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  > .view-content
+  .nav-folder-title {
+  color: var(--text-accent) !important;
+}
+
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  > .view-content
+  > .nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title {
+  color: var(--text-normal) !important;
+}
+
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  > .view-content
+  .nav-file-title-content {
+  color: var(--text-normal) !important;
+}
+
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  .view-content
+  .nav-file-title-content:hover,
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  > .view-content
+  > .nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title:hover {
+  color: var(--text-hover-accent) !important;
+}
+
+div:not(.is-mobile)
+  > .workspace-leaf-content
+  .view-content
+  .nav-folder-children
+  .nav-file-title-content:first-child::before {
+  top: 0px !important;
+}
+
+.nav-file-title,
+.nav-folder-title {
+  border-radius: 5px;
+}
+
+.nav-folder-title {
+  margin: 0;
+  width: 100% !important;
+}
+
+/* Uncomment this for adjusting line with icon */
+.nav-folder:not(.mod-root) > .nav-folder-children .nav-file-title {
+  margin-left: -5px;
+}
+
+/* Top Level Folder Titles */
+.nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-title {
+  /*font-family: var(--default-font);*/
+  font-size: calc(var(--augmente) + 3px) !important;
+  color: var(--FoldText);
+  padding-left: -5px;
+  margin-top: 1px;
+  /* space between top level sections */
+  border-radius: var(--FolderRadius) var(--FolderRadius) 0px 0px;
+}
+
+/* Rounded borders */
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder.is-collapsed
+  > .nav-folder-title {
+  border-radius: var(--FolderRadius);
+}
+
+/* General Nav Folder Children (this is the part that expands from each top level folder) */
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-children {
+  padding-left: 0px;
+  border-top: var(--FoldText) 0.5px solid;
+  border-radius: 0px 0px var(--FolderRadius) var(--FolderRadius);
+  color: var(--FoldText);
+  /* padding-bottom: 12px; */
+}
+
+/* active file increase font size and removes normal highlight marker */
+.nav-file-title.is-active {
+  /*font-size: 100%;*/
+}
+
+/* 16 Top level Folders By Starting Digit (0-F)
+These are set for me by leading number/letter which also ensures they are in the correct order when sorted alphabetically
+You can change these to match your use case.
+*/
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="0."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="0."]
+  + .nav-folder-children {
+  background-color: var(--bg00);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="1."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="1."]
+  + .nav-folder-children {
+  background-color: var(--bg10);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="2."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="2."]
+  + .nav-folder-children {
+  background-color: var(--bg20);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="3."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="3."]
+  + .nav-folder-children {
+  background-color: var(--bg30);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="4."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="4."]
+  + .nav-folder-children {
+  background-color: var(--bg40);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="5."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="5."]
+  + .nav-folder-children {
+  background-color: var(--bg50);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="6."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="6."]
+  + .nav-folder-children {
+  background-color: var(--bg60);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="8."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="8."]
+  + .nav-folder-children {
+  background-color: var(--bg80);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="9."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="9."]
+  + .nav-folder-children {
+  background-color: var(--bg90);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="7."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="7."]
+  + .nav-folder-children {
+  background-color: var(--bg70);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="100."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="100."]
+  + .nav-folder-children {
+  background-color: var(--bg100);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="ZZ."],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="ZZ."]
+  + .nav-folder-children {
+  background-color: var(--bgZZ);
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="Ressource"],
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="Ressource"]
+  + .nav-folder-children {
+  background-color: var(--bgZZ);
+}
+
+/* Scrollbars eliminated */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* == File Explorer - animation for active file as per Obuntu === */
+.nav-folder.mod-root > .nav-folder-title {
+  padding-left: 6px;
+  font-size: 14px;
+  font-weight: normal !important;
+  top: -6px;
+  cursor: default;
+}
+
+.nav-file.is-active > .nav-file-title,
+.nav-file.is-active > .nav-file-title:hover {
+  border-radius: 6px;
+  font-weight: normal !important;
+  border-left: 2px solid var(--text-hover-accent);
+  transition: all 0.5s ease;
+}
+
+.nav-file.is-active > .nav-file-title {
+  padding-left: 5px;
+}
+
+.nav-file-title.is-active,
+body:not(.is-grabbing) .nav-file-title:hover,
+body:not(.is-grabbing) .nav-folder-title:hover {
+  /* border-radius: 2px; */
+  transition: all 0.2s ease;
+}
+
+body:not(.is-grabbing) .nav-folder-title:hover {
+  border-radius: 0px;
+}
+
+.nav-file-title.is-active::before {
+  margin-top: 1px;
+  width: 22px;
+  height: 20px;
+}
+
+.nav-folder-children {
+  padding-left: 1.9em;
+}
+
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="0.unsorted"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 11h-3.416a5.001 5.001 0 0 1-9.168 0H4v5h16v-5zm0-2V5H4v7h5a3 3 0 0 0 6 0h5z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="1.index"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M21 3v2c0 9.627-5.373 14-12 14H5.243C5.08 19.912 5 20.907 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0zm-8 2c-4.418 0-8 3.582-8 8 0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="2.fleeting"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M5 15v4h4v2H3v-6h2zm16 0v6h-6v-2h4v-4h2zm-8-9v12h-2V6h2zM9 9v6H7V9h2zm8 0v6h-2V9h2zM9 3v2H5v4H3V3h6zm12 0v6h-2V5h-4V3h6z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="3.literature"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="4.permanent"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M18.901 10a2.999 2.999 0 0 0 4.075 1.113 3.5 3.5 0 0 1-1.975 3.55L21 21h-7v-2a2 2 0 0 0-1.85-1.995L12 17a2 2 0 0 0-1.995 1.85L10 19v2H3v-6.336a3.5 3.5 0 0 1-1.979-3.553A2.999 2.999 0 0 0 5.098 10h13.803zm-.971 2H6.069l-.076.079c-.431.42-.935.76-1.486 1.002l-.096.039.589.28-.001 5.6 3.002-.001v-.072l.01-.223c.149-2.016 1.78-3.599 3.854-3.698l.208-.005.223.01a4 4 0 0 1 3.699 3.787l.004.201L19 19l.001-5.6.587-.28-.095-.04a5.002 5.002 0 0 1-1.486-1.001L17.93 12zm-.894-9a3.5 3.5 0 0 0 4.446 2.86 3.5 3.5 0 0 1-3.29 3.135L18 9H6a3.5 3.5 0 0 1-3.482-3.14A3.5 3.5 0 0 0 6.964 3h10.072zM15.6 5H8.399a5.507 5.507 0 0 1-1.49 1.816L6.661 7h10.677l-.012-.008a5.518 5.518 0 0 1-1.579-1.722L15.6 5z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="5.tags"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M7.784 14l.42-4H4V8h4.415l.525-5h2.011l-.525 5h3.989l.525-5h2.011l-.525 5H20v2h-3.784l-.42 4H20v2h-4.415l-.525 5h-2.011l.525-5H9.585l-.525 5H7.049l.525-5H4v-2h3.784zm2.011 0h3.99l.42-4h-3.99l-.42 4z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="6.fleeting"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M20 3c.552 0 1 .448 1 1v16c0 .552-.448 1-1 1H4c-.552 0-1-.448-1-1V4c0-.552.448-1 1-1h16zm-8.811 10.158L5 14.25V19h7.218l-1.03-5.842zM19 5h-7.219l2.468 14H19V5zM9.75 5H5v7.218l5.842-1.03L9.75 5z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="7.fleeting"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M12 1l8.217 1.826c.457.102.783.507.783.976v9.987c0 2.006-1.003 3.88-2.672 4.992L12 23l-6.328-4.219C4.002 17.668 3 15.795 3 13.79V3.802c0-.469.326-.874.783-.976L12 1zm0 2.049L5 4.604v9.185c0 1.337.668 2.586 1.781 3.328L12 20.597l5.219-3.48C18.332 16.375 19 15.127 19 13.79V4.604L12 3.05zm4.452 5.173l1.415 1.414L11.503 16 7.26 11.757l1.414-1.414 2.828 2.828 4.95-4.95z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="8.templates"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M6 12h12V8h-4V4H6v8zm-2 0V2.995c0-.55.445-.995.996-.995H15l5 5v5h2v2H2v-2h2zm-1 4h2v6H3v-6zm16 0h2v6h-2v-6zm-4 0h2v6h-2v-6zm-4 0h2v6h-2v-6zm-4 0h2v6H7v-6z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}
+.nav-folder.mod-root
+  > .nav-folder-children
+  > .nav-folder
+  > .nav-folder-title[data-path^="9.src"]
+  .nav-folder-title-content::before {
+  content: " ";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M14 13.5V8a4 4 0 1 0-8 0v5.5a6.5 6.5 0 1 0 13 0V4h2v9.5a8.5 8.5 0 1 1-17 0V8a6 6 0 1 1 12 0v5.5a3.5 3.5 0 0 1-7 0V8h2v5.5a1.5 1.5 0 0 0 3 0z' fill='rgba(0,0,0)'/%3E%3C/svg%3E");
+  background-size: 18px 18px; /* adopt this to your file tree font height */
+  transform: translate(-1px, 3px); /* to position the icon */
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0px 2px 0 0;
+}

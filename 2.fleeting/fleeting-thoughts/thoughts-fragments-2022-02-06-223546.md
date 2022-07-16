@@ -1,0 +1,1 @@
+- [c] Live life to express, not to impress

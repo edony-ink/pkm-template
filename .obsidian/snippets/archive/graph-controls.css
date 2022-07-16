@@ -1,0 +1,15 @@
+.mod-root .workspace-leaf-content[data-type="localgraph"] .graph-controls,
+.mod-root .workspace-leaf-content[data-type="graph"] .graph-controls {
+  top: 50px;
+}
+
+.mod-root .workspace-leaf-content[data-type="localgraph"] .graph-controls,
+.mod-root .workspace-leaf-content[data-type="graph"] .graph-controls {
+  top: 50px;
+}
+
+.graph-controls {
+  border-radius: 5px;
+  min-width: 150px;
+  top: 50px;
+}

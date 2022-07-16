@@ -1,0 +1,1 @@
+所有的笔记会默认创建在 `0.unsorted`，类似于 `GTD` 一样周期性回顾，通过 backlink 和 outlink 建立笔记之间的关联。
