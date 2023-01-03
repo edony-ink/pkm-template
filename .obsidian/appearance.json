@@ -28,5 +28,6 @@
   "theme": "obsidian",
   "monospaceFontFamily": "Comic Mono",
   "interfaceFontFamily": "Recursive Casual,Recursive Monospace Casual,Recursive Monospace",
-  "textFontFamily": "Recursive Casual,Recursive Monospace,Recursive Monospace Casual"
+  "textFontFamily": "Recursive Casual,Recursive Monospace,Recursive Monospace Casual",
+  "accentColor": ""
 }

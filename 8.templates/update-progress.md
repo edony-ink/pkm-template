@@ -1,5 +1,5 @@
 <%*
-	let startDate = new Date(2022,0,1)
+	let startDate = new Date(2023,0,1)
 	let nowDate = new Date()
 	let days = (nowDate.getTime()-startDate.getTime())/(1000*60*60*24)
 	let percent = 100*days/365
