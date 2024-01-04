@@ -1,0 +1,95 @@
+body {
+    --pill-border-width-pa: 1px;
+    --pill-radius-pa: 4px;
+}
+.theme-light {
+    --tag-color-pa: #2B88D8;
+    --tag-background-pa: #EEF3FE;
+    --tag-bg-hover-color: #F9F9FA;
+}
+
+.theme-dark {
+    --tag-color-pa: #2B88D8;
+    --tag-background-pa: #3A4359;
+    --tag-bg-hover-color: #535455;
+}
+
+a.tag, .cm-hashtag {
+    color: var(--tag-color-pa) !important;
+    background-color: var(--tag-background-pa) !important;
+    cursor: pointer;
+    padding: 1px 4px 3px 1px !important;
+    /*border: 0.5px solid !important;
+    border-radius: 3px !important;*/
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.cm-hashtag.cm-hashtag-end {
+    border-top-right-radius: var(--tag-radius);
+    border-bottom-right-radius: var(--tag-radius);
+    border-left: none;
+    border-right: var(--tag-border-width) solid var(--tag-border-color);
+    padding-right: var(--tag-padding-x);
+}
+
+.tag:hover, .cm-hashtag:hover {
+    color: var(--tag-color-pa) !important;
+    background-color: var(--tag-bg-hover-color) !important;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 1px 4px 3px 1px !important;
+    /*border: 0.5px solid !important;
+    border-radius: 3px !important;*/
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+/* fix plugin[tag wrangler] display issue */
+.smalltalk .page header {
+    font-size: 100% !important;
+}
+
+/*
+.tag:is([href="#001-computer-technology"]) {
+    background-color: red !important;
+    color: rgba(0,0,0,0.5) !important;
+}
+
+.tag:is([href="#001-computer-technology"]):hover {
+    background-color: cyan !important;
+    color: black !important;
+}
+
+.cm-hashtag,.cm-meta.cm-tag-001-computer-technology{
+    background-color: red !important;
+    color: rgba(0,0,0,0.5) !important;
+}
+*/
+
+/* properties tags */
+.multi-select-pill {
+    --icon-size: var(--icon-xs);
+    --icon-stroke: var(--icon-xs-stroke-width);
+    display: flex;
+    align-items: center;
+    border: var(--pill-border-width-pa) solid var(--pill-border-color);
+    border-radius: var(--pill-radius-pa);
+    color: var(--tag-color-pa) !important;
+    background-color: var(--tag-background-pa) !important;
+    cursor: var(--cursor);
+    font-weight: var(--pill-weight);
+    padding: 1px 2px 1px 2px !important;
+    line-height: 1.2;
+    max-width: 100%;
+    gap: var(--size-2-1);
+    position: relative;
+}
+
+.multi-select-pill:hover {
+    color: var(--tag-color-pa) !important;
+    background-color: var(--tag-bg-hover-color) !important;
+    font-weight: bold;
+}

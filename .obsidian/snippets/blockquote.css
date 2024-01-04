@@ -33,5 +33,10 @@ blockquote {
 .markdown-preview-view blockquote p {
   margin-left: 1px;
   margin-right: 0px;
-  font-size: var(--normal-weight);
+  font-size: var(--font-adaptive-normal);
+}
+
+/* for inline-blockquote */
+.cm-s-obsidian span.cm-inline-code {
+  font-size: var(--font-adaptive-normal) !important;
 }

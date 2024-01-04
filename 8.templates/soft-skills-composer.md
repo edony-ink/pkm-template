@@ -1,12 +1,22 @@
 ---
+
 title: <% tp.file.title %>
 date: <% tp.file.creation_date("YYYY-MM-DD HH:mm:ss") %>
 modify: <% tp.file.last_modified_date("YYYY-MM-DD HH:mm:ss") %>
 author: edony.zpc
-tags: 002-soft-skills
-aliases: 
----
+tags: [  ]
+aliases: [  ]
+featured: false
+published: false
+excerpt: ""
+feature_image: ""
 
+---
+%%
+subject: #002-soft-skills
+status: 
+type: 
+%%
 # <% tp.file.title %>
 
 

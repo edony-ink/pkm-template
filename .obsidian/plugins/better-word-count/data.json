@@ -1,0 +1,42 @@
+{
+  "statusBar": [
+    {
+      "prefix": "  ",
+      "suffix": "  words  🪬  ",
+      "metric": {
+        "type": 0,
+        "counter": 0
+      }
+    },
+    {
+      "prefix": "  ",
+      "suffix": "  pages",
+      "metric": {
+        "type": 0,
+        "counter": 5
+      }
+    }
+  ],
+  "altBar": [
+    {
+      "prefix": "  ",
+      "suffix": "  today  🪼  ",
+      "metric": {
+        "type": 1,
+        "counter": 0
+      }
+    },
+    {
+      "prefix": "  ",
+      "suffix": "  files",
+      "metric": {
+        "type": 2,
+        "counter": 6
+      }
+    }
+  ],
+  "countComments": false,
+  "collectStats": true,
+  "displaySectionCounts": true,
+  "pageWords": 300
+}

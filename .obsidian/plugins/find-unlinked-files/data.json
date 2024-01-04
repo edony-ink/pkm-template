@@ -1,0 +1,56 @@
+{
+  "outputFileName": "7.archive/orphaned",
+  "disableWorkingLinks": false,
+  "directoriesToIgnore": [
+    "9.src/shadow-walker-assets/",
+    "a.logseq/",
+    "1.index/",
+    "7.archive/",
+    "8.templates/"
+  ],
+  "filesToIgnore": [],
+  "fileTypesToIgnore": [
+    "pdf",
+    "png",
+    "jpg",
+    "jpeg"
+  ],
+  "linksToIgnore": [],
+  "tagsToIgnore": [],
+  "fileTypesToDelete": [],
+  "ignoreFileTypes": true,
+  "ignoreDirectories": true,
+  "unresolvedLinksIgnoreDirectories": true,
+  "unresolvedLinksOutputFileName": "7.archive/broken",
+  "unresolvedLinksDirectoriesToIgnore": [
+    "9.src/shadow-walker-assets/",
+    "a.logseq/",
+    "8.templates/"
+  ],
+  "unresolvedLinksFilesToIgnore": [],
+  "unresolvedLinksFileTypesToIgnore": [],
+  "unresolvedLinksLinksToIgnore": [],
+  "unresolvedLinksTagsToIgnore": [],
+  "withoutTagsDirectoriesToIgnore": [
+    "9.src/shadow-walker-assets/",
+    "a.logseq/",
+    "1.index/",
+    "6.readwise/",
+    "5.tags/",
+    "7.archive/",
+    "8.templates/",
+    "4.permanent/permanent-diary/permanent-2020/"
+  ],
+  "withoutTagsFilesToIgnore": [
+    "README.md"
+  ],
+  "withoutTagsOutputFileName": "7.archive/no-tags",
+  "emptyFilesOutputFileName": "7.archive/empty-files",
+  "emptyFilesDirectories": [
+    "9.src/shadow-walker-assets/",
+    "a.logseq/"
+  ],
+  "emptyFilesFilesToIgnore": [],
+  "emptyFilesIgnoreDirectories": true,
+  "openOutputFile": true
+}

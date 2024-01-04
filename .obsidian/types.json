@@ -1,0 +1,15 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "startTime": "date",
+    "modify": "datetime",
+    "summary": "datetime",
+    "date": "datetime",
+    "testchecklist": "checkbox",
+    "test": "multitext",
+    "testnumber": "number",
+    "title": "text"
+  }
+}

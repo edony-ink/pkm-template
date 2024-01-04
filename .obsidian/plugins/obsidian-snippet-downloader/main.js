@@ -312,7 +312,7 @@ __export(exports, {
 var import_obsidian8 = __toModule(require("obsidian"));
 
 // Snippet-downloader/settings.ts
-var import_obsidian2 = __toModule(require("obsidian"));
+var import_obsidian7 = __toModule(require("obsidian"));
 
 // Snippet-downloader/removeSnippet.ts
 var import_obsidian = __toModule(require("obsidian"));
@@ -365,65 +365,9 @@ function removeSnippetFromExcluded(repoPath, snippetList, errorSnippet, excluded
   return snippetList;
 }
 
-// Snippet-downloader/settings.ts
-var DEFAULT_SETTINGS = {
-  snippetList: [],
-  excludedSnippet: "",
-  errorSnippet: ""
-};
-var SnippetDownloaderTabs = class extends import_obsidian2.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    containerEl.createEl("h2", { text: "Snippet Manager Settings" });
-    const desc_excluder = document.createDocumentFragment();
-    desc_excluder.createEl("span", null, (span) => {
-      span.innerText = "Type the snippet name you want to exclude from the list, without the extension.\nYou can also use regex, for example: ";
-      span.createEl("code", { text: "^(.*)$" });
-      span.createEl("span", { text: " will match all snippets.\n\n" });
-      span.createEl("a", null, (link) => {
-        link.innerText = "You can check your regex here.";
-        link.href = "https://regex101.com/";
-      });
-    });
-    new import_obsidian2.Setting(containerEl).setName("Excluded Snippet").setDesc(desc_excluder).addTextArea((text) => text.setPlaceholder("BadCSS I hate, badCSS*").setValue(this.plugin.settings.excludedSnippet).onChange((value) => __async(this, null, function* () {
-      this.plugin.settings.excludedSnippet = value;
-      yield this.plugin.saveSettings();
-    })));
-    containerEl.createEl("hr");
-    containerEl.createEl("h2", { text: "Repository Snippet List" });
-    containerEl.createEl("div", { text: `The following is a list of the repository added via the command palette ` });
-    containerEl.createEl("p");
-    containerEl.createEl("div", { text: `Click the x button next to a repository to remove it from the list.` });
-    containerEl.createEl("p");
-    containerEl.createEl("span").createEl("b", { text: "Note: " });
-    containerEl.createEl("span", { text: "This does not delete the linked snippet, this should be done from your " });
-    containerEl.createEl("code", { text: ".obsidian/snippets" }).setAttribute("style", "font-family: var(--font-monospace)");
-    containerEl.createSpan({ text: " folder" });
-    for (const repoPath of this.plugin.settings.snippetList) {
-      const repoName = repoPath.repo.replace("https://github.com/", "");
-      new import_obsidian2.Setting(containerEl).setName(repoName).addButton((btn) => {
-        btn.setIcon("cross");
-        btn.setTooltip("Delete this repository from the list");
-        btn.onClick(() => __async(this, null, function* () {
-          btn.buttonEl.parentElement.remove();
-          const newSettings = removeSnippet(repoPath.repo, this.plugin.settings.snippetList, this.plugin.settings.errorSnippet);
-          this.plugin.settings.snippetList = newSettings[0];
-          this.plugin.settings.errorSnippet = newSettings[1];
-          yield this.plugin.saveSettings();
-        }));
-      });
-    }
-  }
-};
-
 // Snippet-downloader/modals/simpleCommands.ts
-var import_obsidian3 = __toModule(require("obsidian"));
-var SnippetDownloaderModals = class extends import_obsidian3.Modal {
+var import_obsidian2 = __toModule(require("obsidian"));
+var SnippetDownloaderModals = class extends import_obsidian2.Modal {
   constructor(app, onSubmit) {
     super(app);
     this.onSubmit = onSubmit;
@@ -431,12 +375,12 @@ var SnippetDownloaderModals = class extends import_obsidian3.Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h1", { text: "Repo Links" });
-    new import_obsidian3.Setting(contentEl).setName("Repo Link").addText((text) => {
+    new import_obsidian2.Setting(contentEl).setName("Repo Link").addText((text) => {
       text.onChange((value) => {
         this.result = value;
       });
     });
-    new import_obsidian3.Setting(contentEl).addButton((btn) => {
+    new import_obsidian2.Setting(contentEl).addButton((btn) => {
       btn.setButtonText("Submit").setCta().onClick(() => {
         this.close();
         this.onSubmit(this.result);
@@ -449,11 +393,8 @@ var SnippetDownloaderModals = class extends import_obsidian3.Modal {
   }
 };
 
-// Snippet-downloader/modals/updateSnippets.ts
-var import_obsidian6 = __toModule(require("obsidian"));
-
 // Snippet-downloader/addSnippets.ts
-var import_obsidian5 = __toModule(require("obsidian"));
+var import_obsidian4 = __toModule(require("obsidian"));
 
 // node_modules/universal-user-agent/dist-web/index.js
 function getUserAgent() {
@@ -1351,7 +1292,7 @@ var gBase64 = {
 };
 
 // Snippet-downloader/downloader.ts
-var import_obsidian4 = __toModule(require("obsidian"));
+var import_obsidian3 = __toModule(require("obsidian"));
 function fetchListSnippet(repoRecur, snippetList, settings, repoPath) {
   return __async(this, null, function* () {
     for (const data of repoRecur.data.tree) {
@@ -1372,7 +1313,7 @@ function grabLastCommitInfo(repoPath, filepath) {
     const repoName = repoPath.replace("https://github.com/", "");
     const url = `https://api.github.com/repos/${repoName}/commits?path=${encodeURIComponent(filepath)}&page=1&per_page=1`;
     try {
-      const response = yield (0, import_obsidian4.request)({ url });
+      const response = yield (0, import_obsidian3.request)({ url });
       return response === "404: Not Found" ? null : JSON.parse(response);
     } catch (error) {
       console.log("error in grabcommitinfo", error);
@@ -1436,13 +1377,14 @@ function downloadSnippet(repoPath, snippetName, vault) {
     const repoName = repo.split("/")[1];
     const octokit = new Octokit();
     const fileName = basename(snippetName);
-    const filePath = (0, import_obsidian4.normalizePath)(vault.configDir + "/snippets/" + fileName);
+    const filePath = (0, import_obsidian3.normalizePath)(vault.configDir + "/snippets/" + fileName);
     try {
       const file = yield octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
         owner,
         repo: repoName,
         path: snippetName
       });
+      console.log(file.status);
       if (file.status === 200) {
         const fileContent = gBase64.decode(file.data.content);
         const adapter = vault.adapter;
@@ -1466,7 +1408,7 @@ function addSnippet(repoPath, settings, vault) {
     if (!snippetList.some((snippet) => snippet.repo === repoPath)) {
       const newSnippetList = yield listSnippetfromRepo(repoPath, settings);
       if (newSnippetList.length === 0) {
-        new import_obsidian5.Notice("Error \u{1F63F}, snippet or repository not found");
+        new import_obsidian4.Notice("Error \u{1F63F}, snippet or repository not found");
         return snippetList;
       }
       snippetList.push({
@@ -1486,10 +1428,10 @@ function addSnippet(repoPath, settings, vault) {
         messageNotice += `
 ${catchErrors.length} snippets not added\u{1F63F}: ${catchErrors.join(", ")}`;
       }
-      new import_obsidian5.Notice(messageNotice);
+      new import_obsidian4.Notice(messageNotice);
       return [snippetList, excludedSnippet];
     }
-    new import_obsidian5.Notice("Error : this repo is already in the list \u{1F63F}");
+    new import_obsidian4.Notice("Error : this repo is already in the list \u{1F63F}");
     return [snippetList, excludedSnippet];
   });
 }
@@ -1509,8 +1451,8 @@ function updateRepo(repoPath, snippetList, vault, excludedSnippets, errorSnippet
       }
     }
     snippetList = removeSnippetFromExcluded(repoPath, snippetList, errorSnippets, excludedSnippets);
-    new import_obsidian5.Notice(`${repoPath} successfully updated \u{1F389}`);
-    return [errorSnippets, snippetList];
+    new import_obsidian4.Notice(`${repoPath} successfully updated \u{1F389}`);
+    return [snippetList, errorSnippets];
   });
 }
 function updateSpecificSnippet(item, settings) {
@@ -1523,7 +1465,7 @@ function updateSpecificSnippet(item, settings) {
       const successDownload = yield downloadSnippet(item.repo, snippetsRep.name, this.app.vault);
       if (successDownload) {
         snippetsRep.lastUpdate = yield grabLastCommitDate(item.repo, snippetsRep.name);
-        new import_obsidian5.Notice(`${basename(item.snippetPath)} has been updated \u{1F389}`);
+        new import_obsidian4.Notice(`${basename(item.snippetPath)} has been updated \u{1F389}`);
         return [
           listSnippet,
           excludedSnippet
@@ -1538,7 +1480,7 @@ function updateSpecificSnippet(item, settings) {
       }
     }
     listSnippet = removeSnippetFromExcluded(item.repo, listSnippet, excludedSnippet, settings.excludedSnippet);
-    new import_obsidian5.Notice(`${basename(item.snippetPath)} is already up to date \u{1F4A1}`);
+    new import_obsidian4.Notice(`${basename(item.snippetPath)} is already up to date \u{1F4A1}`);
     return [
       listSnippet,
       excludedSnippet
@@ -1547,6 +1489,7 @@ function updateSpecificSnippet(item, settings) {
 }
 
 // Snippet-downloader/modals/updateSnippets.ts
+var import_obsidian5 = __toModule(require("obsidian"));
 function getAllRepo(settings) {
   const repoAll = [];
   for (const repo of settings.snippetList) {
@@ -1571,7 +1514,7 @@ function getAllSnippet(settings) {
   }
   return allSnippet;
 }
-var RepoDownloader = class extends import_obsidian6.FuzzySuggestModal {
+var RepoDownloader = class extends import_obsidian5.FuzzySuggestModal {
   constructor(app, settings, plugin) {
     super(app);
     this.settings = settings;
@@ -1586,13 +1529,11 @@ var RepoDownloader = class extends import_obsidian6.FuzzySuggestModal {
   onChooseItem(item, evt) {
     return __async(this, null, function* () {
       const allSettings = yield updateRepo(item.repoName, this.settings.snippetList, this.app.vault, this.settings.excludedSnippet, this.settings.errorSnippet);
-      this.settings.snippetList = allSettings[1];
-      this.settings.errorSnippet = allSettings[0];
-      yield this.plugin.saveSettings();
+      yield this.plugin.updateList(allSettings);
     });
   }
 };
-var SpecificSnippetDownloader = class extends import_obsidian6.FuzzySuggestModal {
+var SpecificSnippetDownloader = class extends import_obsidian5.FuzzySuggestModal {
   constructor(app, settings, plugin) {
     super(app);
     this.settings = settings;
@@ -1607,16 +1548,14 @@ var SpecificSnippetDownloader = class extends import_obsidian6.FuzzySuggestModal
   onChooseItem(item, evt) {
     return __async(this, null, function* () {
       const newList = yield updateSpecificSnippet(item, this.settings);
-      this.settings.snippetList = newList[0];
-      this.settings.errorSnippet = newList[1];
-      yield this.plugin.saveSettings();
+      yield this.plugin.updateList(newList);
     });
   }
 };
 
 // Snippet-downloader/modals/excludeSnippet.ts
-var import_obsidian7 = __toModule(require("obsidian"));
-function getAllSnippet2(settings) {
+var import_obsidian6 = __toModule(require("obsidian"));
+function getExcludedSnippets(settings) {
   const allSnippet = [];
   for (const snippet of settings.snippetList) {
     for (const snippetContent of snippet.snippetsContents) {
@@ -1638,7 +1577,7 @@ function addExcludedSnippet(item, settings) {
     return [snippetList, excludedSnippet];
   });
 }
-var ExcludeSnippet = class extends import_obsidian7.FuzzySuggestModal {
+var ExcludeSnippet = class extends import_obsidian6.FuzzySuggestModal {
   constructor(app, settings, plugin) {
     super(app);
     this.settings = settings;
@@ -1648,21 +1587,161 @@ var ExcludeSnippet = class extends import_obsidian7.FuzzySuggestModal {
     return basename(item.snippetPath);
   }
   getItems() {
-    return getAllSnippet2(this.settings);
+    return getExcludedSnippets(this.settings);
   }
   onChooseItem(item, evt) {
     return __async(this, null, function* () {
       const newSettings = yield addExcludedSnippet(item, this.settings);
-      this.settings.snippetList = newSettings[0];
-      this.settings.excludedSnippet = newSettings[1];
-      yield this.plugin.saveSettings();
-      new import_obsidian7.Notice(`${basename(item.snippetPath)} has been excluded! \u{1F389}`);
+      yield this.plugin.updateList(newSettings);
+      new import_obsidian6.Notice(`${basename(item.snippetPath)} has been excluded! \u{1F389}`);
     });
+  }
+};
+
+// Snippet-downloader/settings.ts
+var DEFAULT_SETTINGS = {
+  snippetList: [],
+  excludedSnippet: "",
+  errorSnippet: ""
+};
+function getDetailsState(name) {
+  for (let i = 0; i < document.getElementsByTagName("details").length; i++) {
+    const details = document.getElementsByTagName("details")[i];
+    if (details.innerText.split("\n")[0] === name) {
+      return details.hasAttribute("open");
+    }
+  }
+  return true;
+}
+function openDetails(name, detailsState) {
+  const allDetails = document.getElementsByTagName("details");
+  for (let i = 0; i < allDetails.length; i++) {
+    const details = allDetails[i];
+    if (details.innerText.split("\n")[0] === name && detailsState) {
+      details.setAttr("open", "true");
+      details.open = true;
+      details.setAttribute("open", "true");
+    } else if (details.innerText.split("\n")[0] === name && !detailsState) {
+      details.removeAttribute("open");
+      details.setAttribute("open", "false");
+    }
+  }
+}
+var SnippetDownloaderTabs = class extends import_obsidian7.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    const allSnippets = getAllSnippet(this.plugin.settings);
+    containerEl.createEl("h2", { text: "Snippet Manager Settings" });
+    const desc_excluder = document.createDocumentFragment();
+    desc_excluder.createEl("span", null, (span) => {
+      span.innerText = "Type the snippet name you want to exclude from the list, without the extension.\nYou can also use regex, for example: ";
+      span.createEl("code", { text: "^(.*)$" });
+      span.createEl("span", { text: " will match all snippets.\n\n" });
+      span.createEl("a", null, (link) => {
+        link.innerText = "You can check your regex here.";
+        link.href = "https://regex101.com/";
+      });
+    });
+    new import_obsidian7.Setting(containerEl).setName("Excluded Snippet").setDesc(desc_excluder).addTextArea((text) => text.setPlaceholder("BadCSS I hate, badCSS*").setValue(this.plugin.settings.excludedSnippet).onChange((value) => __async(this, null, function* () {
+      this.plugin.settings.excludedSnippet = value;
+      yield this.plugin.saveSettings();
+    })));
+    const desc_plugins = document.createDocumentFragment();
+    desc_plugins.createEl("span", {
+      text: `The following is a list of the repository added via the command palette `
+    });
+    desc_plugins.createEl("div", {
+      text: `Click the x button next to a repository to remove it from the list.`
+    });
+    desc_plugins.createEl("b", { text: "Note: " });
+    desc_plugins.createEl("span", { text: "This does not delete the linked snippet, this should be done from your " });
+    desc_plugins.createEl("code", { text: ".obsidian/snippets" }).setAttribute("style", "font-family: var(--font-monospace)");
+    desc_plugins.createEl("span", { text: " folder" });
+    new import_obsidian7.Setting(containerEl).setName("Repository Snippet List").setDesc(desc_plugins).addButton((btn) => {
+      btn.setIcon("plus").setTooltip("Add new repository").onClick(() => __async(this, null, function* () {
+        new SnippetDownloaderModals(this.app, (result) => __async(this, null, function* () {
+          if (result) {
+            const newSettings = yield addSnippet(result.trim(), this.plugin.settings, this.app.vault);
+            yield this.plugin.updateList(newSettings);
+            const detailState = getDetailsState(result);
+            this.display();
+            openDetails(result, detailState);
+          }
+        })).open();
+      }));
+    }).addButton((btn) => {
+      btn.setIcon("install").setTooltip("Update all repository").onClick(() => __async(this, null, function* () {
+        this.plugin.updateAllSnippets();
+      }));
+    });
+    for (const repoPath of this.plugin.settings.snippetList) {
+      const details = containerEl.createEl("details");
+      const repoName = repoPath.repo.replace("https://github.com/", "");
+      const summary = details.createEl("summary", { text: repoName });
+      summary.addClass("snippets-downloader-summary");
+      new import_obsidian7.Setting(summary).setClass("snippets-downloader-options").addButton((btn) => {
+        btn.setClass("snippets-downloader-options-button").setIcon("cross").setTooltip("Delete this repository from the list").onClick(() => __async(this, null, function* () {
+          btn.buttonEl.parentElement.remove();
+          const newSettings = removeSnippet(repoPath.repo, this.plugin.settings.snippetList, this.plugin.settings.errorSnippet);
+          yield this.plugin.updateList(newSettings);
+          const detailState = getDetailsState(repoName);
+          this.display();
+          openDetails(repoName, detailState);
+        }));
+      }).addButton((btn) => {
+        btn.setClass("snippets-downloader-options-button").setIcon("sync").setTooltip("Update this repository").onClick(() => __async(this, null, function* () {
+          const allSettings = yield updateRepo(repoPath.repo, this.plugin.settings.snippetList, this.app.vault, this.plugin.settings.excludedSnippet, this.plugin.settings.errorSnippet);
+          yield this.plugin.updateList(allSettings);
+        }));
+      });
+      for (const snippets of repoPath.snippetsContents) {
+        new import_obsidian7.Setting(details).setName(basename(snippets.name)).setClass("snippets-downloader-settings").addExtraButton((btn) => {
+          btn.setTooltip("Update this snippet").setIcon("install").onClick(() => __async(this, null, function* () {
+            const updatedList = yield updateSpecificSnippet(allSnippets.find((s) => snippets.name === s.snippetPath), this.plugin.settings);
+            yield this.plugin.updateList(updatedList);
+          }));
+        }).addExtraButton((btn) => {
+          btn.setTooltip("Remove this snippet").setIcon("trash").onClick(() => __async(this, null, function* () {
+            btn.extraSettingsEl.parentElement.parentElement.remove();
+            const updatedList = yield addExcludedSnippet(getExcludedSnippets(this.plugin.settings).find((s) => snippets.name === s.snippetPath), this.plugin.settings);
+            yield this.plugin.updateList(updatedList);
+          }));
+        });
+      }
+    }
   }
 };
 
 // Snippet-downloader/main.ts
 var snippetDownloader = class extends import_obsidian8.Plugin {
+  updateAllSnippets() {
+    return __async(this, null, function* () {
+      if (this.settings.snippetList.length > 0) {
+        const snippetList = this.settings.snippetList;
+        const errorSnippet = this.settings.errorSnippet;
+        const excludedSnippet = this.settings.excludedSnippet;
+        let updatedSettings = [errorSnippet, snippetList];
+        for (const repoName of snippetList) {
+          updatedSettings = yield updateRepo(repoName.repo, snippetList, this.app.vault, excludedSnippet, errorSnippet);
+          this.settings.snippetList = updatedSettings[1];
+          this.settings.errorSnippet = updatedSettings[0];
+        }
+        yield this.saveSettings();
+      }
+    });
+  }
+  updateList(newSettings) {
+    return __async(this, null, function* () {
+      this.settings.snippetList = newSettings[0];
+      this.settings.errorSnippet = newSettings[1];
+      yield this.saveSettings();
+    });
+  }
   onload() {
     return __async(this, null, function* () {
       yield this.loadSettings();
@@ -1673,9 +1752,7 @@ var snippetDownloader = class extends import_obsidian8.Plugin {
           new SnippetDownloaderModals(this.app, (result) => __async(this, null, function* () {
             if (result) {
               const newSettings = yield addSnippet(result.trim(), this.settings, this.app.vault);
-              this.settings.snippetList = newSettings[0];
-              this.settings.errorSnippet = newSettings[1];
-              yield this.saveSettings();
+              yield this.updateList(newSettings);
             }
           })).open();
         }
@@ -1692,8 +1769,7 @@ var snippetDownloader = class extends import_obsidian8.Plugin {
               let updatedSettings = [errorSnippet, snippetList];
               for (const repoName of snippetList) {
                 updatedSettings = yield updateRepo(repoName.repo, snippetList, this.app.vault, excludedSnippet, errorSnippet);
-                this.settings.snippetList = updatedSettings[1];
-                this.settings.errorSnippet = updatedSettings[0];
+                yield this.updateList(updatedSettings);
               }
               yield this.saveSettings();
             }

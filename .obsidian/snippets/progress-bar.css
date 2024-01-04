@@ -1,4 +1,4 @@
-.meter {
+.meter-snippet {
   box-sizing: content-box;
   height: 18px; /* Can be anything */
   position: relative;
@@ -13,7 +13,7 @@
   font-style: italic;
   color: brown;
 }
-.meter > span {
+.meter-snippet > span {
   display: block;
   height: 100%;
   border-top-right-radius: 8px;
@@ -31,7 +31,7 @@
   position: relative;
   overflow: hidden;
 }
-.meter > span:after,
+.meter-snippet > span:after,
 .animate > span > span {
   content: "";
   position: absolute;
@@ -87,4 +87,14 @@
 
 * {
   box-sizing: border-box;
+}
+
+.progress-bar-grid-snippet {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  column-gap: 12px;
+}
+
+.progress-bar-number-snippet {
+  color:rgba(84, 240, 84, 0.69);
 }

@@ -21,7 +21,7 @@
         "Mod",
         "Shift"
       ],
-      "key": "R"
+      "key": "L"
     }
   ],
   "app:toggle-left-sidebar": [
@@ -30,7 +30,7 @@
         "Mod",
         "Shift"
       ],
-      "key": "L"
+      "key": "R"
     }
   ],
   "editor:toggle-highlight": [
@@ -39,14 +39,6 @@
         "Mod"
       ],
       "key": "H"
-    }
-  ],
-  "file-explorer:reveal-active-file": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "L"
     }
   ],
   "workspace:split-horizontal": [
@@ -109,45 +101,12 @@
       "key": "Tab"
     }
   ],
-  "templater-obsidian:replace-in-file-templater": [
-    {
-      "modifiers": [
-        "Alt",
-        "Shift"
-      ],
-      "key": "R"
-    }
-  ],
-  "templater-obsidian:8.templates/computer-tech-composer.md": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "1"
-    }
-  ],
   "templater-obsidian:8.templates/diary-composer.md": [
     {
       "modifiers": [
         "Mod"
       ],
       "key": "5"
-    }
-  ],
-  "templater-obsidian:8.templates/readings-composer.md": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "3"
-    }
-  ],
-  "templater-obsidian:8.templates/soft-skills-composer.md": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "2"
     }
   ],
   "templater-obsidian:8.templates/topics-composer.md": [
@@ -201,24 +160,6 @@
         "Mod"
       ],
       "key": "."
-    }
-  ],
-  "outline:open": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "O"
-    }
-  ],
-  "workspaces:load": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "W"
     }
   ],
   "homepage:open-homepage": [
@@ -282,13 +223,249 @@
       "key": "B"
     }
   ],
-  "obsidian-memos:open-memos": [
+  "workspace:goto-tab-1": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "1"
+    }
+  ],
+  "workspace:goto-tab-2": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "2"
+    }
+  ],
+  "workspace:goto-tab-3": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "3"
+    }
+  ],
+  "workspace:goto-tab-5": [],
+  "workspace:goto-tab-8": [],
+  "templater-obsidian:8.templates/computer-tech-composer.md": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "1"
+    }
+  ],
+  "hotkeysplus-obsidian:toggle-embed": [],
+  "templater-obsidian:8.templates/readings-composer.md": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "3"
+    }
+  ],
+  "templater-obsidian:8.templates/soft-skills-composer.md": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "2"
+    }
+  ],
+  "workspace:goto-tab-4": [],
+  "outline:open": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "O"
+    }
+  ],
+  "hotkeysplus-obsidian:clear-current-line": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "W"
+    }
+  ],
+  "hotkeysplus-obsidian:duplicate-lines-down": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowDown"
+    }
+  ],
+  "hotkeysplus-obsidian:duplicate-lines-up": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "ArrowUp"
+    }
+  ],
+  "obsidian-quiet-outline:quiet-outline": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "O"
+    }
+  ],
+  "obsidian-plugins-mng:assistant-memos": [
     {
       "modifiers": [
         "Mod",
         "Shift"
       ],
       "key": "U"
+    }
+  ],
+  "obsidian-git:open-git-view": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "G"
+    }
+  ],
+  "personal-assistant:assistant-memos": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "U"
+    }
+  ],
+  "file-explorer:move-file": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "P"
+    }
+  ],
+  "obsidian-emoji-toolbar:emoji-picker:open-picker": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "J"
+    }
+  ],
+  "personal-assistant:local-graph": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "G"
+    }
+  ],
+  "bookmarks:open": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "."
+    }
+  ],
+  "obsidian-reminder-plugin:show-date-chooser": [],
+  "personal-assistant:startup-recording": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "R"
+    }
+  ],
+  "personal-assistant:preview-records": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": ","
+    }
+  ],
+  "tag-search:open-tag-search": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "T"
+    }
+  ],
+  "daily-notes": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "D"
+    }
+  ],
+  "personal-assistant:memos": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "U"
+    }
+  ],
+  "markdown:clear-metadata-properties": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "Backspace"
+    }
+  ],
+  "editor:swap-line-down": [
+    {
+      "modifiers": [
+        "Ctrl",
+        "Shift"
+      ],
+      "key": "ArrowDown"
+    }
+  ],
+  "editor:swap-line-up": [
+    {
+      "modifiers": [
+        "Ctrl",
+        "Shift"
+      ],
+      "key": "ArrowUp"
+    }
+  ],
+  "hotkeysplus-obsidian:toggle-bullet-number": [],
+  "editor:toggle-numbered-list": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "M"
     }
   ]
 }

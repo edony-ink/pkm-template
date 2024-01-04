@@ -1,0 +1,3 @@
+.active-line-on .cm-line.cm-active {
+    box-shadow: 0vw 0 var(--active-line-bg),0vw 0 var(--active-line-bg) !important;
+}

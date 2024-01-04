@@ -1,6 +1,7 @@
 {
-  "lane-width": 450,
   "show-checkboxes": true,
   "show-relative-date": true,
-  "show-archive-all": false
+  "show-archive-all": false,
+  "lane-width": 380,
+  "new-note-folder": "0.unsorted"
 }

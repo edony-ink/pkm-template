@@ -1,10 +1,11 @@
 {
+  "baseColorScheme": "light",
   "strictLineBreaks": true,
-  "showFrontmatter": false,
+  "showFrontmatter": true,
   "foldHeading": true,
   "foldIndent": true,
   "defaultViewMode": "preview",
-  "showLineNumber": false,
+  "showLineNumber": true,
   "emacsyKeys": false,
   "newFileLocation": "folder",
   "newFileFolderPath": "0.unsorted",
@@ -14,7 +15,7 @@
   "autoConvertHtml": false,
   "communityThemeSortOrder": "download",
   "pdfExportSettings": {
-    "pageSize": "Letter",
+    "pageSize": "A4",
     "landscape": true,
     "margin": "0",
     "downscalePercent": 100
@@ -24,19 +25,17 @@
   "readableLineLength": true,
   "legacyEditor": false,
   "livePreview": true,
-  "spellcheck": false,
+  "spellcheck": true,
   "fileSortOrder": "alphabetical",
   "communityPluginSortOrder": "download",
   "mobileToolbarCommands": [
-    "editor:set-heading",
-    "editor:insert-callout",
-    "editor:fold-all",
-    "editor:unfold-all",
-    "editor:insert-wikilink",
-    "editor:insert-embed",
-    "editor:paste"
+    "obsidian-plugins-mng:startup-recording"
   ],
   "userIgnoreFilters": [
-    "a.logseq/"
-  ]
+    "a.logseq/",
+    "7.archive/",
+    ".git",
+    "8.templates/"
+  ],
+  "showInlineTitle": false
 }

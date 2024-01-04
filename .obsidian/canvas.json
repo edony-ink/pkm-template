@@ -1,0 +1,8 @@
+{
+  "snapToObjects": true,
+  "snapToGrid": true,
+  "zoomBreakpoint": 0.66,
+  "defaultModDragBehavior": "menu",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "5.tags/canvas"
+}

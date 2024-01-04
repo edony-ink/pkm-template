@@ -1,12 +1,13 @@
 .theme-light {
   --title-content-color: black;
   --title-content-hover-color: rgb(100, 100, 100);
-  --folder-hover-color: rgba(0, 255, 255, 0.85);
+  --folder-hover-color: rgba(0, 157, 255, 0.97);
   --outline-color: rgba(99, 84, 84, 0.85);
   --outline-hover-color: rgba(255, 0, 0, 0.9);
   --font-ia: "iA Writer Mono S";
-  --font-recursive: "Recursive Monospace Casual";
-  --sidebar-font-size: 15.5px;
+  --font-recursive: "Recursive Monospace", "Recursive Casual", "Recursive Monospace Casual";
+  --font-barlow: "Barlow";
+  --sidebar-font-size: 14px;
 }
 
 .theme-dark {
@@ -16,8 +17,9 @@
   --outline-color: rgba(255, 255, 255, 0.85);
   --outline-hover-color: rgba(255, 0, 0, 0.9);
   --font-ia: "iA Writer Mono S";
-  --font-recursive: "Recursive Monospace Casual","Recursive Casual";
-  --sidebar-font-size: 15.5px;
+  --font-recursive: "Recursive Monospace", "Recursive Casual", "Recursive Monospace Casual";
+  --font-barlow: "Barlow";
+  --sidebar-font-size: 14px;
 }
 
 /* Connectining lines for files and folders in File Explorer*/
@@ -76,4 +78,20 @@
 }
 .outline .tree-item-self:hover {
   color: var(--outline-hover-color) !important;
+}
+
+/* fix right-sidebar margin issue */
+.mod-right-split .workspace-tab-header-container-inner {
+  padding: 0px 8px 0px !important;
+  margin: 3px 0 0 0 !important;
+  gap: 3px;
+}
+
+/* fix outline issue 
+.tree-item .tree-item-self .tree-item-icon {
+  margin-left: calc(var(--size-4-1) * -4) !important;
+}
+*/
+.quiet-outline .function-bar {
+  padding: 0px 1px !important;
 }

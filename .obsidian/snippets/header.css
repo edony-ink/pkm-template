@@ -1,18 +1,17 @@
-/* fix header4 using uppercase */
-.markdown-preview-view h4,
-.HyperMD-header-4,
-.cm-s-obsidian .cm-header-4 {
-  font-variant: normal !important;
+body {
+  /* fix header4 using uppercase */
+  --h4-variant: normal !important;
+  /* fix header5 using uppercase */
+  --h5-variant: normal !important;
+  /* fix header6 using uppercase */
+  --h6-variant: normal !important;
 }
-/* fix header5 using uppercase */
-.markdown-preview-view h5,
-.HyperMD-header-5,
-.cm-s-obsidian .cm-header-5 {
-  font-variant: normal !important;
-}
-/* fix header6 using uppercase */
-.markdown-preview-view h6,
-.HyperMD-header-6,
-.cm-s-obsidian .cm-header-6 {
-  font-variant: normal !important;
+
+body.colorful-headings .view-content {
+  --h1-color:rgb(255, 2, 2) !important;
+  --h2-color:rgb(232, 151, 0) !important;
+  --h3-color:rgb(15, 198, 2) !important;
+  --h4-color:rgb(67, 123, 207) !important;
+  --h5-color:rgb(144, 0, 255) !important;
+  --h6-color:rgb(128, 0, 23) !important;
 }

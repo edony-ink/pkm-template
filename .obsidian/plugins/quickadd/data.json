@@ -51,14 +51,15 @@
         "createInSameFolderAsActiveFile": false
       },
       "appendLink": false,
-      "incrementFileName": false,
       "openFileInNewTab": {
         "enabled": true,
         "direction": "vertical",
         "focus": true
       },
       "openFile": true,
-      "openFileInMode": "default"
+      "openFileInMode": "default",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
     },
     {
       "id": "94072239-be96-4930-9d2d-5d0c2932c139",
@@ -93,8 +94,1376 @@
       },
       "openFile": false,
       "openFileInMode": "default"
+    },
+    {
+      "id": "30fe80b9-4c7f-49f5-b397-e98e4a2db372",
+      "name": "quickmemos",
+      "type": "Macro",
+      "command": true,
+      "macroId": "37ce93c0-e6c4-4788-ad26-a0ed56fe7374"
+    },
+    {
+      "id": "30b91506-bcf7-4456-ac74-b56e76895ef3",
+      "name": "newcanvas",
+      "type": "Macro",
+      "command": true,
+      "macroId": "50fd49ff-9869-45db-a83e-12d5861ef258"
+    },
+    {
+      "id": "c1bd0bcb-5162-4a65-970d-d418865dc78e",
+      "name": "callout",
+      "type": "Multi",
+      "command": true,
+      "choices": [
+        {
+          "id": "3add0d31-e244-4609-bce2-ddb8a35e3bcf",
+          "name": "tips/hints/note",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!hints]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "7334c248-4a81-40f4-a35c-7a11a3cd94dd",
+          "name": "abstract",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!abstract]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "cd0bf2e6-1343-4767-af23-d5548edf41c0",
+          "name": "TLDR",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!tldr]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "c20e7d17-6de0-434d-b07d-1ea4784322be",
+          "name": "info",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!info]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "c65ce271-ad74-4dfc-a1ae-65d4261c8256",
+          "name": "important",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!important]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "f3b421e4-c8b0-4330-aa1a-b2b7f06e0942",
+          "name": "success",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!success]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "3c80cb41-3492-418c-9176-72be3006df00",
+          "name": "bug",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!bug]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "7a9e3db4-f958-4a4e-8d3a-d58d4e4fb003",
+          "name": "danger",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!danger]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "a52c2874-f91b-4a20-b615-a869f536b7eb",
+          "name": "example",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!example]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "d02ebbfc-8542-4f31-b822-261e9caa5fcd",
+          "name": "resources",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!resources]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "bc10a58e-7dcb-4e40-8380-3142091aabd7",
+          "name": "meditation",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!meditation]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "7ae716ca-1f36-489f-b973-26ee2320ac82",
+          "name": "todo",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!todo]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "7f92c974-526d-42a6-acae-a977c5127b7a",
+          "name": "doing",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!doing]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "2fb31c15-dabc-4250-be55-7ca307394ac6",
+          "name": "check/done",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!done]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "c42c20aa-2fa8-4519-838b-2706a108560a",
+          "name": "idea",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!idea]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "8617fc48-f4a8-47d4-a876-96ba297fc1f0",
+          "name": "buy",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!buy]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "ba2194bd-bbb9-45d1-a299-2ace1eac0a2c",
+          "name": "BTC",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!BTC]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "5a376d11-c233-480e-b2a6-aadb19b22e53",
+          "name": "target",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!target]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "cadb63cf-d55b-45fa-9688-a0627dd6676a",
+          "name": "pro",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!pro]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "26f333bd-a73e-4526-986e-04df711205e1",
+          "name": "con",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!con]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "4120182d-7e5d-4a38-a9d7-7d120c8098dd",
+          "name": "related",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!related]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "5ebc4f60-8c57-4123-be55-8afeff5c47a6",
+          "name": "links",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!links]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "87c2cdd9-f0f2-479c-a6f6-4b285f865e4a",
+          "name": "money",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!money]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "baf14c10-c5e9-4b65-9983-7dee8889f979",
+          "name": "feature",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!feature]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "0925cc3a-66b5-4392-9dd8-0f462b00959b",
+          "name": "world",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!world]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "4cac3163-7c18-4c46-85ad-813aac21b168",
+          "name": "coffee",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!coffee]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "d3b8ab62-ae3f-412c-8587-dcecafa497ab",
+          "name": "summary",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!summary]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "482c5f3c-5582-4a56-8d33-3dd02e5a5b74",
+          "name": "backlog",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!backlog]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "cb735511-3378-4830-8b17-b7017e855d62",
+          "name": "translate",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!translate]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "d0ce0e72-12fc-4979-9850-725370cbf603",
+          "name": "important",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!important]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "c90b19bd-6d14-4c1f-ac5e-fc544007cebb",
+          "name": "conflict",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!conflict]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "49bb611c-6639-42c0-ab91-15a53d0e5fcb",
+          "name": "currently",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!currently]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "613f2a6f-bdb0-4fb1-a482-922c89e9c6ad",
+          "name": "backstory",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!backstory]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "1b12acf9-291e-4459-8c2f-c24257ff5e7c",
+          "name": "quote/cite",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!cite]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "ea27a15c-69f7-4a3a-89e2-08f8b4102372",
+          "name": "fail/missing",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!fail]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "e2dcab43-515c-43e2-8bad-afa985a19aa0",
+          "name": "faq/question/help",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!help]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        },
+        {
+          "id": "02584ffc-6d5b-41b3-8e84-133fe2c9cfef",
+          "name": "warn/caution/attention",
+          "type": "Capture",
+          "command": false,
+          "appendLink": false,
+          "captureTo": "",
+          "captureToActiveFile": true,
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "> [!warning]\n> "
+          },
+          "insertAfter": {
+            "enabled": false,
+            "after": "",
+            "insertAtEnd": false,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "prepend": false,
+          "task": false,
+          "openFileInNewTab": {
+            "enabled": false,
+            "direction": "vertical",
+            "focus": true
+          },
+          "openFile": false,
+          "openFileInMode": "default"
+        }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "7ef09530-0191-46dd-a2f1-d708fbd6f9ce",
+      "name": "local-graph",
+      "type": "Macro",
+      "command": true,
+      "macroId": "3281c6f3-2f4a-42b3-a2f7-cc17b427278b"
     }
   ],
-  "macros": [],
-  "inputPrompt": "single-line"
+  "macros": [
+    {
+      "name": "memos",
+      "id": "37ce93c0-e6c4-4788-ad26-a0ed56fe7374",
+      "commands": [
+        {
+          "name": "startup_memos",
+          "type": "UserScript",
+          "id": "dbd51565-3c0e-41de-97dc-f40854b2cd60",
+          "path": "8.templates/js/startup_memos.js",
+          "settings": {
+            "Message": "quick memos in new pane",
+            "Type": "popover",
+            "Debug": true
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "canvas",
+      "id": "50fd49ff-9869-45db-a83e-12d5861ef258",
+      "commands": [
+        {
+          "name": "new_canvas",
+          "type": "UserScript",
+          "id": "b090e0c9-69f7-4ed0-b1e0-ff4173e4bafb",
+          "path": "8.templates/js/new_canvas.js",
+          "settings": {
+            "Message": "new canvas in specific directory",
+            "Type": "5.tags/canvas/",
+            "Debug": true
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "local-graph",
+      "id": "3281c6f3-2f4a-42b3-a2f7-cc17b427278b",
+      "commands": [
+        {
+          "name": "current_local_graph",
+          "type": "UserScript",
+          "id": "127a8eaf-86d1-4e74-abed-0b5ea3aee8b4",
+          "path": "8.templates/js/current_local_graph.js",
+          "settings": {
+            "Message": "show DG view of current note",
+            "Type": "popover",
+            "Debug": false,
+            "Depth": "4",
+            "ShowTags": true,
+            "ShowAttachments": true,
+            "ShowNeighbors": true,
+            "ShowArrow": true,
+            "Collapse": true
+          }
+        }
+      ],
+      "runOnStartup": false
+    }
+  ],
+  "inputPrompt": "multi-line",
+  "devMode": false,
+  "templateFolderPath": "",
+  "announceUpdates": true,
+  "version": "1.6.1",
+  "disableOnlineFeatures": true,
+  "ai": {
+    "OpenAIApiKey": "",
+    "defaultModel": "Ask me",
+    "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",
+    "promptTemplatesFolderPath": "",
+    "showAssistant": true
+  },
+  "migrations": {
+    "migrateToMacroIDFromEmbeddedMacro": true,
+    "useQuickAddTemplateFolder": true,
+    "incrementFileNameSettingMoveToDefaultBehavior": true,
+    "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
+    "setVersionAfterUpdateModalRelease": true
+  }
 }

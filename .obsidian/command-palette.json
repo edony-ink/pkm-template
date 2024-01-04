@@ -1,5 +1,6 @@
 {
   "pinned": [
+    "obsidian-plugins-mng:startup-recording",
     "markdown:toggle-preview",
     "switcher:open"
   ]

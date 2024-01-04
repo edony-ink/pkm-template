@@ -1,0 +1,88 @@
+# coding: utf-8
+import re
+    
+with open(".obsidian/snippets/callout.css", 'r', encoding='utf-8') as filebuf:
+    content = filebuf.readlines()
+    lines = re.search('^div.callout\[data-callout="', content)
+    
+with open(".obsidian/snippets/callout.css", 'r', encoding='utf-8') as filebuf:
+    content = filebuf.readlines()
+    lines = re.search('^div.callout\[data-callout="', str(content))
+    
+lines
+content
+re.search('^div.callout\[data-callout="', content)
+re.search('^div.callout\[data-callout="', str(content))
+re.match('^div.callout\[data-callout="', str(content))
+re.findall('^div.callout\[data-callout="', str(content))
+str(content)
+str(content).split('\n')
+regex = re.compile('^div.callout\[data-callout="')
+matches = []
+regex = re.compile('^div.callout\[data-callout="(\w)\]"')
+for line in content.split('\n'):
+    z = regex.match(line)
+    matches += z.groups()
+    
+content
+for line in content.split('\n'):
+    z = regex.match(line)
+    matches += z.groups()
+    
+for line in content:
+    z = regex.match(line)
+    matches += z.groups()
+    
+for line in content:
+    z = regex.match(line)
+    if z is not None:
+        matches += z.groups()
+        
+matches
+for line in content:
+    print(line)
+    z = regex.match(line)
+    if z is not None:
+        matches += z.groups()
+
+s = 'div.callout[data-callout="world"], div.callout[data-callout="worlds"] {\n'
+regex
+z = regex.findall(s)
+z.groups()
+z = regex.match(s)
+z
+print(z)
+re.match('^div.callout\[data-callout="(\w)"\]', s)
+z = re.match('^div.callout\[data-callout="(\w)"\]', s)
+z
+print(z)
+z = re.match('^div.callout\[data-callout=\"(\w)\"\]', s)
+print(z)
+z = re.match('^div.callout\[data-callout=\"(.*)\"\]', s)
+print(z)
+z.group()
+z.groups()
+z = re.match('^div.callout\[data-callout=\"([a-zA-Z]{1,})\"\],', s)
+z.group()
+z.groups()
+for line in content:
+    print(line)
+    z = re.match('^div.callout\[data-callout=\"([a-zA-Z]{1,})\"\],', line)
+    if z is not None:
+        matches += z.groups()
+        
+matches
+for line in content:
+    print(line)
+    z = re.match('^div.callout\[data-callout=\"([a-zA-Z]{1,})\"\],{0,}', line)
+    if z is not None:
+        matches += z.groups()
+        
+matches
+set(matches)
+new_list = list(set(matches))
+old_list = ['note', 'abstract', 'summary', 'tldr', 'info', 'todo', 'tip', 'hint', 'important', 'success', 'check', 'done', 'question', 'help', 'faq', 'warning', 'caution', 'attention', 'failure', 'fail', 'missing', 'danger', 'error', 'bug', 'example', 'quote', 'cite']
+diff = set(matches).difference(set(old_list))
+print(diff)
+# save ipython as notebook
+# %save -r get_new_callout 1-99999

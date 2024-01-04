@@ -1,5 +1,6 @@
 .status-bar {
   background: transparent;
+  opacity: 0 !important;
   position: relative;
   z-index: auto;
   padding: 0px 8px 0px 3px;

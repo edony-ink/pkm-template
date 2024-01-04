@@ -2,23 +2,8 @@
   "items": [
     {
       "type": "file",
-      "title": "000.quicknote",
-      "path": "2.fleeting/000.quicknote.md"
-    },
-    {
-      "type": "file",
-      "title": "001.kanban",
-      "path": "2.fleeting/001.roadmap.md"
-    },
-    {
-      "type": "file",
-      "title": "工作备忘录",
-      "path": "2.fleeting/002.工作备忘录.md"
-    },
-    {
-      "type": "file",
-      "title": "003.task reviewer",
-      "path": "2.fleeting/003.task-reviewer.md"
+      "title": "2023",
+      "path": "4.permanent/permanent-diary/permanent-2023/2023规划.md"
     },
     {
       "type": "file",
@@ -27,13 +12,18 @@
     },
     {
       "type": "file",
-      "title": "2022计划",
-      "path": "4.permanent/permanent-2022/2022计划.md"
+      "title": "005.Dashboard",
+      "path": "2.fleeting/005.Dashboard.md"
     },
     {
       "type": "file",
       "title": "养成好的睡眠习惯",
-      "path": "4.permanent/permanent-2022/养成好习惯.md"
+      "path": "4.permanent/permanent-diary/permanent-2022/养成好习惯.md"
+    },
+    {
+      "type": "file",
+      "title": "TODO",
+      "path": "2.fleeting/TODO.md"
     }
   ]
 }

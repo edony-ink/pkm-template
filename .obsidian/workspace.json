@@ -1,35 +1,54 @@
 {
   "main": {
-    "id": "9d547a3b309ca1ff",
+    "id": "e1e4b05e2f4bbac0",
     "type": "split",
     "children": [
       {
-        "id": "ca2ab4125303aa3a",
+        "id": "364bf6af731b976e",
         "type": "tabs",
         "children": [
           {
-            "id": "dbb68863c4496041",
+            "id": "0e48766faaebb98a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "8.templates/prism.md",
+                "mode": "preview",
+                "backlinks": true,
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "01e6a5bce58286e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2.fleeting/Statistics of Obsidian Vault.md",
+                "mode": "preview",
+                "backlinks": true,
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "c0210d399b41b365",
+    "id": "f7e0d45a7a4bcd01",
     "type": "split",
     "children": [
       {
-        "id": "1aafb527283689be",
+        "id": "eca1b701909f08a0",
         "type": "tabs",
         "children": [
           {
-            "id": "7d647905a3d814d0",
+            "id": "d7e401f087daaca1",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -39,25 +58,25 @@
             }
           },
           {
-            "id": "c1f02634abf8d3e9",
+            "id": "6dc90bf2d0a8f3e5",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "",
-                "matchingCase": false,
+                "query": "我的价值",
+                "matchingCase": true,
                 "explainSearch": false,
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               }
             }
           },
           {
-            "id": "82f6a73992dd84c4",
+            "id": "2083849c932fe807",
             "type": "leaf",
             "state": {
-              "type": "starred",
+              "type": "bookmarks",
               "state": {}
             }
           }
@@ -65,45 +84,28 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 352.5,
+    "collapsed": true
   },
   "right": {
-    "id": "88c09c7c732553fd",
+    "id": "3b4dda1254ec9f92",
     "type": "split",
     "children": [
       {
-        "id": "4670d46d546861cf",
+        "id": "a161fc679fae418b",
         "type": "tabs",
+        "dimension": 62.93436293436294,
         "children": [
           {
-            "id": "470d6e1305c46608",
+            "id": "7a975dee5ef5262f",
             "type": "leaf",
             "state": {
-              "type": "backlink",
-              "state": {
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              }
+              "type": "quiet-outline",
+              "state": {}
             }
           },
           {
-            "id": "0ae3f5252fabca49",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "135d772967aab180",
+            "id": "85e917483149272e",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -114,45 +116,154 @@
             }
           },
           {
-            "id": "a03904b37aa04ecf",
+            "id": "bae8e99828337434",
             "type": "leaf",
             "state": {
-              "type": "outline",
+              "type": "reminder-list",
               "state": {}
             }
           },
           {
-            "id": "ef99b9b93b6726e1",
+            "id": "9ec5a723fcb79ecf",
             "type": "leaf",
             "state": {
-              "type": "calendar",
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              }
+            }
+          },
+          {
+            "id": "2b908dc0b7cc82fd",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
               "state": {}
             }
           }
         ],
         "currentTab": 4
+      },
+      {
+        "id": "ff93aac8ebb2b769",
+        "type": "tabs",
+        "dimension": 37.06563706563706,
+        "children": [
+          {
+            "id": "2c441c5edc6ec58d",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "f3d55a608fabebcf",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2.fleeting/Statistics of Obsidian Vault.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d9b8d6062b88876f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "2.fleeting/Statistics of Obsidian Vault.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 342.5,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
       "command-palette:Open command palette": false,
-      "zk-prefixer:Create new unique note": false,
+      "switcher:Open quick switcher": true,
+      "graph:Open graph view": true,
+      "canvas:Create new canvas": true,
+      "daily-notes:Open today's daily note": false,
+      "zk-prefixer:Create new unique note": true,
       "random-note:Open random note": false,
       "workspaces:Manage workspace layouts": false,
-      "templater-obsidian:Templater": false,
+      "templater-obsidian:Templater": true,
+      "obsidian42-brat:BRAT": true,
+      "personal-assistant:Obsidian Assistant": false,
+      "obsidian-importer:Open Importer": true,
+      "send-to-ghost:Publish Ghost": false,
       "obsidian-memos:Memos": false
     }
   },
-  "active": "dbb68863c4496041",
+  "active": "01e6a5bce58286e5",
   "lastOpenFiles": [
-    "8.templates/update-progress.md"
+    "8.templates/prism.md",
+    "2.fleeting/Statistics of Obsidian Vault.md",
+    "5.tags/kanban/2024.md",
+    "8.templates/update-progress.md",
+    "5.tags/kanban/2023规划.md",
+    "2.fleeting/fleeting-thoughts/fleeting-thoughts-2024-01-01.md",
+    "4.permanent/permanent-diary/permanent-2022/Diary-2022-01-29-215036.md",
+    "b.notion/Tombkeeper Renew 245967d1e09b4eaf8c09ffda5739c2c2.md",
+    "2.fleeting/fleeting-thoughts/fleeting-thoughts-2023-12-12.md",
+    "4.permanent/permanent-diary/permanent-2024/Diary-2024-01-01.md",
+    "3.literature/Ask Question With Smart Way.md",
+    "README.md",
+    "1.index/index-diary/2024.md",
+    "8.templates/annual.md",
+    "8.templates/diary-composer.md",
+    "4.permanent/permanent-diary/permanent-2024",
+    "1.index/index-diary/2023.md",
+    "8.templates/time.md",
+    "8.templates/annual-plan.md",
+    "1.index/index-diary/2022.md",
+    "0.unsorted/Linux 运维手册.md",
+    "4.permanent/permanent-blogging/2022总结.md",
+    "4.permanent/permanent-blogging/2023总结.md",
+    "8.templates/kanban-annual.md",
+    "8.templates/readings-composer.md",
+    "8.templates/kanban-basic.md",
+    "5.tags/kanban/knowledge graph kanban.md",
+    "9.src/Pasted image 20231224213336.png",
+    "9.src/Pasted image 20231210121912.png",
+    "9.src/Pasted image 20231203153330.png",
+    "9.src/Pasted image 20231203125620.png",
+    "9.src/Pasted image 20231203124647.png",
+    "9.src/Pasted image 20231203124343.png",
+    "9.src/Pasted image 20231203124255.png",
+    "9.src/Pasted image 20231203124016.png",
+    "9.src/Pasted image 20231203121933.png",
+    "9.src/Pasted image 20231203121838.png",
+    "9.src/260cd0495f9633ba2d8b925b81490807975a2f3b.mp4",
+    "9.src/8-secure-shares.mp4",
+    "9.src/7-cyclic-poly.mp4",
+    "9.src/6-mod-example.mp4",
+    "9.src/f8c18b640785e410deaa9bb42ef2268ab555abb2.mp4",
+    "9.src/4-gathering-shars.mp4",
+    "9.src/f468dff959c31c05dc961d569b41c0ee1ea83d1a.mp4",
+    "9.src/2-show-poly.mp4",
+    "9.src/1-poly-example.mp4",
+    "5.tags/canvas/社交账号运营流程.canvas",
+    "5.tags/canvas/安全技术方向研究.canvas",
+    "5.tags/canvas/2023规划——工作.canvas",
+    "5.tags/canvas/obsidian 跨场景问题思考.canvas"
   ]
 }

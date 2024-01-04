@@ -1,5 +1,6 @@
 {
   "format": "[Diary-]YYYY-MM-DD",
-  "folder": "4.permanent/permanent-2023",
-  "template": "8.templates/diary-composer"
+  "folder": "4.permanent/permanent-diary/permanent-2024",
+  "template": "8.templates/diary-composer",
+  "autorun": false
 }

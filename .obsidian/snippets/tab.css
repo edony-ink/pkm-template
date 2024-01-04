@@ -1,0 +1,22 @@
+/* fix obsidian tab title css box issue */
+.workspace .mod-root .workspace-tab-header {
+    padding: 3px 3px 1px !important;
+}
+
+.workspace-tab-header-container > .workspace-tab-header-container-inner {
+    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+}
+
+/* tab title */
+.workspace-tabs .workspace-tab-header-inner-title {
+    font-size: 16px !important;
+    font-weight: 360 !important;
+}
+
+/* for setting tab */
+.horizontal-tab-nav-item, .vertical-tab-nav-item {
+    font-size: var(--font-ui-small) !important;
+}
+.theme-dark .setting-hotkey.has-conflict, .theme-light .setting-hotkey.has-conflict {
+    color: var(--text-muted) !important;
+}

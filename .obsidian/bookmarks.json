@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "title": "2023",
+      "path": "5.tags/kanban/2023规划.md",
+      "ctime": 1680143593948
+    },
+    {
+      "type": "file",
+      "title": "blog 运维日志",
+      "path": "2.fleeting/004.blog 运维日志.md",
+      "ctime": 1680143593948
+    },
+    {
+      "type": "file",
+      "title": "005.Dashboard",
+      "path": "2.fleeting/005.Dashboard.md",
+      "ctime": 1680143593948
+    },
+    {
+      "type": "file",
+      "title": "养成好的睡眠习惯",
+      "path": "4.permanent/permanent-diary/permanent-2022/养成好习惯.md",
+      "ctime": 1680143593948
+    },
+    {
+      "type": "file",
+      "ctime": 1693991727757,
+      "path": "2.fleeting/Statistics of Obsidian Vault.md",
+      "title": "Obsidian Status"
+    },
+    {
+      "type": "group",
+      "ctime": 1702133170038,
+      "items": [
+        {
+          "type": "search",
+          "ctime": 1702132848632,
+          "query": "句子"
+        }
+      ],
+      "title": "Serach"
+    }
+  ]
+}

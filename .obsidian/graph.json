@@ -1,65 +1,107 @@
 {
-  "collapse-filter": false,
+  "collapse-filter": true,
   "search": "",
-  "showTags": false,
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": false,
-  "showOrphans": false,
-  "collapse-color-groups": false,
+  "showOrphans": true,
+  "collapse-color-groups": true,
   "colorGroups": [
     {
       "query": "path:0.unsorted",
       "color": {
         "a": 1,
-        "rgb": 9825544
+        "rgb": 53503
       }
     },
     {
       "query": "path:1.index",
       "color": {
         "a": 1,
-        "rgb": 2792847
+        "rgb": 15899138
       }
     },
     {
       "query": "path:2.fleeting",
       "color": {
         "a": 1,
-        "rgb": 1342965
+        "rgb": 19450
       }
     },
     {
       "query": "path:3.literature",
       "color": {
         "a": 1,
-        "rgb": 16746240
+        "rgb": 13893887
       }
     },
     {
       "query": "path:4.permanent",
       "color": {
         "a": 1,
-        "rgb": 12454655
+        "rgb": 16711680
       }
     },
     {
-      "query": "path:1.index/index-note",
+      "query": "path:6.readwise",
       "color": {
         "a": 1,
-        "rgb": 16774912
+        "rgb": 16116736
+      }
+    },
+    {
+      "query": "path:5.tags",
+      "color": {
+        "a": 1,
+        "rgb": 8083455
+      }
+    },
+    {
+      "query": "path:7.archive",
+      "color": {
+        "a": 1,
+        "rgb": 36020
+      }
+    },
+    {
+      "query": "path:8.templates",
+      "color": {
+        "a": 1,
+        "rgb": 16745942
+      }
+    },
+    {
+      "query": "path:9.src",
+      "color": {
+        "a": 1,
+        "rgb": 16351360
+      }
+    },
+    {
+      "query": "path:a.logseq",
+      "color": {
+        "a": 1,
+        "rgb": 9884511
+      }
+    },
+    {
+      "query": "path:b.notion",
+      "color": {
+        "a": 1,
+        "rgb": 4428537
       }
     }
   ],
   "collapse-display": true,
   "showArrow": true,
-  "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 0.857421875,
-  "lineSizeMultiplier": 1.004296875,
+  "textFadeMultiplier": -0.9,
+  "nodeSizeMultiplier": 1.28273111979167,
+  "lineSizeMultiplier": 0.895332845052083,
   "collapse-forces": true,
-  "centerStrength": 0.495615433673469,
-  "repelStrength": 10.0043655413271,
-  "linkStrength": 0.799985448195576,
-  "linkDistance": 200,
-  "scale": 0.15306359493108593,
+  "centerStrength": 0.446236559139785,
+  "repelStrength": 13.010752688172,
+  "linkStrength": 0.811827956989247,
+  "linkDistance": 270,
+  "scale": 0.09938533592928633,
   "close": true
 }

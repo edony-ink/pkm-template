@@ -1,9 +1,13 @@
-.theme-dark {
-  --font-recursive: "Recursive Casual";
+body {
+  --font-backlink: "Barlow", "Recursive Monospace Casual";
 }
-.embedded-backlinks {
-  font-family: var(--font-recursive);
+
+.embedded-backlinks .backlink-pane {
+  font-family: var(--font-backlink);
+  align-self: center;
 }
-.tree-item-self .collapse-icon {
-  width: auto !important;
+
+.backlink-pane>.tree-item-self .tree-item-inner {
+  font-style: bold;
+  font-size: 14px !important;
 }

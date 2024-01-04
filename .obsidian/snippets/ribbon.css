@@ -1,0 +1,28 @@
+/*
+.workspace-ribbon.mod-left:before {
+    position: static;
+    display: flex;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M21 3v2c0 9.627-5.373 14-12 14H7.098c.212-3.012 1.15-4.835 3.598-7.001 1.204-1.065 1.102-1.68.509-1.327-4.084 2.43-6.112 5.714-6.202 10.958L5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0z' fill='rgba(47,204,113,1)'/%3E%3C/svg%3E");
+    height: 18px;
+    width: 18px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 6px;
+    margin-top: 14px;
+    margin-left: 9px;
+}
+
+body>div.app-container>div.horizontal-main-container>div>div.workspace-ribbon.side-dock-ribbon.mod-left.is-collapsed
+.hider-ribbon:not(.is-mobile) .workspace-ribbon.mod-left {
+    height: 25px !important;
+    position: fixed;
+}
+
+.hider-ribbon:not(.is-mobile) .side-dock-actions {
+    height: 24px !important;
+}
+
+.clickable-icon.side-dock-ribbon-action .svg-icon, .mod-left-split .workspace-tab-header-inner-icon .svg-icon, .mod-right-split .workspace-tab-header-inner-icon .svg-icon {
+    --icon-size: var(--icon-s);
+}
+*/

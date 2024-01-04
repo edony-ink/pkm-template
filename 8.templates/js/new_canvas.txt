@@ -1,0 +1,135 @@
+'use strict'
+
+const fs = require('fs');
+const path = require('path');
+const execSync = require('child_process').execSync;
+
+const OPTION_1 = "Message";
+const OPTION_2 = "Type";
+const OPTION_3 = "Debug";
+const debug = (msg) => console.log(msg);
+module.exports = {
+    entry: start,
+    settings: {
+        name: "New Canvas File In Specific Directory",
+        options: {
+            [OPTION_1]: {
+                type: "text",
+                defaultValue: "new canvas in specific directory",
+            },
+            [OPTION_2]: {
+                type: "text",
+                // use the default directory
+                defaultValue: "5.tags/canvas/",
+            },
+            [OPTION_3]: {
+                type: "toggle",
+                defaultValue: false,
+            },
+        },
+    },
+};
+
+async function start(params, settings) {
+    // debug logging
+    if (settings[OPTION_3]) {
+        debug(settings);
+    }
+
+    const dirCanvas = settings[OPTION_2];
+    const defaultName = "Untitled.canvas";
+    const vaultPath = params.app.vault.adapter.basePath;
+
+    //let canvasFilePath = path.join(vaultPath, dirCanvas, defaultName);
+    //let fileName = path.join(dirCanvas, defaultName);
+
+    //const output = execSync('touch "' + canvasFilePath +'";ls "' + canvasFilePath + '"', { encoding: 'utf-8' });
+    //debug(output);
+    await params.app.commands.executeCommandById('canvas:new-file');
+
+    // step2. get the created file info
+    debug(params.app.workspace.activeLeaf.view.file);
+    let canvasFilePath =  params.app.workspace.activeLeaf.view.file.path;
+    let canvasFileName = params.app.workspace.activeLeaf.view.file.name;
+
+    // step3. rename it for moving it to the specific directory
+    let tFile = params.app.vault.getAbstractFileByPath(canvasFilePath);
+    let targetDir = "5.archive/canvas/";
+
+    app.vault.adapter.rename(tFile, targetDir);
+    /*
+    debug("---------------------------------------------------------------");
+    debug(params.app.metadataCache.fileCache['0.unsorted/Untitled.canvas']);
+    debug(await params.app.vault.adapter.files['0.unsorted/Untitled.canvas']);
+
+    params.app.vault.getFiles().forEach((file) => {
+        debug(file.path);
+        if (file.path === fileName) {
+            debug(file);
+        }
+    });
+    */
+    debug("---------------------------------------------------------------");
+    /*
+    let tFile = params.app.vault.getAbstractFileByPath(fileName);
+    debug(tFile);
+    debug(fileName);
+    debug(params.app.vault);
+    let leaf = await params.workspace.getLeaf('tab');
+    await params.workspace.setActiveLeaf(leaf, {focus:true});
+    await leaf.openFile(tFile);
+    */
+}
+
+
+/* debugging code for testing */
+/*
+async function start(params, settings) {
+    // debug logging
+    if (settings[OPTION_3]) {
+        debug(settings);
+    }
+
+    const dirCanvas = settings[OPTION_2];
+    const cmdNewCanvas = "canvas:new-file";
+
+    // new canvas file with the obsidian default operation,
+    // and the created file is located in obsidian default directory, e.g. "0.unsorted/"
+    params.app.commands.executeCommandById(cmdNewCanvas);
+    let viewState = params.app.workspace.activeLeaf.getViewState();
+    debug(viewState);
+    debug(viewState.file);
+
+    /*
+    // move the new created file to the specific directory
+    // **BUG**: activeLeaf.view.file is null
+    let files = params.app.workspace.getLastOpenFiles();
+    let canvasFilePath = files[0];
+    let canvasFileName = path.basename(canvasFilePath);
+
+    //await params.app.workspace.iterateRootLeaves((leaf) => {
+    //    debug(leaf.getViewState());
+    //    if (leaf.getViewState().type === "canvas") {
+    //        if (leaf.view.file.name === "Untitiled.canvas") {
+    //            debug(leaf);
+    //            canvasFilePath = leaf.view.file.path;
+    //            canvasFileName = leaf.view.file.name;
+    //        }
+    //    }
+    //})
+
+    debug(params.app.workspace.activeLeaf.getViewState());
+    const vaultPath = params.app.vault.adapter.basePath;
+    let oldPath = path.join(vaultPath, canvasFilePath);
+    let newPath = path.join(vaultPath, dirCanvas);
+    const output = await exec('mv "' + oldPath + '" "' + newPath +'"', { encoding: 'utf-8' });
+    debug(output);
+    
+    // open the file in as the active Leaf of obsidian window
+    let fileName = path.join(dirCanvas, canvasFileName);
+    let tFile = params.app.vault.getAbstractFileByPath(fileName);
+    await params.workspace.activeLeaf.openFile(tFile);
+
+    new Notice(settings[OPTION_1]);
+}
+*/

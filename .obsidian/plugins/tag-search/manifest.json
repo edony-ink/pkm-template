@@ -1,0 +1,10 @@
+{
+	"id": "tag-search",
+	"name": "Tag Search",
+	"version": "1.2.1",
+	"minAppVersion": "0.15.0",
+	"description": "Fuzzy-find your tags!",
+	"author": "R. W. Blickhan",
+	"authorUrl": "https://rwblickhan.org",
+	"isDesktopOnly": false
+}

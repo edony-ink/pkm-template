@@ -7,20 +7,29 @@
 
 /* global search match highlight color */
 .search-result-file-matched-text {
-  background-color: rgba(255, 255, 0, 0.8);
-  color: rgba(255, 0, 0, 0.8);
-  font-style: italic;
-  border-radius: 0.2em;
+  background-color: rgb(255, 187, 0);
+  color: rgba(2, 2, 2, 0.8);
+  font-style: bold;
+  /*border-radius: 0.3em;*/
 }
 
 /* Local search match highlight */
 /* Local (= in note) search match highlight color change in Edit mode */
-.cm-s-obsidian span.obsidian-search-match-highlight {
-  background-color: rgb(119, 136, 153, 0.5);
-  color:aliceblue;
-  font-style: italic;
-  /*color: rgba(255, 0, 0, 0.9);*/
+span.obsidian-search-match-highlight {
+  background-color: rgb(255, 187, 0) !important;
+  color:rgba(2, 2, 2) !important;
+  font-style: oblique 30deg !important;
   mix-blend-mode: normal;
-  border-radius: 0.2em;
-  box-shadow: 0 0 0 2px var(--text-accent);
+  border:0 !important;
+  /*border-radius: 0.3em;*/
+  box-shadow: 0 0 0 0px var(--text-accent) !important;
+}
+
+.search-highlight>div {
+  background-color: rgb(255, 187, 0, 0.55) !important;
+  color: rgba(2, 2, 2) !important;
+  font-style: oblique 30deg !important;
+  border: 0 !important;
+  /*border-radius: 0.3em;*/
+  box-shadow: 0 0 0 0px var(--text-accent) !important;
 }

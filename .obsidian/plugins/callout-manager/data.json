@@ -1,0 +1,32 @@
+{
+  "callouts": {
+    "custom": [],
+    "settings": {
+      "con": [
+        {
+          "changes": {}
+        },
+        {
+          "condition": {
+            "colorScheme": "light"
+          },
+          "changes": {}
+        },
+        {
+          "condition": {
+            "colorScheme": "dark"
+          },
+          "changes": {
+            "color": "255, 75, 75"
+          }
+        }
+      ]
+    }
+  },
+  "calloutDetection": {
+    "obsidianFallbackForced": false,
+    "obsidian": false,
+    "theme": true,
+    "snippet": true
+  }
+}

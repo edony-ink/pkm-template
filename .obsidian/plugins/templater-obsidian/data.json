@@ -11,15 +11,16 @@
   "auto_jump_to_cursor": true,
   "enable_system_commands": false,
   "shell_path": "",
-  "user_scripts_folder": "",
+  "user_scripts_folder": "8.templates/js",
   "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "",
-      "template": ""
+      "folder": "2.fleeting/fleeting-thoughts",
+      "template": "8.templates/fleeting-thoughts.md"
     }
   ],
   "syntax_highlighting": true,
+  "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [
     "8.templates/computer-tech-composer.md",
     "8.templates/soft-skills-composer.md",
@@ -31,10 +32,13 @@
     "8.templates/time.md",
     "8.templates/time-header.md",
     "8.templates/storybox-composer.md",
-    "8.templates/quick-done.md",
-    "8.templates/side-project-composer.md"
+    "8.templates/side-project-composer.md",
+    "8.templates/annual-plan.md",
+    "8.templates/navigate.md",
+    "8.templates/tweet-card.md",
+    "8.templates/kanban-annual.md",
+    "8.templates/annual.md"
   ],
-  "startup_templates": [
-    ""
-  ]
+  "startup_templates": [],
+  "enable_ribbon_icon": true
 }

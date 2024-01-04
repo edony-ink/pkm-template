@@ -1,0 +1,168 @@
+{
+  "debug": false,
+  "targetPath": "2.fleeting/fleeting-thoughts/",
+  "fileFormat": "[fleeting-thoughts]-YYYY-MM-DD",
+  "previewLimits": 5,
+  "previewTags": [],
+  "localGraph": {
+    "notice": "show current note grah view",
+    "type": "popover",
+    "depth": 2,
+    "showTags": true,
+    "showAttach": true,
+    "showNeighbor": true,
+    "collapse": true,
+    "resizeStyle": {
+      "width": 550,
+      "height": 500,
+      "left": 180,
+      "top": 360
+    },
+    "autoColors": true
+  },
+  "memos": {
+    "resizeStyle": {
+      "width": 640,
+      "height": 850,
+      "left": 800,
+      "top": 96
+    }
+  },
+  "enableGraphColors": true,
+  "colorGroups": [
+    {
+      "query": "path:0.unsorted",
+      "color": {
+        "a": 1,
+        "rgb": 53503
+      }
+    },
+    {
+      "query": "path:1.index",
+      "color": {
+        "a": 1,
+        "rgb": 15899138
+      }
+    },
+    {
+      "query": "path:2.fleeting",
+      "color": {
+        "a": 1,
+        "rgb": 19450
+      }
+    },
+    {
+      "query": "path:3.literature",
+      "color": {
+        "a": 1,
+        "rgb": 13893887
+      }
+    },
+    {
+      "query": "path:4.permanent",
+      "color": {
+        "a": 1,
+        "rgb": 16711680
+      }
+    },
+    {
+      "query": "path:6.readwise",
+      "color": {
+        "a": 1,
+        "rgb": 16774912
+      }
+    },
+    {
+      "query": "path:5.tags",
+      "color": {
+        "a": 1,
+        "rgb": 8083455
+      }
+    },
+    {
+      "query": "path:7.archive",
+      "color": {
+        "a": 1,
+        "rgb": 65518
+      }
+    },
+    {
+      "query": "path:8.templates",
+      "color": {
+        "a": 1,
+        "rgb": 16745942
+      }
+    },
+    {
+      "query": "path:9.src",
+      "color": {
+        "a": 1,
+        "rgb": 16351360
+      }
+    },
+    {
+      "query": "path:a.logseq",
+      "color": {
+        "a": 1,
+        "rgb": 16772812
+      }
+    }
+  ],
+  "enableMetadataUpdating": true,
+  "metadatas": [
+    {
+      "key": "modify",
+      "value": "YYYY-MM-DD HH:mm:ss",
+      "t": "moment"
+    }
+  ],
+  "metadataExcludePath": [
+    "8.templates",
+    "9.src"
+  ],
+  "isEnabledMetadataUpdating": false,
+  "cachePluginRepo": {
+    "personal-assistant": "edonyzpc/personal-assistant",
+    "calendar": "liamcain/obsidian-calendar-plugin",
+    "callout-manager": "eth-p/obsidian-callout-manager",
+    "dataview": "blacksmithgu/obsidian-dataview",
+    "find-unlinked-files": "Vinzent03/find-unlinked-files",
+    "hotkeysplus-obsidian": "argenos/hotkeysplus-obsidian",
+    "markdown-table-editor": "ganesshkumar/obsidian-table-editor",
+    "obsidian-advanced-uri": "Vinzent03/obsidian-advanced-uri",
+    "obsidian-charts": "phibr0/obsidian-charts",
+    "obsidian-contextual-typography": "mgmeyers/obsidian-contextual-typography",
+    "obsidian-emoji-toolbar": "oliveryh/obsidian-emoji-toolbar",
+    "obsidian-frontmatter-tag-suggest": "jmilldotdev/obsidian-frontmatter-tag-suggest",
+    "obsidian-git": "denolehov/obsidian-git",
+    "obsidian-hider": "kepano/obsidian-hider",
+    "obsidian-hover-editor": "nothingislost/obsidian-hover-editor",
+    "obsidian-html-plugin": "nuthrash/obsidian-html-plugin",
+    "obsidian-image-toolkit": "sissilab/obsidian-image-toolkit",
+    "obsidian-kanban": "mgmeyers/obsidian-kanban",
+    "obsidian-memos": "Quorafind/Obsidian-Memos",
+    "obsidian-minimal-settings": "kepano/obsidian-minimal-settings",
+    "obsidian-quiet-outline": "guopenghui/obsidian-quiet-outline",
+    "obsidian-reminder-plugin": "uphy/obsidian-reminder",
+    "obsidian-snippet-downloader": "Lisandra-dev/obsidian-snippet-downloader",
+    "obsidian-style-settings": "mgmeyers/obsidian-style-settings",
+    "obsidian42-brat": "TfTHacker/obsidian42-brat",
+    "quickadd": "chhoumann/quickadd",
+    "readwise-official": "readwiseio/obsidian-readwise",
+    "table-editor-obsidian": "tgrosinger/advanced-tables-obsidian",
+    "tag-search": "rwblickhan/obsidian-tag-search",
+    "tag-wrangler": "pjeby/tag-wrangler",
+    "tasks-calendar-wrapper": "Leonezz/obsidian-tasks-calendar-wrapper",
+    "templater-obsidian": "SilentVoid13/Templater",
+    "obsidian-importer": "obsidianmd/obsidian-importer",
+    "telegram-sync": "soberhacker/obsidian-telegram-sync",
+    "better-word-count": "lukeleppan/better-word-count",
+    "novel-word-count": "isaaclyman/novel-word-count-obsidian",
+    "send-to-ghost": "southpaw1496/obsidian-send-to-ghost"
+  },
+  "cacheThemeRepo": {
+    "Minimal": "kepano/obsidian-minimal",
+    "AnuPpuccin": "AnubisNekhet/AnuPpuccin",
+    "Things": "colineckert/obsidian-things"
+  }
+}
