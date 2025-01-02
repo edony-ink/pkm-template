@@ -24,8 +24,7 @@
     }
   },
   "calloutDetection": {
-    "obsidianFallbackForced": false,
-    "obsidian": false,
+    "obsidian": true,
     "theme": true,
     "snippet": true
   }

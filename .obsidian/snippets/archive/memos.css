@@ -1,0 +1,48 @@
+div[data-type='memos_view'] {
+    color: var(--tx1) !important;
+    font-family: Barlow, Recursive Casual, -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans", "Noto Sans CJK SC", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.workspace-tab-header-inner .workspace-tab-header-inner-icon {
+    color: var(--tab-text-color);
+    opacity: var(--icon-opacity);
+}
+
+div[data-type='memos_view'] #page-wrapper>main>div.section-header-container.memos-header-container>div.title-text>button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 40px !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    /*
+    
+    height: 24px;
+    flex-shrink: 0;
+    background-color: unset;
+    */
+}
+
+div[data-type='memos_view'] #page-wrapper>main>div.section-header-container.memos-header-container>div.title-text>span {
+    margin-left: 4px;
+}
+
+.theme-dark div[data-type='memos_view'] .memo-content-text {
+    color: #FFFFFF !important;
+}
+
+.theme-dark div[data-type='memos_view'].mobile-view .memolist-wrapper .memo-content-text>p{
+    color: #FFFFFF !important;
+}
+
+.theme-dark .mobile-view .memos-sidebar-wrapper {
+    /* width + padding */
+    transform: translateX(-336px);
+}
+
+div[data-type='memos_view']>div.view-header>button svg {
+    fill:none !important;
+}

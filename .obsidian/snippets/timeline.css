@@ -1,0 +1,23 @@
+.theme-light {
+  --timeline-after-color: rgb(177, 176, 176);
+  --timeline-leaf-after-color: var(--background-secondary);
+  --timeline-container-color: var(--background-secondary);
+}
+
+.theme-dark {
+  --timeline-after-color: rgba(255, 255, 255, 0.85);
+  --timeline-leaf-after-color: rgb(72, 72, 72);
+  --timeline-container-color: rgba(37, 35, 35, 0.85);
+}
+
+.timeline::after {
+  background-color: var(--timeline-after-color) !important;
+}
+
+.timeline-container:not(.timeline-head):not(.timeline-tail)::after {
+  background-color: var(--timeline-leaf-after-color) !important;
+}
+
+.timeline-card {
+  background-color: var(--timeline-container-color) !important;
+}

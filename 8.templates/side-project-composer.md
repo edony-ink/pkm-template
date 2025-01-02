@@ -11,6 +11,7 @@ subject: #001-computer-technology  #006-side-projects
 status: 
 type: 
 project: 
+related: [[]]
 %%
 # <% tp.file.title %>
 

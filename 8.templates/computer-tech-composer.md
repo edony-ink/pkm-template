@@ -16,6 +16,7 @@ feature_image: ""
 subject: #001-computer-technology
 status: 
 type: 
+related: [[]]
 %%
 # <% tp.file.title %>
 

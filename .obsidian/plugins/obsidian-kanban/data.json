@@ -3,5 +3,14 @@
   "show-relative-date": true,
   "show-archive-all": false,
   "lane-width": 380,
-  "new-note-folder": "0.unsorted"
+  "new-note-folder": "5.tags/kanban",
+  "date-picker-week-start": 1,
+  "date-colors": [
+    {
+      "isToday": false,
+      "distance": 1,
+      "unit": "days",
+      "direction": "after"
+    }
+  ]
 }

@@ -2,7 +2,7 @@
   "debug": false,
   "targetPath": "2.fleeting/fleeting-thoughts/",
   "fileFormat": "[fleeting-thoughts]-YYYY-MM-DD",
-  "previewLimits": 5,
+  "previewLimits": 15,
   "previewTags": [],
   "localGraph": {
     "notice": "show current note grah view",
@@ -19,14 +19,6 @@
       "top": 360
     },
     "autoColors": true
-  },
-  "memos": {
-    "resizeStyle": {
-      "width": 640,
-      "height": 850,
-      "left": 800,
-      "top": 96
-    }
   },
   "enableGraphColors": true,
   "colorGroups": [
@@ -158,11 +150,48 @@
     "telegram-sync": "soberhacker/obsidian-telegram-sync",
     "better-word-count": "lukeleppan/better-word-count",
     "novel-word-count": "isaaclyman/novel-word-count-obsidian",
-    "send-to-ghost": "southpaw1496/obsidian-send-to-ghost"
+    "send-to-ghost": "southpaw1496/obsidian-send-to-ghost",
+    "surfing": "PKM-er/Obsidian-Surfing",
+    "auto-card-link": "nekoshita/obsidian-auto-card-link",
+    "gemini-assistant": "eatgrass/obsidian-gemini-assistant",
+    "note-gallery": "pashashocky/obsidian-note-gallery",
+    "code-styler": "mayurankv/Obsidian-Code-Styler",
+    "canvas-mindmap": "Quorafind/Obsidian-Canvas-MindMap",
+    "apple-books-import-highlights": "bandantonio/obsidian-apple-books-highlights-plugin",
+    "advanced-canvas": "Developer-Mike/obsidian-advanced-canvas",
+    "homepage": "mirnovov/obsidian-homepage",
+    "mononote": "czottmann/obsidian-mononote",
+    "tabs": "xhuajin/obsidian-tabs",
+    "canvas-css-class": "Mara-Li/obsidian-canvas-css-class",
+    "meld-encrypt": "meld-cp/obsidian-encrypt",
+    "timelines-revamped": "seanlowe/obsidian-timelines",
+    "shiki-highlighter": "mProjectsCode/obsidian-shiki-plugin",
+    "terminal": "polyipseity/obsidian-terminal",
+    "obsidian-local-rest-api": "coddingtonbear/obsidian-local-rest-api",
+    "better-export-pdf": "l1xnan/obsidian-better-export-pdf"
   },
   "cacheThemeRepo": {
     "Minimal": "kepano/obsidian-minimal",
     "AnuPpuccin": "AnubisNekhet/AnuPpuccin",
-    "Things": "colineckert/obsidian-things"
+    "Things": "colineckert/obsidian-things",
+    "Atom": "kognise/obsidian-atom",
+    "Obsidianite": "bennyxguo/Obsidian-Obsidianite"
+  },
+  "statisticsType": "daily",
+  "statsPath": ".obsidian/stats.json",
+  "displaySectionCounts": false,
+  "countComments": false,
+  "animation": true,
+  "modelName": "qwen-max",
+  "apiToken": "fake-api-key",
+  "featuredImagePath": "9.src",
+  "numFeaturedImages": 1,
+  "memos": {
+    "resizeStyle": {
+      "width": 640,
+      "height": 850,
+      "left": 800,
+      "top": 96
+    }
   }
 }

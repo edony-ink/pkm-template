@@ -4,33 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "364bf6af731b976e",
+        "id": "f10031ac163da938",
         "type": "tabs",
         "children": [
           {
-            "id": "0e48766faaebb98a",
+            "id": "86cf4b919516ccf5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "8.templates/prism.md",
-                "mode": "preview",
+                "file": "0.unsorted/README.md",
+                "mode": "source",
+                "source": false,
                 "backlinks": true,
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "01e6a5bce58286e5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2.fleeting/Statistics of Obsidian Vault.md",
-                "mode": "preview",
-                "backlinks": true,
-                "source": false
-              }
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "README"
             }
           }
         ],
@@ -54,7 +52,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -69,15 +69,19 @@
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
-            "id": "2083849c932fe807",
+            "id": "df7f5dc919a60f4b",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -94,90 +98,79 @@
       {
         "id": "a161fc679fae418b",
         "type": "tabs",
-        "dimension": 62.93436293436294,
+        "dimension": 56.875,
         "children": [
           {
-            "id": "7a975dee5ef5262f",
+            "id": "9288a041a09cad72",
             "type": "leaf",
             "state": {
               "type": "quiet-outline",
-              "state": {}
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
             }
           },
           {
-            "id": "85e917483149272e",
+            "id": "135d772967aab180",
             "type": "leaf",
             "state": {
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
-            "id": "bae8e99828337434",
+            "id": "9638e02d3bb65367",
             "type": "leaf",
             "state": {
-              "type": "reminder-list",
-              "state": {}
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "56f843272ff40d0c",
+        "type": "tabs",
+        "dimension": 43.125,
+        "children": [
           {
             "id": "9ec5a723fcb79ecf",
             "type": "leaf",
             "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency",
-                "showSearch": false,
-                "searchQuery": ""
-              }
-            }
-          },
-          {
-            "id": "2b908dc0b7cc82fd",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {}
-            }
-          }
-        ],
-        "currentTab": 4
-      },
-      {
-        "id": "ff93aac8ebb2b769",
-        "type": "tabs",
-        "dimension": 37.06563706563706,
-        "children": [
-          {
-            "id": "2c441c5edc6ec58d",
-            "type": "leaf",
-            "state": {
               "type": "calendar",
-              "state": {}
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           },
           {
-            "id": "f3d55a608fabebcf",
+            "id": "0ae3f5252fabca49",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2.fleeting/Statistics of Obsidian Vault.md",
+                "file": "0.unsorted/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from README"
             }
           },
           {
-            "id": "d9b8d6062b88876f",
+            "id": "470d6e1305c46608",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2.fleeting/Statistics of Obsidian Vault.md",
+                "file": "0.unsorted/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,7 +178,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for README"
             }
           }
         ]
@@ -197,73 +192,67 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "command-palette:Open command palette": false,
-      "switcher:Open quick switcher": true,
-      "graph:Open graph view": true,
-      "canvas:Create new canvas": true,
+      "obsidian42-brat:BRAT": false,
+      "obsidian-kanban:Create new board": false,
+      "callout-manager:Insert Callout": false,
+      "obsidian-importer:Open Importer": false,
+      "send-to-ghost:Publish Ghost": false,
+      "gemini-assistant:New Gemini chat": false,
+      "apple-books-import-highlights:Apple Books - Import Highlights": false,
+      "meld-encrypt:New encrypted note": false,
+      "meld-encrypt:Convert to or from an Encrypted note": false,
+      "meld-encrypt:Encrypt/Decrypt": false,
+      "timelines-revamped:Insert Timeline Event": false,
+      "timelines-revamped:Insert Timeline Event (Frontmatter)": false,
+      "terminal:Open terminal": false,
+      "obsidian-git:Open Git source control": false,
+      "personal-assistant:Obsidian Assistant": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
+      "command-palette:Open command palette": false,
       "zk-prefixer:Create new unique note": true,
       "random-note:Open random note": false,
       "workspaces:Manage workspace layouts": false,
-      "templater-obsidian:Templater": true,
-      "obsidian42-brat:BRAT": true,
-      "personal-assistant:Obsidian Assistant": false,
-      "obsidian-importer:Open Importer": true,
-      "send-to-ghost:Publish Ghost": false,
-      "obsidian-memos:Memos": false
+      "templater-obsidian:Templater": false
     }
   },
-  "active": "01e6a5bce58286e5",
+  "active": "86cf4b919516ccf5",
   "lastOpenFiles": [
-    "8.templates/prism.md",
-    "2.fleeting/Statistics of Obsidian Vault.md",
-    "5.tags/kanban/2024.md",
-    "8.templates/update-progress.md",
-    "5.tags/kanban/2023规划.md",
-    "2.fleeting/fleeting-thoughts/fleeting-thoughts-2024-01-01.md",
-    "4.permanent/permanent-diary/permanent-2022/Diary-2022-01-29-215036.md",
-    "b.notion/Tombkeeper Renew 245967d1e09b4eaf8c09ffda5739c2c2.md",
-    "2.fleeting/fleeting-thoughts/fleeting-thoughts-2023-12-12.md",
-    "4.permanent/permanent-diary/permanent-2024/Diary-2024-01-01.md",
-    "3.literature/Ask Question With Smart Way.md",
     "README.md",
-    "1.index/index-diary/2024.md",
-    "8.templates/annual.md",
-    "8.templates/diary-composer.md",
-    "4.permanent/permanent-diary/permanent-2024",
-    "1.index/index-diary/2023.md",
-    "8.templates/time.md",
+    "8.templates/docs-template/项目研发文档模版.md",
+    "8.templates/docs-template/软件服务购买分析模版.md",
+    "8.templates/docs-template/Product Demand Analysis.md",
+    "8.templates/docs-template/Go Project Development Document Template.md",
+    "8.templates/docs-template/Architecture Design of a Project.md",
+    "8.templates/docs-template",
     "8.templates/annual-plan.md",
-    "1.index/index-diary/2022.md",
-    "0.unsorted/Linux 运维手册.md",
-    "4.permanent/permanent-blogging/2022总结.md",
-    "4.permanent/permanent-blogging/2023总结.md",
-    "8.templates/kanban-annual.md",
     "8.templates/readings-composer.md",
-    "8.templates/kanban-basic.md",
-    "5.tags/kanban/knowledge graph kanban.md",
-    "9.src/Pasted image 20231224213336.png",
-    "9.src/Pasted image 20231210121912.png",
-    "9.src/Pasted image 20231203153330.png",
-    "9.src/Pasted image 20231203125620.png",
-    "9.src/Pasted image 20231203124647.png",
-    "9.src/Pasted image 20231203124343.png",
-    "9.src/Pasted image 20231203124255.png",
-    "9.src/Pasted image 20231203124016.png",
-    "9.src/Pasted image 20231203121933.png",
-    "9.src/Pasted image 20231203121838.png",
-    "9.src/260cd0495f9633ba2d8b925b81490807975a2f3b.mp4",
-    "9.src/8-secure-shares.mp4",
-    "9.src/7-cyclic-poly.mp4",
-    "9.src/6-mod-example.mp4",
-    "9.src/f8c18b640785e410deaa9bb42ef2268ab555abb2.mp4",
-    "9.src/4-gathering-shars.mp4",
-    "9.src/f468dff959c31c05dc961d569b41c0ee1ea83d1a.mp4",
-    "9.src/2-show-poly.mp4",
-    "9.src/1-poly-example.mp4",
-    "5.tags/canvas/社交账号运营流程.canvas",
-    "5.tags/canvas/安全技术方向研究.canvas",
-    "5.tags/canvas/2023规划——工作.canvas",
-    "5.tags/canvas/obsidian 跨场景问题思考.canvas"
+    "8.templates/prism.md",
+    "8.templates/index-composer.md",
+    "8.templates/navigate.md",
+    "8.templates/diary-composer.md",
+    "8.templates/soft-skills-composer.md",
+    "8.templates/time-header.md",
+    "8.templates/finance-composer.md",
+    "8.templates/update-progress.md",
+    "8.templates/update.md",
+    "8.templates/fleeting-thoughts.md",
+    "8.templates/annual.md",
+    "8.templates/side-project-composer.md",
+    "8.templates/utils/get_new_callout.ipy",
+    "8.templates/utils",
+    "8.templates/kanban-annual.md",
+    "8.templates/topics-composer.md",
+    "8.templates/js/new_canvas.txt",
+    "8.templates/js/lunar_year.js",
+    "8.templates/js/generate_tweets_card.js",
+    "8.templates/js",
+    "8.templates/computer-tech-composer.md",
+    "8.templates/tweet-card.md",
+    "8.templates/time-insert.md",
+    "8.templates/storybox-composer.md",
+    "8.templates"
   ]
 }

@@ -1,0 +1,36 @@
+{
+  "bookmarks": [
+    {
+      "id": "280468907",
+      "name": "Shadow Walker 松烟阁",
+      "url": "https://edony.ink/",
+      "description": "",
+      "category": [
+        "ROOT"
+      ],
+      "tags": "",
+      "created": 1706369486478,
+      "modified": 1706369486478
+    },
+    {
+      "id": "779853062",
+      "name": "Memos",
+      "url": "https://twitter.edony.ink/",
+      "description": "",
+      "category": [
+        "ROOT"
+      ],
+      "tags": "",
+      "created": 1706258257436,
+      "modified": 1706258257436
+    }
+  ],
+  "categories": [
+    {
+      "value": "ROOT",
+      "text": "ROOT",
+      "label": "ROOT",
+      "children": []
+    }
+  ]
+}

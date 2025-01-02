@@ -1,22 +1,49 @@
+.theme-dark {
+  --tab-corner-color: #17191c;
+}
+.theme-light {
+  --tab-corner-color: #fffefe;
+}
 /* fix obsidian tab title css box issue */
 .workspace .mod-root .workspace-tab-header {
-    padding: 3px 3px 1px !important;
+  padding: 3px 3px 1px !important;
 }
 
 .workspace-tab-header-container > .workspace-tab-header-container-inner {
-    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
+    Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei,
+    sans-serif;
 }
 
 /* tab title */
 .workspace-tabs .workspace-tab-header-inner-title {
-    font-size: 16px !important;
-    font-weight: 360 !important;
+  font-size: 16px !important;
+  font-weight: 360 !important;
 }
 
 /* for setting tab */
-.horizontal-tab-nav-item, .vertical-tab-nav-item {
-    font-size: var(--font-ui-small) !important;
+.horizontal-tab-nav-item,
+.vertical-tab-nav-item {
+  font-size: var(--font-ui-small) !important;
 }
-.theme-dark .setting-hotkey.has-conflict, .theme-light .setting-hotkey.has-conflict {
-    color: var(--text-muted) !important;
+.theme-dark .setting-hotkey.has-conflict,
+.theme-light .setting-hotkey.has-conflict {
+  color: var(--text-muted) !important;
+}
+
+/* fix tab color of light high constract 
+.mod-left-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+    color: white !important;
+}
+*/
+.theme-dark .workspace .mod-root .workspace-tab-header.is-active {
+  background-color: rgb(20, 20, 20) !important;
+}
+.theme-light .workspace .mod-root .workspace-tab-header.is-active {
+  background-color: rgb(255, 254, 254) !important;
+}
+.workspace-split.mod-root .workspace-tab-header.is-active::before,
+.workspace-split.mod-root .workspace-tab-header.is-active::after {
+  box-shadow: inset 0 0 0 var(--tab-outline-width) var(--tab-outline-color),
+    0 0 0 calc(var(--tab-curve) * 4) var(--tab-corner-color) !important;
 }

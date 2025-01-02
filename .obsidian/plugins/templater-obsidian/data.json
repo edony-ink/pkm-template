@@ -19,6 +19,13 @@
       "template": "8.templates/fleeting-thoughts.md"
     }
   ],
+  "enable_file_templates": false,
+  "file_templates": [
+    {
+      "regex": ".*",
+      "template": ""
+    }
+  ],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [
@@ -29,7 +36,7 @@
     "8.templates/diary-composer.md",
     "8.templates/update.md",
     "8.templates/update-progress.md",
-    "8.templates/time.md",
+    "8.templates/time-insert.md",
     "8.templates/time-header.md",
     "8.templates/storybox-composer.md",
     "8.templates/side-project-composer.md",
@@ -37,7 +44,9 @@
     "8.templates/navigate.md",
     "8.templates/tweet-card.md",
     "8.templates/kanban-annual.md",
-    "8.templates/annual.md"
+    "8.templates/annual.md",
+    "8.templates/index-composer.md",
+    "8.templates/finance-composer.md"
   ],
   "startup_templates": [],
   "enable_ribbon_icon": true

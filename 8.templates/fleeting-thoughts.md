@@ -12,6 +12,7 @@ subject: #005-diary
 status: 
 type: 
 publish: false
+related: [[]]
 %%
 # <% tp.file.title %>
 
@@ -29,3 +30,5 @@ publish: false
         this.app.vault.append(targetFile, "\n"+"- "+"[["+fileName+"]]")
     }
 %>
+
+**关键词总结：** 

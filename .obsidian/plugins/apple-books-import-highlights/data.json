@@ -1,0 +1,7 @@
+{
+  "highlightsFolder": "6.readwise/applebooks",
+  "backup": false,
+  "importOnStart": false,
+  "highlightsSortingCriterion": "creationDateOldToNew",
+  "template": "Title:: 📕 {{bookTitle}}\nAuthor:: {{bookAuthor}}\nLink:: [Apple Books Link](ibooks://assetid/{{bookId}})\n\n## Annotations\n\nNumber of annotations:: {{annotations.length}}\n\n{{#each annotations}}\n----\n\n- Chapter {{#if chapter}}{{chapter}}{{else}}N/A{{/if}}\n- Highlight {{highlight}}\n- Note {{#if note}}{{note}}{{else}}N/A{{/if}}\n\n{{/each}}\n\n$$\\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}\\textcolor{emerald}{--- \\infty \\nabla \\infty ---}$$\n\n{{#each annotations}}\n- {{highlight}}\n{{/each}}"
+}

@@ -12,6 +12,7 @@ aliases: [  ]
 subject: #002-soft-skills #写作 #故事箱
 status: 
 type: 
+related: [[]]
 %%
 # <% tp.file.title %>
 

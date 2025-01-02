@@ -17,6 +17,7 @@ subject: #004-topics #blogging
 status: 
 type: 
 excerpt:
+related: [[]]
 %%
 # <% tp.file.title %>
 

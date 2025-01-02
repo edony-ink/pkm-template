@@ -1,5 +1,6 @@
 body {
-  --font-backlink: "Barlow", "Recursive Monospace Casual";
+  --font-backlink: "Barlow", "Recursive Mono Casual Static",
+    "Recursive Monospace Casual";
 }
 
 .embedded-backlinks .backlink-pane {
@@ -7,7 +8,12 @@ body {
   align-self: center;
 }
 
-.backlink-pane>.tree-item-self .tree-item-inner {
+.backlink-pane > .tree-item-self .tree-item-inner {
+  font-style: bold;
+  font-size: 14px !important;
+}
+
+.backlink-pane > .tree-item-self .tree-item-inner {
   font-style: bold;
   font-size: 14px !important;
 }

@@ -5,7 +5,7 @@ span.cm-formatting-code.cm-inline-code {
   border-bottom-right-radius: 0;
 }
 
-span.cm-inline-code~.cm-formatting-code.cm-inline-code {
+span.cm-inline-code ~ .cm-formatting-code.cm-inline-code {
   border-top-right-radius: 3px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -15,10 +15,11 @@ span.cm-inline-code~.cm-formatting-code.cm-inline-code {
 span.cm-inline-code {
   padding: 0.2em 0.4em;
   margin: 0;
-  font-family: Recursive Monospace Casual,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
-  font-size: 90%;
-  background-color: rgb(53,58,65) !important;
-  color: #f0f0f0 !important;
+  font-family: Recursive Monospace, Recursive Monospace Casual, SFMono-Regular,
+    SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-size: 90% !important;
+  background-color: rgba(221, 221, 221, 0.7) !important;
+  color: #3b3b3b !important;
   /*border-radius: 6px;*/
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -27,10 +28,11 @@ span.cm-inline-code {
 .cm-line span.cm-inline-code {
   padding: 0.2em 0.4em;
   margin: 0;
-  font-family: Recursive Monospace Casual, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-  font-size: 90%;
-  background-color: rgb(53,58,65) !important;
-  color: #f0f0f0 !important;
+  font-family: Recursive Monospace, Recursive Monospace Casual, SFMono-Regular,
+    SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-size: 90% !important;
+  background-color: rgba(221, 221, 221, 0.7) !important;
+  color: #3b3b3b !important;
   border-radius: 3px;
   padding-left: 3px !important;
   padding-right: 3px !important;
@@ -39,7 +41,8 @@ span.cm-inline-code {
 .markdown-preview-view code {
   padding: 0.2em 0.4em;
   margin: 0;
-  font-family: Recursive Monospace Casual,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+  font-family: Recursive Monospace Casual, SFMono-Regular, SF Mono, Menlo,
+    Consolas, Liberation Mono, monospace;
   font-size: 90%;
   /*color: #f0f0f0 !important;
   background-color: rgb(53, 58, 65) !important;*/

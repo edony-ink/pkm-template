@@ -4,7 +4,7 @@
   "showFrontmatter": true,
   "foldHeading": true,
   "foldIndent": true,
-  "defaultViewMode": "preview",
+  "defaultViewMode": "source",
   "showLineNumber": true,
   "emacsyKeys": false,
   "newFileLocation": "folder",
@@ -29,7 +29,13 @@
   "fileSortOrder": "alphabetical",
   "communityPluginSortOrder": "download",
   "mobileToolbarCommands": [
-    "obsidian-plugins-mng:startup-recording"
+    "editor:toggle-bold",
+    "editor:toggle-italics",
+    "editor:insert-wikilink",
+    "editor:cycle-list-checklist",
+    "editor:toggle-code",
+    "editor:toggle-highlight",
+    "command-palette:open"
   ],
   "userIgnoreFilters": [
     "a.logseq/",
@@ -37,5 +43,6 @@
     ".git",
     "8.templates/"
   ],
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "showRibbon": false
 }

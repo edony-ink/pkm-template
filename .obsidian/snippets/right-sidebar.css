@@ -1,25 +1,31 @@
 .theme-light {
-  --title-content-color: black;
+  --title-content-color: rgb(170, 170, 170);
   --title-content-hover-color: rgb(100, 100, 100);
   --folder-hover-color: rgba(0, 157, 255, 0.97);
   --outline-color: rgba(99, 84, 84, 0.85);
   --outline-hover-color: rgba(255, 0, 0, 0.9);
   --font-ia: "iA Writer Mono S";
-  --font-recursive: "Recursive Monospace", "Recursive Casual", "Recursive Monospace Casual";
+  --font-recursive: "Recursive Monospace", "Recursive Casual",
+    "Recursive Monospace Casual";
   --font-barlow: "Barlow";
-  --sidebar-font-size: 14px;
+  --font-explore: "PT Sans Caption", "PingFang SC", var(--font-ia),
+    var(--font-barlow), var(--font-recursive);
+  --sidebar-font-size: 16px;
 }
 
 .theme-dark {
-  --title-content-color: white;
+  --title-content-color: rgb(186, 186, 186);
   --title-content-hover-color: rgb(189, 189, 189);
   --folder-hover-color: rgba(0, 255, 255, 0.85);
   --outline-color: rgba(255, 255, 255, 0.85);
   --outline-hover-color: rgba(255, 0, 0, 0.9);
   --font-ia: "iA Writer Mono S";
-  --font-recursive: "Recursive Monospace", "Recursive Casual", "Recursive Monospace Casual";
+  --font-recursive: "Recursive Monospace", "Recursive Casual",
+    "Recursive Monospace Casual";
   --font-barlow: "Barlow";
-  --sidebar-font-size: 14px;
+  --font-explore: "PT Sans Caption", "PingFang SC", var(--font-ia),
+    var(--font-barlow), var(--font-recursive);
+  --sidebar-size: 16px;
 }
 
 /* Connectining lines for files and folders in File Explorer*/
@@ -51,7 +57,7 @@
   display: flex;
   align-items: baseline;
   flex-direction: row;
-  font-family: var(--font-recursive);
+  /* font-family: var(--font-explore);
   /* font-style: italic; */
 }
 .nav-file-title-content,
@@ -60,10 +66,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
-  font-family: var(--font-recursive);
+  /* font-family: var(---font-explore);
   /* font-style: italic; */
-  font-size: var(--sidebar-font-size);
-  color: var(--title-content-color);
+  font-size: var(--sidebar-size) !important;
+  color: var(--nav-item-color-hover);
 }
 .nav-file-title-content:hover {
   color: var(--title-content-hover-color);
@@ -72,7 +78,7 @@
   color: var(--folder-hover-color);
 }
 .outline .tree-item-self {
-  font-family: var(--font-recursive);
+  /* font-family: var(--font-barlow);
   /* font-style: italic;*/
   color: var(--outline-color) !important;
 }
@@ -94,4 +100,26 @@
 */
 .quiet-outline .function-bar {
   padding: 0px 1px !important;
+}
+
+.search-results-children .tree-item-self,
+.view-content .tree-item-self {
+  font-size: var(--sidebar-size) !important;
+}
+
+.workspace-drawer-header
+  .workspace-drawer-header-left
+  .workspace-drawer-header-name {
+  color: var(--title-content-color) !important;
+}
+
+.sidebar-toggle-button.mod-right,
+.sidebar-toggle-button.mod-left {
+  display: none;
+}
+
+.workspace-split.mod-left-split
+  .workspace-sidedock-vault-profile
+  .workspace-drawer-vault-switcher {
+  color: #cfcfcfbe !important;
 }

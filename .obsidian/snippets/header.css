@@ -8,10 +8,10 @@ body {
 }
 
 body.colorful-headings .view-content {
-  --h1-color:rgb(255, 2, 2) !important;
-  --h2-color:rgb(232, 151, 0) !important;
-  --h3-color:rgb(15, 198, 2) !important;
-  --h4-color:rgb(67, 123, 207) !important;
-  --h5-color:rgb(144, 0, 255) !important;
-  --h6-color:rgb(128, 0, 23) !important;
+  --h1-color: rgb(255, 2, 2) !important;
+  --h2-color: rgb(255, 166, 0) !important;
+  --h3-color: rgb(15, 198, 2) !important;
+  --h4-color: rgb(67, 123, 207) !important;
+  --h5-color: rgb(206, 28, 255) !important;
+  --h6-color: rgb(128, 0, 23) !important;
 }

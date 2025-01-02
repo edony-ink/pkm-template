@@ -2,21 +2,15 @@
   "items": [
     {
       "type": "file",
-      "title": "2023",
-      "path": "5.tags/kanban/2023规划.md",
-      "ctime": 1680143593948
+      "ctime": 1723720165842,
+      "path": "2.fleeting/fleeting-fin/我的理财日记.md",
+      "title": "理财笔记"
     },
     {
       "type": "file",
-      "title": "blog 运维日志",
-      "path": "2.fleeting/004.blog 运维日志.md",
-      "ctime": 1680143593948
-    },
-    {
-      "type": "file",
-      "title": "005.Dashboard",
-      "path": "2.fleeting/005.Dashboard.md",
-      "ctime": 1680143593948
+      "ctime": 1704453692398,
+      "path": "5.tags/kanban/2024规划.md",
+      "title": "2024"
     },
     {
       "type": "file",
@@ -25,10 +19,42 @@
       "ctime": 1680143593948
     },
     {
-      "type": "file",
-      "ctime": 1693991727757,
-      "path": "2.fleeting/Statistics of Obsidian Vault.md",
-      "title": "Obsidian Status"
+      "type": "group",
+      "ctime": 1708155793252,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1693991727757,
+          "path": "2.fleeting/Statistics of Obsidian Vault.md",
+          "title": "Obsidian Status"
+        },
+        {
+          "type": "file",
+          "title": "005.Dashboard",
+          "path": "2.fleeting/005.Dashboard.md",
+          "ctime": 1680143593948
+        },
+        {
+          "type": "file",
+          "title": "blog 运维日志",
+          "path": "2.fleeting/004.blog 运维日志.md",
+          "ctime": 1680143593948
+        }
+      ],
+      "title": "Shadow Walker"
+    },
+    {
+      "type": "group",
+      "ctime": 1708155765471,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1708155719439,
+          "path": "0.unsorted/跟我提问的时间机器人.md",
+          "title": "时间机器人"
+        }
+      ],
+      "title": "AI Assistant"
     },
     {
       "type": "group",
@@ -40,7 +66,26 @@
           "query": "句子"
         }
       ],
-      "title": "Serach"
+      "title": "Search"
+    },
+    {
+      "type": "group",
+      "ctime": 1705125295628,
+      "items": [
+        {
+          "type": "file",
+          "title": "2023",
+          "path": "5.tags/kanban/2023规划.md",
+          "ctime": 1680143593948
+        }
+      ],
+      "title": "Archive"
+    },
+    {
+      "type": "file",
+      "ctime": 1726285757147,
+      "path": "2.fleeting/fleeting-thoughts/fleeting-ideas.md",
+      "title": "ideas"
     }
   ]
 }

@@ -21,24 +21,6 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var __accessCheck = (obj, member, msg) => {
-  if (!member.has(obj))
-    throw TypeError("Cannot " + msg);
-};
-var __privateGet = (obj, member, getter) => {
-  __accessCheck(obj, member, "read from private field");
-  return getter ? getter.call(obj) : member.get(obj);
-};
-var __privateAdd = (obj, member, value) => {
-  if (member.has(obj))
-    throw TypeError("Cannot add the same private member more than once");
-  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-};
-var __privateSet = (obj, member, value, setter) => {
-  __accessCheck(obj, member, "write to private field");
-  setter ? setter.call(obj, value) : member.set(obj, value);
-  return value;
-};
 
 // src/main.ts
 var main_exports = {};
@@ -46,7 +28,7 @@ __export(main_exports, {
   default: () => CalloutManagerPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian18 = require("obsidian");
+var import_obsidian25 = require("obsidian");
 
 // node_modules/obsidian-extra/dist/esm/functions/getFloatingWindows.js
 function getFloatingWindows(app2) {
@@ -94,7 +76,7 @@ function isSnippetEnabled(app2, snippetID) {
   return app2.customCss.enabledSnippets.has(snippetID);
 }
 
-// node_modules/obsidian-extra/dist/esm/functions/fetchObsidianStyles.js
+// node_modules/obsidian-extra/dist/esm/functions/fetchObsidianStyleSheet.js
 var import_obsidian = require("obsidian");
 
 // node_modules/obsidian-extra/dist/esm/internal/utils/versionCompare.js
@@ -119,14 +101,14 @@ function arrayPadEnd(arr, length, fill) {
   }
 }
 
-// node_modules/obsidian-extra/dist/esm/functions/fetchObsidianStyles.js
-var __awaiter = function(thisArg, _arguments, P, generator) {
+// node_modules/obsidian-extra/dist/esm/functions/fetchObsidianStyleSheet.js
+var __awaiter = function (thisArg, _arguments, P, generator) {
   function adopt(value) {
-    return value instanceof P ? value : new P(function(resolve) {
+    return value instanceof P ? value : new P(function (resolve) {
       resolve(value);
     });
   }
-  return new (P || (P = Promise))(function(resolve, reject) {
+  return new (P || (P = Promise))(function (resolve, reject) {
     function fulfilled(value) {
       try {
         step(generator.next(value));
@@ -147,27 +129,72 @@ var __awaiter = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-function fetchObsidianStyles(app2) {
+function fetchObsidianStyleSheet(app2) {
+  return __awaiter(this, void 0, void 0, function* () {
+    let errors = [];
+    const orElse = (cb) => (ex) => {
+      errors.push(ex);
+      return cb();
+    };
+    const result = yield viaElectron("app.css").catch(orElse(() => viaFetch("app.css"))).catch(orElse(() => viaDom("app.css")));
+    result._errors = errors;
+    return result;
+  });
+}
+function viaFetch(path) {
+  return __awaiter(this, void 0, void 0, function* () {
+    if (import_obsidian.Platform.isDesktopApp) {
+      throw new Error("Obsidian styles via fetch() does not work under Electron.");
+    }
+    return fetch(`/${path}`).then((r) => r.text()).then((t) => ({
+      method: "fetch",
+      cssText: t
+    }));
+  });
+}
+function viaElectron(path) {
   var _a;
   return __awaiter(this, void 0, void 0, function* () {
-    if (versionCompare(import_obsidian.apiVersion, "1.1.15") > 0) {
-      throw new Error(`[obsidian-extra]: Obsidian ${import_obsidian.apiVersion} has not been tested with this function`);
+    if (versionCompare(import_obsidian.apiVersion, "1.1.16") > 0) {
+      throw new Error(`Obsidian ${import_obsidian.apiVersion} has not been tested with this function`);
     }
-    try {
-      const electron = (_a = globalThis.electron) !== null && _a !== void 0 ? _a : require("electron");
-      if (electron == null) {
-        throw new Error("Unable to get electron module from web renderer process");
-      }
-      const fs = require("fs/promises");
-      if ((fs === null || fs === void 0 ? void 0 : fs.readFile) == null) {
-        throw new Error("Unable to get fs module from web renderer process");
-      }
-      const resources = electron.ipcRenderer.sendSync("resources");
-      return yield fs.readFile(`${resources}/app.css`, "utf8");
-    } catch (ex) {
-      throw new Error(`[obsidian-extra]: Could not get Obsidian styles: ${ex}`);
+    const require2 = globalThis.require;
+    const electron = (_a = globalThis.electron) !== null && _a !== void 0 ? _a : require2 === null || require2 === void 0 ? void 0 : require2("electron");
+    if (electron == null) {
+      throw new Error("Unable to get electron module from web renderer process");
     }
+    const fs = require2 === null || require2 === void 0 ? void 0 : require2("fs/promises");
+    if ((fs === null || fs === void 0 ? void 0 : fs.readFile) == null) {
+      throw new Error("Unable to get fs/promises module from web renderer process");
+    }
+    const resources = electron.ipcRenderer.sendSync("resources");
+    return fs.readFile(`${resources}/${path}`, "utf8").then((t) => ({
+      method: "electron",
+      cssText: t
+    }));
   });
+}
+function viaDom(path) {
+  let found = false;
+  const lines = [];
+  for (const styleSheet of Array.from(document.styleSheets)) {
+    if (!(styleSheet.ownerNode instanceof HTMLLinkElement))
+      continue;
+    const href = styleSheet.ownerNode.getAttribute("href");
+    if (href !== path && href !== `/${path}`)
+      continue;
+    found = true;
+    for (const rule of Array.from(styleSheet.cssRules)) {
+      lines.push(rule.cssText);
+    }
+  }
+  if (!found) {
+    throw new Error("Unable to find <link> element for Obsidian's stylesheet");
+  }
+  return {
+    method: "dom",
+    cssText: lines.join("\n")
+  };
 }
 
 // node_modules/obsidian-extra/dist/esm/functions/getInstalledSnippetIDs.js
@@ -311,8 +338,17 @@ function createCustomStyleSheet(app2, plugin) {
   return result;
 }
 
-// src/ui/paned-setting-tab.ts
+// node_modules/obsidian-extra/dist/esm/functions/detectPlatformBrowser.js
+var import_obsidian2 = require("obsidian");
+
+// node_modules/obsidian-extra/dist/esm/functions/detectPlatformRuntime.js
 var import_obsidian3 = require("obsidian");
+
+// node_modules/obsidian-extra/dist/esm/functions/detectPlatformOperatingSystem.js
+var import_obsidian4 = require("obsidian");
+
+// src/ui/paned-setting-tab.ts
+var import_obsidian6 = require("obsidian");
 
 // node_modules/obsidian-extra/dist/esm/functions/closeSettings.js
 function closeSettings(app2) {
@@ -321,7 +357,7 @@ function closeSettings(app2) {
 }
 
 // src/ui/pane-layers.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 var UIPaneLayers = class {
   constructor(options) {
     this.layers = [];
@@ -364,17 +400,16 @@ var UIPaneLayers = class {
    * @param pane The pane to push.
    */
   pop(options) {
-    var _a, _b;
     if (this.activePane === void 0) {
       this.closeParent();
       return void 0;
     }
-    const noDisplay = (_a = options == null ? void 0 : options.noDisplay) != null ? _a : false;
+    const noDisplay = options?.noDisplay ?? false;
     const oldPane = this.activePane;
     const newPane = this.layers.pop();
     this.activePane = void 0;
     this.setPaneVariables(oldPane, false);
-    oldPane.onClose((_b = options == null ? void 0 : options.cancelled) != null ? _b : false);
+    oldPane.onClose(options?.cancelled ?? false);
     if (!noDisplay) {
       this.containerEl.empty();
     }
@@ -399,7 +434,7 @@ var UIPaneLayers = class {
     const removed = [];
     const opts = {
       noDisplay: true,
-      ...options != null ? options : {}
+      ...options ?? {}
     };
     while (this.activePane !== void 0) {
       removed.push(this.pop(opts));
@@ -430,7 +465,7 @@ var UIPaneLayers = class {
     }
     navEl.empty();
     if (this.layers.length > 0) {
-      new import_obsidian2.ButtonComponent(this.navEl).setIcon("lucide-arrow-left-circle").setClass("clickable-icon").setTooltip(`Back to ${this.layers[this.layers.length - 1].title}`).onClick(() => this.navInstance.close());
+      new import_obsidian5.ButtonComponent(this.navEl).setIcon("lucide-arrow-left-circle").setClass("clickable-icon").setTooltip(`Back to ${this.layers[this.layers.length - 1].title}`).onClick(() => this.navInstance.close());
     }
     titleEl.empty();
     const { title } = activePane;
@@ -472,7 +507,7 @@ var UIPaneLayers = class {
 };
 
 // src/ui/paned-setting-tab.ts
-var UISettingTab = class extends import_obsidian3.PluginSettingTab {
+var UISettingTab = class extends import_obsidian6.PluginSettingTab {
   constructor(plugin, createDefault) {
     super(plugin.app, plugin);
     this.plugin = plugin;
@@ -493,7 +528,6 @@ var UISettingTab = class extends import_obsidian3.PluginSettingTab {
     super.hide();
   }
   display() {
-    var _a;
     const { containerEl, layers } = this;
     containerEl.empty();
     containerEl.classList.add("calloutmanager-setting-tab", "calloutmanager-pane");
@@ -514,14 +548,18 @@ var UISettingTab = class extends import_obsidian3.PluginSettingTab {
       });
     });
     layers.clear();
-    const initLayer = (_a = this.initLayer) != null ? _a : this.createDefault();
+    const initLayer = this.initLayer ?? this.createDefault();
     this.initLayer = null;
     layers.top = initLayer;
   }
 };
 
+// src/api-common.ts
+var emitter = Symbol("emitter");
+var destroy = Symbol("destroy");
+
 // src/api-v1.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // src/util/color.ts
 function toHSV(color) {
@@ -561,10 +599,10 @@ function toHexRGB(color) {
 }
 var REGEX_RGB = /^\s*rgba?\(\s*([\d.]+%?)\s*[, ]\s*([\d.]+%?)\s*[, ]\s*([\d.]+%?\s*)\)\s*$/i;
 function parseColorRGB(rgb) {
-  const matches = REGEX_RGB.exec(rgb);
-  if (matches === null)
+  const matches2 = REGEX_RGB.exec(rgb);
+  if (matches2 === null)
     return null;
-  const components = matches.slice(1).map((v) => v.trim());
+  const components = matches2.slice(1).map((v) => v.trim());
   const rgbComponents = rgbComponentStringsToNumber(components);
   if (rgbComponents === null) {
     return null;
@@ -591,345 +629,25 @@ function rgbComponentStringsToNumber(components) {
   return components.map((v) => parseInt(v, 10));
 }
 
-// src/ui/component/callout-preview.ts
-var import_obsidian4 = require("obsidian");
-var NO_ATTACH = Symbol();
-var CalloutPreviewComponent = class extends import_obsidian4.Component {
-  constructor(containerEl, options) {
-    super();
-    const { color, icon, id, title, content } = options;
-    const frag = document.createDocumentFragment();
-    const calloutEl = this.calloutEl = frag.createDiv({ cls: ["callout", "calloutmanager-preview"] });
-    const titleElContainer = calloutEl.createDiv({ cls: "callout-title" });
-    this.iconEl = titleElContainer.createDiv({ cls: "callout-icon" });
-    const titleEl = this.titleEl = titleElContainer.createDiv({ cls: "callout-title-inner" });
-    const contentEl = this.contentEl = content === void 0 ? void 0 : calloutEl.createDiv({ cls: "callout-content" });
-    this.setIcon(icon);
-    this.setColor(color);
-    this.setCalloutID(id);
-    if (title == null)
-      titleEl.textContent = id;
-    else if (typeof title === "function")
-      title(titleEl);
-    else if (typeof title === "string")
-      titleEl.textContent = title;
-    else
-      titleEl.appendChild(title);
-    if (contentEl != null) {
-      if (typeof content === "function")
-        content(contentEl);
-      else if (typeof content === "string")
-        contentEl.textContent = content;
-      else
-        contentEl.appendChild(content);
-    }
-    if (containerEl != NO_ATTACH) {
-      CalloutPreviewComponent.prototype.attachTo.call(this, containerEl);
-    }
-  }
-  /**
-   * Changes the callout ID.
-   * This will *not* change the appearance of the preview.
-   *
-   * @param id The new ID to use.
-   */
-  setCalloutID(id) {
-    const { calloutEl } = this;
-    calloutEl.setAttribute("data-callout", id);
-    return this;
-  }
-  /**
-   * Changes the callout icon.
-   *
-   * @param icon The ID of the new icon to use.
-   */
-  setIcon(icon) {
-    const { iconEl, calloutEl } = this;
-    calloutEl.style.setProperty("--callout-icon", icon);
-    iconEl.empty();
-    const iconSvg = (0, import_obsidian4.getIcon)(icon);
-    if (iconSvg != null) {
-      this.iconEl.appendChild(iconSvg);
-    }
-    return this;
-  }
-  /**
-   * Changes the callout color.
-   *
-   * @param color The color to use.
-   */
-  setColor(color) {
-    const { calloutEl } = this;
-    if (color == null) {
-      calloutEl.style.removeProperty("--callout-color");
-      return this;
-    }
-    calloutEl.style.setProperty("--callout-color", `${color.r}, ${color.g}, ${color.b}`);
-    return this;
-  }
-  /**
-   * Attaches the callout preview to a DOM element.
-   * This places it at the end of the element.
-   *
-   * @param containerEl The container to attach to.
-   */
-  attachTo(containerEl) {
-    containerEl.appendChild(this.calloutEl);
-    return this;
-  }
-  /**
-   * Resets the `--callout-color` and `--callout-icon` CSS properties added to the callout element.
-   */
-  resetStylePropertyOverrides() {
-    const { calloutEl } = this;
-    calloutEl.style.removeProperty("--callout-color");
-    calloutEl.style.removeProperty("--callout-icon");
-  }
-};
-var IsolatedCalloutPreviewComponent = class extends CalloutPreviewComponent {
-  constructor(containerEl, options) {
-    var _a, _b, _c;
-    super(NO_ATTACH, options);
-    const frag = document.createDocumentFragment();
-    const focused = (_a = options.focused) != null ? _a : false;
-    const colorScheme = options.colorScheme;
-    const readingView = ((_b = options.viewType) != null ? _b : "reading") === "reading";
-    const cssEls = (_c = options == null ? void 0 : options.cssEls) != null ? _c : getCurrentStyles(containerEl == null ? void 0 : containerEl.doc);
-    const shadowHostEl = this.shadowHostEl = frag.createDiv();
-    const shadowRoot = this.shadowRoot = shadowHostEl.attachShadow({ delegatesFocus: false, mode: "closed" });
-    const shadowHead = this.shadowHead = shadowRoot.createEl("head");
-    const shadowBody = this.shadowBody = shadowRoot.createEl("body");
-    const styleEls = this.styleEls = [];
-    for (const cssEl of cssEls) {
-      const cssElClone = cssEl.cloneNode(true);
-      if (cssEl.tagName === "STYLE") {
-        styleEls.push(cssElClone);
-      }
-      shadowHead.appendChild(cssElClone);
-    }
-    shadowHead.createEl("style", { text: SHADOW_DOM_RESET_STYLES });
-    this.customStyleEl = shadowHead.createEl("style", { attr: { "data-custom-styles": "true" } });
-    shadowBody.classList.add(`theme-${colorScheme}`, "obsidian-app");
-    const viewContentEl = shadowBody.createDiv({ cls: "app-container" }).createDiv({ cls: "horizontal-main-container" }).createDiv({ cls: "workspace" }).createDiv({ cls: "workspace-split mod-root" }).createDiv({ cls: `workspace-tabs ${focused ? "mod-active" : ""}` }).createDiv({ cls: "workspace-tab-container" }).createDiv({ cls: `workspace-leaf ${focused ? "mod-active" : ""}` }).createDiv({ cls: "workspace-leaf-content" }).createDiv({ cls: "view-content" });
-    const calloutParentEl = readingView ? createReadingViewContainer(viewContentEl) : createLiveViewContainer(viewContentEl);
-    calloutParentEl.appendChild(this.calloutEl);
-    if (containerEl != null) {
-      IsolatedCalloutPreviewComponent.prototype.attachTo.call(this, containerEl);
-    }
-  }
-  /**
-   * Replaces the `<style>` elements used by the isolated callout preview with the latest ones.
-   */
-  updateStyles() {
-    return this.updateStylesWith(
-      getCurrentStyles(this.shadowHostEl.doc).filter((e) => e.tagName === "STYLE").map((e) => e.cloneNode(true))
-    );
-  }
-  /**
-   * Replaces the `<style>` elements used by the isolated callout preview.
-   * This can be used to update the preview with the latest styles.
-   *
-   * @param styleEls The new style elements to use. These will *not* be cloned.
-   */
-  updateStylesWith(styleEls) {
-    const { styleEls: oldStyleEls, customStyleEl } = this;
-    let i, end;
-    let lastNode = customStyleEl.previousSibling;
-    for (i = 0, end = Math.min(styleEls.length, oldStyleEls.length); i < end; i++) {
-      const el = styleEls[i];
-      oldStyleEls[i].replaceWith(el);
-      lastNode = el;
-    }
-    for (end = styleEls.length; i < end; i++) {
-      const el = styleEls[i];
-      lastNode.insertAdjacentElement("afterend", el);
-      oldStyleEls.push(el);
-    }
-    const toRemove = oldStyleEls.splice(i, oldStyleEls.length - i);
-    for (const node of toRemove) {
-      node.remove();
-    }
-    return this;
-  }
-  /**
-   * Removes matching style elements.
-   * @param predicate The predicate function. If it returns true, the element is removed.
-   */
-  removeStyles(predicate) {
-    for (let i = 0; i < this.styleEls.length; i++) {
-      const el = this.styleEls[i];
-      if (predicate(el)) {
-        el.remove();
-        this.styleEls.splice(i, 1);
-        i--;
-      }
-    }
-  }
-  /**
-   * Changes the color scheme.
-   * @param colorScheme The color scheme to use.
-   */
-  setColorScheme(colorScheme) {
-    const { classList } = this.shadowBody;
-    classList.toggle("theme-dark", colorScheme === "dark");
-    classList.toggle("theme-light", colorScheme === "light");
-    return this;
-  }
-  /**
-   * Attaches the callout preview to a DOM element.
-   * This places it at the end of the element.
-   *
-   * @param containerEl The container to attach to.
-   * @override
-   */
-  attachTo(containerEl) {
-    containerEl.appendChild(this.shadowHostEl);
-    return this;
-  }
-};
-function getCurrentStyles(doc) {
-  var _a;
-  const els = [];
-  let node = (doc != null ? doc : window.document).head.firstElementChild;
-  for (; node != null; node = node.nextElementSibling) {
-    const nodeTag = node.tagName;
-    if (nodeTag === "STYLE" || nodeTag === "LINK" && ((_a = node.getAttribute("rel")) == null ? void 0 : _a.toLowerCase()) === "stylesheet") {
-      els.push(node);
-    }
-  }
-  return els;
-}
-function createReadingViewContainer(viewContentEl) {
-  return viewContentEl.createDiv({ cls: "markdown-reading-view" }).createDiv({ cls: "markdown-preview-view markdown-rendered" }).createDiv({ cls: "markdown-preview-section" }).createDiv();
-}
-function createLiveViewContainer(viewContentEl) {
-  return viewContentEl.createDiv({ cls: "markdown-source-view cm-s-obsidian mod-cm6 is-live-preview" }).createDiv({ cls: "cm-editor \u037C1 \u037C2 \u037Cq" }).createDiv({ cls: "cm-scroller" }).createDiv({ cls: "cm-sizer" }).createDiv({ cls: "cm-contentContainer" }).createDiv({ cls: "cm-content" }).createDiv({ cls: "cm-embed-block markdown-rendered cm-callout" });
-}
-var SHADOW_DOM_RESET_STYLES = `
-/* Reset layout and stylings for all properties up to the callout. */
-.app-container,
-.horizontal-main-container,
-.workspace,
-.workspace-split,
-.workspace-tabs,
-.workspace-tab-container,
-.workspace-leaf,
-.workspace-leaf-content,
-.view-content,
-.markdown-reading-view,
-.markdown-source-view,
-.cm-editor.\u037C1.\u037C2.\u037Cq,
-.cm-editor.\u037C1.\u037C2.\u037Cq > .cm-scroller,
-.cm-sizer,
-.cm-contentContainer,
-.cm-content,
-.markdown-preview-view {
-	all: initial !important;
-	display: block !important;
-}
-
-/* Set the text color of the container for the callout. */
-.markdown-preview-section,
-.cm-callout {
-	color: var(--text-normal) !important;
-}
-
-/* Override margin on callout to keep the preview as small as possible. */
-.markdown-preview-section > div > .callout,
-.cm-callout > .callout,
-.calloutmanager-preview.callout {
-	margin: 0 !important;
-}
-
-/* Set the font properties of the callout. */
-.cm-callout,
-.callout {
-	font-size: var(--font-text-size) !important;
-	font-family: var(--font-text) !important;
-	line-height: var(--line-height-normal) !important;
-}
-
-/* Use transparent background color. */
-body {
-	background-color: transparent !important;
-}
-`;
-
-// src/callout-resolver.ts
-var CalloutResolver = class {
-  constructor() {
-    this.hostElement = document.body.createDiv({
-      cls: "calloutmanager-callout-resolver"
-    });
-    this.hostElement.style.setProperty("display", "none", "important");
-    this.calloutPreview = new IsolatedCalloutPreviewComponent(this.hostElement, {
-      id: "",
-      icon: "",
-      colorScheme: "dark"
-    });
-    this.calloutPreview.resetStylePropertyOverrides();
-  }
-  /**
-   * Reloads the styles of the callout resolver.
-   * This is necessary to get up-to-date styles when the application CSS changes.
-   *
-   * Note: This will not reload the Obsidian app.css stylesheet.
-   * @param styles The new style elements to use.
-   */
-  reloadStyles() {
-    this.calloutPreview.setColorScheme(getCurrentThemeID2(app));
-    this.calloutPreview.updateStyles();
-    this.calloutPreview.removeStyles((el) => el.getAttribute("data-callout-manager") === "style-overrides");
-  }
-  /**
-   * Removes the host element.
-   * This should be called when the plugin is unloading.
-   */
-  unload() {
-    this.hostElement.remove();
-  }
-  /**
-   * Gets the computed styles for a given type of callout.
-   * This uses the current Obsidian styles, themes, and snippets.
-   *
-   * @param id The callout ID.
-   * @param callback A callback function to run. The styles may only be accessed through this.
-   * @returns Whatever the callback function returned.
-   */
-  getCalloutStyles(id, callback) {
-    const { calloutEl } = this.calloutPreview;
-    calloutEl.setAttribute("data-callout", id);
-    return callback(window.getComputedStyle(calloutEl));
-  }
-  /**
-   * Gets the icon and color for a given type of callout.
-   * This uses the current Obsidian styles, themes, and snippets.
-   *
-   * @param id The callout ID.
-   * @returns The callout icon and color.
-   */
-  getCalloutProperties(id) {
-    return this.getCalloutStyles(id, (styles) => ({
-      icon: styles.getPropertyValue("--callout-icon").trim(),
-      color: styles.getPropertyValue("--callout-color").trim()
-    }));
-  }
-  get customStyleEl() {
-    return this.calloutPreview.customStyleEl;
-  }
-};
+// src/callout-util.ts
 function getColorFromCallout(callout) {
   return parseColorRGB(`rgb(${callout.color})`);
 }
+function getTitleFromCallout(callout) {
+  const matches2 = /^(.)(.*)/u.exec(callout.id);
+  if (matches2 == null)
+    return callout.id;
+  const firstChar = matches2[1].toLocaleUpperCase();
+  const remainingChars = matches2[2].toLocaleLowerCase().replace(/-+/g, " ");
+  return `${firstChar}${remainingChars}`;
+}
 
 // src/api-v1.ts
-var _emitter;
 var CalloutManagerAPI_V1 = class {
   constructor(plugin, consumer) {
-    __privateAdd(this, _emitter, void 0);
     this.plugin = plugin;
     this.consumer = consumer;
-    __privateSet(this, _emitter, new import_obsidian5.Events());
+    this[emitter] = new import_obsidian7.Events();
     if (consumer != null) {
       console.debug("Created API V1 Handle:", { plugin: consumer.manifest.id });
     }
@@ -937,7 +655,7 @@ var CalloutManagerAPI_V1 = class {
   /**
    * Called to destroy an API handle bound to a consumer.
    */
-  destroy() {
+  [(emitter, destroy)]() {
     const consumer = this.consumer;
     console.debug("Destroyed API V1 Handle:", { plugin: consumer.manifest.id });
   }
@@ -948,27 +666,81 @@ var CalloutManagerAPI_V1 = class {
   /** @override */
   getColor(callout) {
     const color = getColorFromCallout(callout);
-    return color != null ? color : { invalid: callout.color };
+    return color ?? { invalid: callout.color };
+  }
+  /** @override */
+  getTitle(callout) {
+    return getTitleFromCallout(callout);
   }
   /** @override */
   on(event, listener) {
     if (this.consumer == null) {
       throw new Error("Cannot listen for events without an API consumer.");
     }
-    __privateGet(this, _emitter).on(event, listener);
+    this[emitter].on(event, listener);
   }
   /** @override */
   off(event, listener) {
     if (this.consumer == null) {
       throw new Error("Cannot listen for events without an API consumer.");
     }
-    __privateGet(this, _emitter).off(event, listener);
-  }
-  _emit(event, ...params) {
-    __privateGet(this, _emitter).trigger(event, params);
+    this[emitter].off(event, listener);
   }
 };
-_emitter = new WeakMap();
+
+// src/apis.ts
+var CalloutManagerAPIs = class {
+  constructor(plugin) {
+    this.plugin = plugin;
+    this.handles = /* @__PURE__ */ new Map();
+  }
+  /**
+   * Creates (or gets) an instance of the Callout Manager API for a plugin.
+   * If the plugin is undefined, only trivial functions are available.
+   *
+   * @param version The API version.
+   * @param consumerPlugin The plugin using the API.
+   *
+   * @internal
+   */
+  async newHandle(version, consumerPlugin, cleanupFunc) {
+    if (version !== "v1")
+      throw new Error(`Unsupported Callout Manager API: ${version}`);
+    if (consumerPlugin == null) {
+      return new CalloutManagerAPI_V1(this.plugin, void 0);
+    }
+    const existing = this.handles.get(consumerPlugin);
+    if (existing != null) {
+      return existing;
+    }
+    consumerPlugin.register(cleanupFunc);
+    const handle = new CalloutManagerAPI_V1(this.plugin, consumerPlugin);
+    this.handles.set(consumerPlugin, handle);
+    return handle;
+  }
+  /**
+   * Destroys an API handle created by {@link newHandle}.
+   *
+   * @param version The API version.
+   * @param consumerPlugin The plugin using the API.
+   *
+   * @internal
+   */
+  destroyHandle(version, consumerPlugin) {
+    if (version !== "v1")
+      throw new Error(`Unsupported Callout Manager API: ${version}`);
+    const handle = this.handles.get(consumerPlugin);
+    if (handle == null)
+      return;
+    handle[destroy]();
+    this.handles.delete(consumerPlugin);
+  }
+  emitEventForCalloutChange(id) {
+    for (const handle of this.handles.values()) {
+      handle[emitter].trigger("change");
+    }
+  }
+};
 
 // src/callout-collection.ts
 var CalloutCollection = class {
@@ -994,6 +766,16 @@ var CalloutCollection = class {
       this.resolveOne(cached);
     }
     return cached.callout;
+  }
+  /**
+   * Checks if a callout with this ID is in the collection.
+   * @param id The callout ID.
+   * @returns True if the callout is in the collection.
+   */
+  has(id) {
+    if (!this.cached)
+      this.buildCache();
+    return this.cacheById.has(id);
   }
   /**
    * Gets all the known {@link CalloutID callout IDs}.
@@ -1248,7 +1030,7 @@ var CalloutCollectionTheme = class {
       return;
     }
     this.invalidate(
-      { type: "theme", theme: oldTheme != null ? oldTheme : "" },
+      { type: "theme", theme: oldTheme ?? "" },
       {
         added: [],
         removed: Array.from(old.values()),
@@ -1270,7 +1052,7 @@ var CalloutCollectionTheme = class {
     this.data = /* @__PURE__ */ new Set();
     this.oldTheme = null;
     this.invalidate(
-      { type: "theme", theme: oldTheme != null ? oldTheme : "" },
+      { type: "theme", theme: oldTheme ?? "" },
       {
         added: [],
         removed: Array.from(old.values()),
@@ -1369,39 +1151,335 @@ function sourceFromKey(sourceKey) {
   throw new Error("Unknown source key: " + sourceKey);
 }
 
-// src/callout-fallback-obsidian.json
-var callout_fallback_obsidian_default = [
-  "quote",
-  "cite",
-  "warning",
-  "caution",
-  "attention",
-  "help",
-  "faq",
-  "success",
-  "check",
-  "done",
-  "abstract",
-  "summary",
-  "tldr",
-  "important",
-  "tip",
-  "hint",
-  "info",
-  "todo",
-  "example",
-  "failure",
-  "fail",
-  "missing",
-  "danger",
-  "error",
-  "bug"
-];
+// src/ui/component/callout-preview.ts
+var import_obsidian8 = require("obsidian");
+var NO_ATTACH = Symbol();
+var CalloutPreviewComponent = class extends import_obsidian8.Component {
+  constructor(containerEl, options) {
+    super();
+    const { color, icon, id, title, content } = options;
+    const frag = document.createDocumentFragment();
+    const calloutEl = this.calloutEl = frag.createDiv({ cls: ["callout", "calloutmanager-preview"] });
+    const titleElContainer = calloutEl.createDiv({ cls: "callout-title" });
+    this.iconEl = titleElContainer.createDiv({ cls: "callout-icon" });
+    const titleEl = this.titleEl = titleElContainer.createDiv({ cls: "callout-title-inner" });
+    const contentEl = this.contentEl = content === void 0 ? void 0 : calloutEl.createDiv({ cls: "callout-content" });
+    this.setIcon(icon);
+    this.setColor(color);
+    this.setCalloutID(id);
+    if (title == null)
+      titleEl.textContent = id;
+    else if (typeof title === "function")
+      title(titleEl);
+    else if (typeof title === "string")
+      titleEl.textContent = title;
+    else
+      titleEl.appendChild(title);
+    if (contentEl != null) {
+      if (typeof content === "function")
+        content(contentEl);
+      else if (typeof content === "string")
+        contentEl.textContent = content;
+      else
+        contentEl.appendChild(content);
+    }
+    if (containerEl != NO_ATTACH) {
+      CalloutPreviewComponent.prototype.attachTo.call(this, containerEl);
+    }
+  }
+  /**
+   * Changes the callout ID.
+   * This will *not* change the appearance of the preview.
+   *
+   * @param id The new ID to use.
+   */
+  setCalloutID(id) {
+    const { calloutEl } = this;
+    calloutEl.setAttribute("data-callout", id);
+    return this;
+  }
+  /**
+   * Changes the callout icon.
+   *
+   * @param icon The ID of the new icon to use.
+   */
+  setIcon(icon) {
+    const { iconEl, calloutEl } = this;
+    calloutEl.style.setProperty("--callout-icon", icon);
+    iconEl.empty();
+    const iconSvg = (0, import_obsidian8.getIcon)(icon);
+    if (iconSvg != null) {
+      this.iconEl.appendChild(iconSvg);
+    }
+    return this;
+  }
+  /**
+   * Changes the callout color.
+   *
+   * @param color The color to use.
+   */
+  setColor(color) {
+    const { calloutEl } = this;
+    if (color == null) {
+      calloutEl.style.removeProperty("--callout-color");
+      return this;
+    }
+    calloutEl.style.setProperty("--callout-color", `${color.r}, ${color.g}, ${color.b}`);
+    return this;
+  }
+  /**
+   * Attaches the callout preview to a DOM element.
+   * This places it at the end of the element.
+   *
+   * @param containerEl The container to attach to.
+   */
+  attachTo(containerEl) {
+    containerEl.appendChild(this.calloutEl);
+    return this;
+  }
+  /**
+   * Resets the `--callout-color` and `--callout-icon` CSS properties added to the callout element.
+   */
+  resetStylePropertyOverrides() {
+    const { calloutEl } = this;
+    calloutEl.style.removeProperty("--callout-color");
+    calloutEl.style.removeProperty("--callout-icon");
+  }
+};
+var IsolatedCalloutPreviewComponent = class extends CalloutPreviewComponent {
+  constructor(containerEl, options) {
+    super(NO_ATTACH, options);
+    const frag = document.createDocumentFragment();
+    const focused = options.focused ?? false;
+    const colorScheme = options.colorScheme;
+    const readingView = (options.viewType ?? "reading") === "reading";
+    const cssEls = options?.cssEls ?? getCurrentStyles(containerEl?.doc);
+    const shadowHostEl = this.shadowHostEl = frag.createDiv();
+    const shadowRoot = this.shadowRoot = shadowHostEl.attachShadow({ delegatesFocus: false, mode: "closed" });
+    const shadowHead = this.shadowHead = shadowRoot.createEl("head");
+    const shadowBody = this.shadowBody = shadowRoot.createEl("body");
+    const styleEls = this.styleEls = [];
+    for (const cssEl of cssEls) {
+      const cssElClone = cssEl.cloneNode(true);
+      if (cssEl.tagName === "STYLE") {
+        styleEls.push(cssElClone);
+      }
+      shadowHead.appendChild(cssElClone);
+    }
+    shadowHead.createEl("style", { text: SHADOW_DOM_RESET_STYLES });
+    this.customStyleEl = shadowHead.createEl("style", { attr: { "data-custom-styles": "true" } });
+    shadowBody.classList.add(`theme-${colorScheme}`, "obsidian-app");
+    const viewContentEl = shadowBody.createDiv({ cls: "app-container" }).createDiv({ cls: "horizontal-main-container" }).createDiv({ cls: "workspace" }).createDiv({ cls: "workspace-split mod-root" }).createDiv({ cls: `workspace-tabs ${focused ? "mod-active" : ""}` }).createDiv({ cls: "workspace-tab-container" }).createDiv({ cls: `workspace-leaf ${focused ? "mod-active" : ""}` }).createDiv({ cls: "workspace-leaf-content" }).createDiv({ cls: "view-content" });
+    const calloutParentEl = readingView ? createReadingViewContainer(viewContentEl) : createLiveViewContainer(viewContentEl);
+    calloutParentEl.appendChild(this.calloutEl);
+    if (containerEl != null) {
+      IsolatedCalloutPreviewComponent.prototype.attachTo.call(this, containerEl);
+    }
+  }
+  /**
+   * Replaces the `<style>` elements used by the isolated callout preview with the latest ones.
+   */
+  updateStyles() {
+    return this.updateStylesWith(
+      getCurrentStyles(this.shadowHostEl.doc).filter((e) => e.tagName === "STYLE").map((e) => e.cloneNode(true))
+    );
+  }
+  /**
+   * Replaces the `<style>` elements used by the isolated callout preview.
+   * This can be used to update the preview with the latest styles.
+   *
+   * @param styleEls The new style elements to use. These will *not* be cloned.
+   */
+  updateStylesWith(styleEls) {
+    const { styleEls: oldStyleEls, customStyleEl } = this;
+    let i, end;
+    let lastNode = customStyleEl.previousSibling;
+    for (i = 0, end = Math.min(styleEls.length, oldStyleEls.length); i < end; i++) {
+      const el = styleEls[i];
+      oldStyleEls[i].replaceWith(el);
+      lastNode = el;
+    }
+    for (end = styleEls.length; i < end; i++) {
+      const el = styleEls[i];
+      lastNode.insertAdjacentElement("afterend", el);
+      oldStyleEls.push(el);
+    }
+    const toRemove = oldStyleEls.splice(i, oldStyleEls.length - i);
+    for (const node of toRemove) {
+      node.remove();
+    }
+    return this;
+  }
+  /**
+   * Removes matching style elements.
+   * @param predicate The predicate function. If it returns true, the element is removed.
+   */
+  removeStyles(predicate) {
+    for (let i = 0; i < this.styleEls.length; i++) {
+      const el = this.styleEls[i];
+      if (predicate(el)) {
+        el.remove();
+        this.styleEls.splice(i, 1);
+        i--;
+      }
+    }
+  }
+  /**
+   * Changes the color scheme.
+   * @param colorScheme The color scheme to use.
+   */
+  setColorScheme(colorScheme) {
+    const { classList } = this.shadowBody;
+    classList.toggle("theme-dark", colorScheme === "dark");
+    classList.toggle("theme-light", colorScheme === "light");
+    return this;
+  }
+  /**
+   * Attaches the callout preview to a DOM element.
+   * This places it at the end of the element.
+   *
+   * @param containerEl The container to attach to.
+   * @override
+   */
+  attachTo(containerEl) {
+    containerEl.appendChild(this.shadowHostEl);
+    return this;
+  }
+};
+function getCurrentStyles(doc) {
+  const els = [];
+  let node = (doc ?? window.document).head.firstElementChild;
+  for (; node != null; node = node.nextElementSibling) {
+    const nodeTag = node.tagName;
+    if (nodeTag === "STYLE" || nodeTag === "LINK" && node.getAttribute("rel")?.toLowerCase() === "stylesheet") {
+      els.push(node);
+    }
+  }
+  return els;
+}
+function createReadingViewContainer(viewContentEl) {
+  return viewContentEl.createDiv({ cls: "markdown-reading-view" }).createDiv({ cls: "markdown-preview-view markdown-rendered" }).createDiv({ cls: "markdown-preview-section" }).createDiv();
+}
+function createLiveViewContainer(viewContentEl) {
+  return viewContentEl.createDiv({ cls: "markdown-source-view cm-s-obsidian mod-cm6 is-live-preview" }).createDiv({ cls: "cm-editor \u037C1 \u037C2 \u037Cq" }).createDiv({ cls: "cm-scroller" }).createDiv({ cls: "cm-sizer" }).createDiv({ cls: "cm-contentContainer" }).createDiv({ cls: "cm-content" }).createDiv({ cls: "cm-embed-block markdown-rendered cm-callout" });
+}
+var SHADOW_DOM_RESET_STYLES = `
+/* Reset layout and stylings for all properties up to the callout. */
+.app-container,
+.horizontal-main-container,
+.workspace,
+.workspace-split,
+.workspace-tabs,
+.workspace-tab-container,
+.workspace-leaf,
+.workspace-leaf-content,
+.view-content,
+.markdown-reading-view,
+.markdown-source-view,
+.cm-editor.\u037C1.\u037C2.\u037Cq,
+.cm-editor.\u037C1.\u037C2.\u037Cq > .cm-scroller,
+.cm-sizer,
+.cm-contentContainer,
+.cm-content,
+.markdown-preview-view {
+	all: initial !important;
+	display: block !important;
+}
+
+/* Set the text color of the container for the callout. */
+.markdown-preview-section,
+.cm-callout {
+	color: var(--text-normal) !important;
+}
+
+/* Override margin on callout to keep the preview as small as possible. */
+.markdown-preview-section > div > .callout,
+.cm-callout > .callout,
+.calloutmanager-preview.callout {
+	margin: 0 !important;
+}
+
+/* Set the font properties of the callout. */
+.cm-callout,
+.callout {
+	font-size: var(--font-text-size) !important;
+	font-family: var(--font-text) !important;
+	line-height: var(--line-height-normal) !important;
+}
+
+/* Use transparent background color. */
+body {
+	background-color: transparent !important;
+}
+`;
+
+// src/callout-resolver.ts
+var CalloutResolver = class {
+  constructor() {
+    this.hostElement = document.body.createDiv({
+      cls: "calloutmanager-callout-resolver"
+    });
+    this.hostElement.style.setProperty("display", "none", "important");
+    this.calloutPreview = new IsolatedCalloutPreviewComponent(this.hostElement, {
+      id: "",
+      icon: "",
+      colorScheme: "dark"
+    });
+    this.calloutPreview.resetStylePropertyOverrides();
+  }
+  /**
+   * Reloads the styles of the callout resolver.
+   * This is necessary to get up-to-date styles when the application CSS changes.
+   *
+   * Note: This will not reload the Obsidian app.css stylesheet.
+   * @param styles The new style elements to use.
+   */
+  reloadStyles() {
+    this.calloutPreview.setColorScheme(getCurrentThemeID2(app));
+    this.calloutPreview.updateStyles();
+    this.calloutPreview.removeStyles((el) => el.getAttribute("data-callout-manager") === "style-overrides");
+  }
+  /**
+   * Removes the host element.
+   * This should be called when the plugin is unloading.
+   */
+  unload() {
+    this.hostElement.remove();
+  }
+  /**
+   * Gets the computed styles for a given type of callout.
+   * This uses the current Obsidian styles, themes, and snippets.
+   *
+   * @param id The callout ID.
+   * @param callback A callback function to run. The styles may only be accessed through this.
+   * @returns Whatever the callback function returned.
+   */
+  getCalloutStyles(id, callback) {
+    const { calloutEl } = this.calloutPreview;
+    calloutEl.setAttribute("data-callout", id);
+    return callback(window.getComputedStyle(calloutEl));
+  }
+  /**
+   * Gets the icon and color for a given type of callout.
+   * This uses the current Obsidian styles, themes, and snippets.
+   *
+   * @param id The callout ID.
+   * @returns The callout icon and color.
+   */
+  getCalloutProperties(id) {
+    return this.getCalloutStyles(id, (styles) => ({
+      icon: styles.getPropertyValue("--callout-icon").trim(),
+      color: styles.getPropertyValue("--callout-color").trim()
+    }));
+  }
+  get customStyleEl() {
+    return this.calloutPreview.customStyleEl;
+  }
+};
 
 // src/callout-settings.ts
 function currentCalloutEnvironment(app2) {
-  var _a;
-  const theme = (_a = getCurrentThemeID(app2)) != null ? _a : "<default>";
+  const theme = getCurrentThemeID(app2) ?? "<default>";
   return {
     theme,
     colorScheme: getCurrentThemeID2(app2)
@@ -1466,7 +1544,6 @@ function typeofCondition(condition) {
 
 // src/css-parser.ts
 function getCalloutsFromCSS(css) {
-  var _a;
   const REGEX_CALLOUT_SELECTOR = /\[data-callout([^\]]*)\]/gmi;
   const REGEX_MATCH_QUOTED_STRING = {
     "'": /^'([^']+)'( i)?$/,
@@ -1474,10 +1551,10 @@ function getCalloutsFromCSS(css) {
     "": /^([^\]]+)$/
   };
   const attributeSelectors = [];
-  let matches;
-  while ((matches = REGEX_CALLOUT_SELECTOR.exec(css)) != null) {
-    attributeSelectors.push(matches[1]);
-    REGEX_CALLOUT_SELECTOR.lastIndex = matches.index + matches[0].length;
+  let matches2;
+  while ((matches2 = REGEX_CALLOUT_SELECTOR.exec(css)) != null) {
+    attributeSelectors.push(matches2[1]);
+    REGEX_CALLOUT_SELECTOR.lastIndex = matches2.index + matches2[0].length;
   }
   const ids = [];
   for (const attributeSelector of attributeSelectors) {
@@ -1490,10 +1567,10 @@ function getCalloutsFromCSS(css) {
       continue;
     }
     const quoteChar = selectorString.charAt(0);
-    const stringRegex = (_a = REGEX_MATCH_QUOTED_STRING[quoteChar]) != null ? _a : REGEX_MATCH_QUOTED_STRING[""];
-    const matches2 = stringRegex.exec(selectorString);
-    if (matches2 != null && matches2[1] != null) {
-      ids.push(matches2[1]);
+    const stringRegex = REGEX_MATCH_QUOTED_STRING[quoteChar] ?? REGEX_MATCH_QUOTED_STRING[""];
+    const matches3 = stringRegex.exec(selectorString);
+    if (matches3 != null && matches3[1] != null) {
+      ids.push(matches3[1]);
     }
   }
   return ids;
@@ -1501,14 +1578,13 @@ function getCalloutsFromCSS(css) {
 
 // src/css-watcher.ts
 var StylesheetWatcher = class {
-  constructor(app2, disableObsidianStylesheet) {
+  constructor(app2) {
     this.app = app2;
     this.listeners = /* @__PURE__ */ new Map();
     this.cachedSnippets = /* @__PURE__ */ new Map();
-    this.cachedObsidian = disableObsidianStylesheet ? false : null;
+    this.cachedObsidian = null;
     this.cachedTheme = null;
     this.watching = false;
-    this.disableObsidianStylesheet = disableObsidianStylesheet;
   }
   /**
    * Start watching for changes to stylesheets.
@@ -1538,6 +1614,24 @@ var StylesheetWatcher = class {
       }
       this.watching = false;
     };
+  }
+  /**
+   * Describes how the Obsidian stylesheet was fetched, for the purpose of telling the user
+   * within the plugin's settings pane. The string will be concatenated as `Find built-in Obsidian callouts ${text}`.
+   *
+   * This uses the extra metadata attached to the {@link ObsidianStylesAndMetadata}.
+   */
+  describeObsidianFetchMethod() {
+    switch (this.cachedObsidian?.method ?? "pending") {
+      case "dom":
+        return "using browser functions";
+      case "electron":
+        return "using undocumented functions";
+      case "fetch":
+        return "by reading Obsidian's styles";
+      case "pending":
+        return "";
+    }
   }
   /**
    * @internal
@@ -1590,7 +1684,7 @@ var StylesheetWatcher = class {
       this.cachedTheme = null;
       this.cachedObsidian = null;
     }
-    if (this.cachedObsidian == null && !this.disableObsidianStylesheet) {
+    if (this.cachedObsidian == null) {
       changed = await this.checkForChangesObsidian() || changed;
     }
     changed = this.checkForChangesSnippets() || changed;
@@ -1605,18 +1699,14 @@ var StylesheetWatcher = class {
    * @returns true if the fetch was successful.
    */
   async checkForChangesObsidian() {
-    if (this.cachedObsidian === false) {
-      return false;
-    }
     try {
-      this.cachedObsidian = await fetchObsidianStyles(this.app);
+      this.cachedObsidian = await fetchObsidianStyleSheet(this.app);
       this.emit("change", {
         type: "obsidian",
-        styles: this.cachedObsidian
+        styles: this.cachedObsidian.cssText
       });
       return true;
     } catch (ex) {
-      this.cachedObsidian = false;
       console.warn("Unable to fetch Obsidian stylesheet.", ex);
       return false;
     }
@@ -1625,12 +1715,11 @@ var StylesheetWatcher = class {
    * Checks for changes in the application's theme.
    */
   checkForChangesTheme() {
-    var _a;
     const theme = getCurrentThemeID(this.app);
     const themeManifest = theme == null ? null : getThemeManifest(this.app, theme);
     const hasTheme = theme != null && themeManifest != null;
     const styleEl = getThemeStyleElement(this.app);
-    const styles = (_a = styleEl == null ? void 0 : styleEl.textContent) != null ? _a : "";
+    const styles = styleEl?.textContent ?? "";
     if (this.cachedTheme != null && !hasTheme) {
       this.emit("remove", { type: "theme", theme: this.cachedTheme.id, styles: this.cachedTheme.contents });
       this.cachedTheme = null;
@@ -1645,8 +1734,8 @@ var StylesheetWatcher = class {
       return false;
     }
     const changed = this.cachedTheme.id !== theme || // Active theme changed
-    this.cachedTheme.version !== themeManifest.version || // Version of active theme changed
-    this.cachedTheme.contents !== styles;
+      this.cachedTheme.version !== themeManifest.version || // Version of active theme changed
+      this.cachedTheme.contents !== styles;
     if (changed) {
       this.cachedTheme = {
         id: theme,
@@ -1689,16 +1778,10 @@ var StylesheetWatcher = class {
     }
     return anyChanges;
   }
-  /**
-   * Returns true if fetching the Obsidian stylesheet is supported.
-   */
-  isObsidianStylesheetSupported() {
-    return !this.disableObsidianStylesheet && this.cachedObsidian !== false;
-  }
 };
 
 // src/panes/manage-callouts-pane.ts
-var import_obsidian16 = require("obsidian");
+var import_obsidian22 = require("obsidian");
 
 // src/ui/pane.ts
 var UIPane = class {
@@ -1739,22 +1822,924 @@ var UIPane = class {
   }
 };
 
+// src/search/condition.ts
+var import_obsidian9 = require("obsidian");
+function matches(index, textToMatch, scores) {
+  const matchesQuery = (0, import_obsidian9.prepareFuzzySearch)(textToMatch.trim());
+  let mask = 0n;
+  for (const [text, bit] of index) {
+    const res = matchesQuery(text);
+    if (res != null) {
+      mask |= 1n << BigInt(bit);
+      scores[bit] += res.score;
+    }
+  }
+  return mask;
+}
+function includes(index, textToInclude, scores) {
+  let mask = 0n;
+  for (const [text, bit] of index) {
+    if (text.includes(textToInclude)) {
+      mask |= 1n << BigInt(bit);
+      scores[bit] += textToInclude.length / text.length;
+    }
+  }
+  return mask;
+}
+function equals(index, textToHave, scores) {
+  let mask = 0n;
+  for (const [text, bit] of index) {
+    if (text.includes(textToHave)) {
+      mask |= 1n << BigInt(bit);
+      scores[bit] += textToHave.length / text.length;
+    }
+  }
+  return mask;
+}
+function startsWith(index, textToStart, scores) {
+  let mask = 0n;
+  for (const [text, bit] of index) {
+    if (text.startsWith(textToStart)) {
+      mask |= 1n << BigInt(bit);
+      scores[bit] += textToStart.length / text.length;
+    }
+  }
+  return mask;
+}
+
+// src/search/bitfield.ts
+var BitField;
+((BitField3) => {
+  function fromPosition(position) {
+    return 1n << BigInt(position);
+  }
+  BitField3.fromPosition = fromPosition;
+  function fromPositionWithTrailing(position) {
+    return (1n << BigInt(position + 1)) - 1n;
+  }
+  BitField3.fromPositionWithTrailing = fromPositionWithTrailing;
+  function scanMostSignificant(field) {
+    const MASK = ~0xFFFFFFFFn;
+    let offset = 0;
+    for (let a = field; (a & MASK) > 0; a >>= 32n) {
+      offset += 32;
+    }
+    return offset + (31 - Math.clz32(Number(field)));
+  }
+  BitField3.scanMostSignificant = scanMostSignificant;
+  function or(a, b) {
+    return a | b;
+  }
+  BitField3.or = or;
+  function and(a, b) {
+    return a & b;
+  }
+  BitField3.and = and;
+  function andNot(a, b) {
+    return a & ~b;
+  }
+  BitField3.andNot = andNot;
+  function not(a, width) {
+    return fromPositionWithTrailing(width - 1) ^ a;
+  }
+  BitField3.not = not;
+})(BitField || (BitField = {}));
+var BitPositionRegistry = class {
+  constructor() {
+    this.recycled = [];
+    this.next = 0;
+    this.asField = 0n;
+  }
+  /**
+   * A field of all owned bits.
+   */
+  get field() {
+    return this.asField;
+  }
+  /**
+   * The number of bits that are needed to represent a bitfield.
+   */
+  get size() {
+    return this.next;
+  }
+  /**
+   * Claims a bit from the registry.
+   */
+  claim() {
+    const { recycled } = this;
+    const claimed = recycled.length > 0 ? recycled.pop() : this.next++;
+    this.asField = BitField.or(this.asField, BitField.fromPosition(claimed));
+    return claimed;
+  }
+  /**
+   * Relinquishes a bit back to the registry.
+   * @param position The position to relinquish.
+   */
+  relinquish(position) {
+    const { recycled } = this;
+    recycled.push(position);
+    this.asField = BitField.andNot(this.asField, BitField.fromPosition(position));
+  }
+};
+
+// src/search/effect.ts
+function add(a, b) {
+  return BitField.or(a, b);
+}
+function remove(a, b) {
+  return BitField.andNot(a, b);
+}
+function filter(a, b) {
+  return BitField.and(a, b);
+}
+
+// src/sort.ts
+function combinedComparison(fns) {
+  const compare = (a, b) => {
+    let delta = 0;
+    for (const compare2 of fns) {
+      delta = compare2(a, b);
+      if (delta !== 0)
+        break;
+    }
+    return delta;
+  };
+  compare.precompute = (value) => {
+    const obj = {};
+    for (const fn of fns) {
+      if ("precompute" in fn) {
+        Object.assign(obj, fn.precompute(value));
+      }
+    }
+    return obj;
+  };
+  return compare;
+}
+function compareColor({ computed: { colorValid: aValid, colorHSV: aHSV } }, { computed: { colorValid: bValid, colorHSV: bHSV } }) {
+  const validityDelta = (aValid ? 1 : 0) - (bValid ? 1 : 0);
+  if (validityDelta !== 0)
+    return validityDelta;
+  const saturatedDelta = (aHSV.s > 0 ? 1 : 0) - (bHSV.s > 0 ? 1 : 0);
+  if (saturatedDelta !== 0)
+    return saturatedDelta;
+  const hueDelta = aHSV.h - bHSV.h;
+  if (Math.abs(hueDelta) > 2)
+    return hueDelta;
+  const svDelta = aHSV.s + aHSV.v - (bHSV.s + bHSV.v);
+  if (svDelta !== 0)
+    return svDelta;
+  return 0;
+}
+((compareColor2) => {
+  function precompute(v) {
+    const color = getColorFromCallout(v);
+    return {
+      colorValid: color != null,
+      colorHSV: color == null ? { h: 0, s: 0, v: 0 } : toHSV(color)
+    };
+  }
+  compareColor2.precompute = precompute;
+})(compareColor || (compareColor = {}));
+function compareId({ value: { id: aId } }, { value: { id: bId } }) {
+  return bId.localeCompare(aId);
+}
+
+// src/search/search-index.ts
+var SearchIndex = class {
+  constructor(columns) {
+    this.columns = /* @__PURE__ */ new Map();
+    this.registry = new BitPositionRegistry();
+    for (const [col, description] of Object.entries(columns)) {
+      this.columns.set(col, new SearchIndexColumn(this.registry, description));
+    }
+  }
+  get bitfield() {
+    return this.registry.field;
+  }
+  get size() {
+    return this.registry.size;
+  }
+  column(name) {
+    const col = this.columns.get(name);
+    if (col === void 0)
+      throw new NoSuchColumnError(name);
+    return col;
+  }
+};
+var NoSuchColumnError = class extends Error {
+  constructor(column) {
+    super(`No such column in index: ${column}`);
+  }
+};
+var SearchIndexColumn = class {
+  constructor(registry, options) {
+    this.entries = /* @__PURE__ */ new Map();
+    this.bitReg = registry;
+    this.normalize = options?.normalize ?? ((n) => n);
+  }
+  /**
+   * Adds a value to the column.
+   *
+   * @param value The value to add.
+   * @returns The associated bit position of the value.
+   */
+  add(value) {
+    const { entries } = this;
+    const normalized = this.normalize(value);
+    const existingBit = entries.get(normalized);
+    if (existingBit !== void 0)
+      return existingBit;
+    const newBit = this.bitReg.claim();
+    entries.set(normalized, newBit);
+    return newBit;
+  }
+  /**
+   * Removes a value from the column.
+   * @param value The value to remove.
+   */
+  delete(value) {
+    const { entries } = this;
+    const normalized = this.normalize(value);
+    const existingBit = entries.get(normalized);
+    if (existingBit === void 0)
+      return;
+    this.bitReg.relinquish(existingBit);
+    entries.delete(normalized);
+  }
+  /**
+   * Gets a value from the column.
+   *
+   * @param value The value to get.
+   * @returns The associated bit position, or undefined if it is not in the column.
+   */
+  get(value) {
+    return this.entries.get(this.normalize(value));
+  }
+  /**
+   * The number of indices in this column.
+   */
+  get size() {
+    return this.entries.size;
+  }
+  [Symbol.iterator]() {
+    return this.entries.entries();
+  }
+};
+
+// src/search/search.ts
+var Search = class {
+  constructor(options) {
+    this.resetToAll = options?.resetToAll ?? false;
+    this.index = new SearchIndex(options.columns);
+    this.indexedItems = [];
+    const suppliedFnCompare = options.compareItem ?? ((a, b) => 0);
+    this.fnIndex = options.indexItem;
+    this.currentMask = 0n;
+    this.currentResults = null;
+    this.currentScores = new Float32Array(0);
+    this.reusableCurrentScoresBuffer = new Float32Array(0);
+    this.fnCompare = (options.resultRanking ?? true) === false ? (a, b) => suppliedFnCompare(a.value, b.value) : (a, b) => {
+      const delta = b.score - a.score;
+      if (delta !== 0)
+        return delta;
+      return suppliedFnCompare(b.value, a.value);
+    };
+  }
+  /**
+   * Adds items to the search.
+   * This will index the items.
+   *
+   * @param items The items to add.
+   */
+  addItems(items) {
+    const { index, indexedItems } = this;
+    for (const item of items) {
+      const mask = this.fnIndex(item, index);
+      indexedItems.push({
+        value: item,
+        mask,
+        score: 0
+      });
+    }
+    const { size: newLength } = index;
+    if (newLength > this.currentScores.length) {
+      const { currentScores: oldScore } = this;
+      this.reusableCurrentScoresBuffer = new Float32Array(newLength);
+      this.currentScores = new Float32Array(newLength);
+      this.currentScores.set(oldScore, 0);
+    }
+  }
+  reset() {
+    const { index } = this;
+    this.currentMask = this.resetToAll ? index.bitfield : 0n;
+    this.currentResults = null;
+    this.currentScores = new Float32Array(index.size);
+  }
+  search(property, condition, text, effect, weight) {
+    const newScores = this.reusableCurrentScoresBuffer.fill(0);
+    this.currentResults = null;
+    const column = this.index.column(property);
+    const searchResult = condition(column, column.normalize(text), newScores);
+    this.currentMask = effect(this.currentMask, searchResult);
+    const scoreWeight = weight ?? 1;
+    const scores = this.currentScores;
+    for (let i = 0, end = scores.length; i < end; i++) {
+      scores[i] += newScores[i] * scoreWeight;
+    }
+  }
+  get results() {
+    const cached = this.currentResults;
+    if (cached != null)
+      return cached;
+    const { currentMask, currentScores, fnCompare } = this;
+    const results = this.indexedItems.filter(({ mask }) => (currentMask & mask) > 0n);
+    results.forEach((item) => {
+      let mask = item.mask;
+      let score = 0;
+      for (let index = 0; mask > 0n; index++, mask >>= 1n) {
+        if ((mask & 1n) !== 0n)
+          score += currentScores[index];
+      }
+      item.score = score;
+    });
+    results.sort(fnCompare);
+    return this.currentResults = results.map(({ value }) => value);
+  }
+};
+
+// src/search/factory.ts
+var SearchFactory = class {
+  /**
+   * @param objects The objects to search through.
+   */
+  constructor(objects) {
+    this.columns = [];
+    this.metadataGenerators = [];
+    this.sortFunctions = [];
+    this.options = {};
+    this.items = objects;
+  }
+  /**
+   * Adds a column that can be searched.
+   *
+   * @param name The column name.
+   * @param property The property name of the string property to index, or a getter function to return some string.
+   * @param normalize A function to normalize the value.
+   */
+  withColumn(name, property, normalize) {
+    const getter = typeof property === "function" ? property : (obj) => [obj[property]];
+    this.columns.push({
+      name,
+      getter,
+      desc: {
+        normalize
+      }
+    });
+    return this;
+  }
+  /**
+   * Adds metadata to the search result items.
+   * This is useful for attaching cached data such as search previews.
+   *
+   * @param generator A function to generate the metadata.
+   */
+  withMetadata(generator) {
+    this.metadataGenerators.push(generator);
+    return this;
+  }
+  /**
+   * Adds a sorting rule to the search result items.
+   * @param comparator The comparator for the sorting rule.
+   */
+  withSorting(comparator) {
+    this.sortFunctions.push(comparator);
+    return this;
+  }
+  /**
+   * Changes if empty queries will be inclusive.
+   * @param enabled Whether enabled.
+   */
+  withInclusiveDefaults(enabled) {
+    this.options.resetToAll = enabled;
+    return this;
+  }
+  /**
+   * Builds the index and returns a search class.
+   */
+  build() {
+    const { metadataGenerators, sortFunctions, columns: columnGenerators } = this;
+    const compareFn = sortFunctions.length === 0 ? void 0 : sortFunctions.length === 1 ? sortFunctions[0] : combinedComparison(this.sortFunctions);
+    const items = this.items.map(
+      (item) => Object.assign({}, ...metadataGenerators.map((fn) => fn(item)), {
+        value: item,
+        computed: compareFn?.precompute?.(item)
+      })
+    );
+    const columns = Object.fromEntries(columnGenerators.map(({ name, desc }) => [name, desc]));
+    const indexFn = (item, index) => {
+      let field = 0n;
+      for (const { name, getter } of columnGenerators) {
+        const column = index.column(name);
+        for (const value of getter(item.value)) {
+          field = BitField.or(field, BitField.fromPosition(column.add(value)));
+        }
+      }
+      return field;
+    };
+    const search = new Search({
+      ...this.options,
+      columns,
+      indexItem: indexFn,
+      compareItem: compareFn
+    });
+    search.addItems(items);
+    return search;
+  }
+};
+
+// src/search/normalize.ts
+function casefold(text) {
+  return text.toLowerCase();
+}
+function unicode(text) {
+  return text.normalize("NFC");
+}
+function trimmed(text) {
+  return text.trim();
+}
+function combinedNormalization(fns) {
+  return (text) => {
+    for (const fn of fns) {
+      text = fn(text);
+    }
+    return text;
+  };
+}
+
+// src/search/query.ts
+var REGEX_NOT_WHITESPACE = /\S/g;
+var REGEX_FIELD_DELIMITER = /[ \\":]/g;
+var REGEX_QUERYOP_EFFECT = /[-+&]+/y;
+var REGEX_QUERYOP_FIELD = /[\w-]+/y;
+var REGEX_QUERYOP_CONDITION = /[\^=~%:]+|(?:\[(?:is|equals|matches|has|includes|contains)\]:)/y;
+function parseQuery(query) {
+  const ctx = new QueryParserContext(query);
+  const ops = [];
+  while (!ctx.done) {
+    ctx.take.trim();
+    ops.push(parseOperation(ctx));
+  }
+  return ops;
+}
+function parseOperation(ctx) {
+  ctx.stage.push("search term");
+  try {
+    const effect = parseOperationEffect(ctx);
+    let field = parseOperationField(ctx);
+    const condition = parseOperationCondition(ctx);
+    let text = ctx.done || ctx.peek.prefix(" ") ? null : parseText(ctx);
+    if (text == null && condition == null) {
+      text = field;
+      field = null;
+    }
+    if (text == "" && field == "" && effect == null && condition == null) {
+      throw new QuerySyntaxError(ctx, "Unexpected end");
+    }
+    if (text == "") {
+      throw new QuerySyntaxError(ctx, "Missing query text");
+    }
+    return {
+      field,
+      text,
+      condition,
+      effect
+    };
+  } finally {
+    ctx.stage.pop();
+  }
+}
+function parseOperationEffect(ctx) {
+  const [matches2] = ctx.take.findFirstRegex(REGEX_QUERYOP_EFFECT);
+  if (matches2 == null)
+    return null;
+  switch (matches2[0]) {
+    case "-":
+      return remove;
+    case "+":
+      return add;
+    case "&":
+      return filter;
+    default:
+      throw new QuerySyntaxError(
+        ctx,
+        `Unexpected symbol \`${matches2[1]}\`. Did you mean \`-\`, \`+\`, or \`&\`?`
+      );
+  }
+}
+function parseOperationField(ctx) {
+  const parts = [];
+  while (true) {
+    const [matches2] = ctx.take.findFirstRegex(REGEX_QUERYOP_FIELD);
+    if (matches2 != null) {
+      parts.push(matches2[0]);
+      continue;
+    }
+    if (ctx.peek.prefix("\\")) {
+      parts.push(parseEscapeSequence(ctx));
+      continue;
+    }
+    break;
+  }
+  return parts.join("");
+}
+function parseOperationCondition(ctx) {
+  const [matches2] = ctx.take.findFirstRegex(REGEX_QUERYOP_CONDITION);
+  if (matches2 == null)
+    return null;
+  const chr = matches2[0];
+  switch (chr) {
+    case ":":
+    case "[matches]:":
+      return matches;
+    case "=":
+    case "[equals]:":
+    case "[is]:":
+      return equals;
+    case "%=":
+    case "[includes]:":
+    case "[contains]:":
+      return includes;
+    case "^=":
+      return startsWith;
+    default:
+      throw new QuerySyntaxError(ctx, `Unexpected symbol \`${chr}\`. Did you mean \`:\`, \`=\`, or \`%=\`?`);
+  }
+}
+function parseText(ctx) {
+  ctx.stage.push("text");
+  try {
+    const parts = [];
+    let isQuoted = false;
+    while (true) {
+      const [matches2] = ctx.peek.findFirstRegex(REGEX_FIELD_DELIMITER);
+      if (matches2 == null) {
+        parts.push(ctx.take.remaining());
+        break;
+      }
+      parts.push(ctx.take.next(matches2.index - ctx.offset));
+      const chr = matches2[0];
+      if (chr === "\\") {
+        parts.push(parseEscapeSequence(ctx));
+        continue;
+      }
+      if (chr === " ") {
+        if (!isQuoted)
+          break;
+        ctx.take.next(chr.length);
+        parts.push(" ");
+        continue;
+      }
+      if (chr === '"') {
+        ctx.take.next(chr.length);
+        isQuoted = !isQuoted;
+        continue;
+      }
+      throw new QuerySyntaxError(ctx, `Unexpected symbol \`${chr}\``);
+    }
+    if (isQuoted) {
+      throw new QuerySyntaxError(ctx, 'Unexpected end of string while matching `"`');
+    }
+    return parts.join("");
+  } finally {
+    ctx.stage.pop();
+  }
+}
+function parseEscapeSequence(ctx) {
+  ctx.stage.push("escape sequence");
+  try {
+    if (!ctx.take.prefix("\\")) {
+      throw new QuerySyntaxError(ctx, "Not an escape sequence");
+    }
+    const chr = ctx.take.next(1);
+    switch (chr) {
+      case "\\":
+      case '"':
+      case "'":
+      case " ":
+        return chr;
+      case "n":
+        return "\n";
+      case "r":
+        return "\r";
+      case "x": {
+        const hex = ctx.take.next(2);
+        return hexStringToCharacter(ctx, hex);
+      }
+      case "u": {
+        if (ctx.peek.next(1) !== "{") {
+          return hexStringToCharacter(ctx, ctx.take.next(4));
+        }
+        const [matches2] = ctx.take.findLongestRegex(/\{([^}]+)\}/);
+        if (matches2 == null) {
+          throw new QuerySyntaxError(ctx, "Unexpected end of string while matching `{`");
+        }
+        return hexStringToCharacter(ctx, matches2[1]);
+      }
+      default: {
+        throw new QuerySyntaxError(ctx, `Unknown escape sequence (${chr})`);
+      }
+    }
+  } finally {
+    ctx.stage.pop();
+  }
+}
+function hexStringToCharacter(ctx, hex) {
+  if (!/^[A-Fa-f0-9]+$/.test(hex)) {
+    throw new QuerySyntaxError(ctx, `Invalid hex number \`${hex}\``);
+  }
+  const value = parseInt(hex, 16);
+  if (isNaN(value))
+    throw new QuerySyntaxError(ctx, `Invalid hex number \`${hex}\``);
+  return String.fromCharCode(value);
+}
+var QuerySyntaxError = class extends Error {
+  constructor(ctx, message) {
+    super(`Error parsing ${ctx.stage ?? "query"} at offset ${ctx.offset}: ${message}`);
+  }
+};
+var QueryParserContext = class {
+  constructor(source) {
+    this.source = source;
+    this._offset = 0;
+    this.take = new QueryParserContextFunctions(this, (n) => this._offset = n);
+    this.peek = new QueryParserContextFunctions(this, () => {
+    });
+    this.stage = [];
+  }
+  /**
+   * The current offset from the source.
+   */
+  get offset() {
+    return this._offset;
+  }
+  /**
+   * True if the source is fully consumed.
+   */
+  get done() {
+    return this._offset >= this.source.length;
+  }
+};
+var QueryParserContextFunctions = class {
+  constructor(ctx, setOffset) {
+    this.ctx = ctx;
+    this.setOffset = setOffset;
+  }
+  /**
+   * Checks if the next few characters are equal to a prefix string, and consumes them if they are.
+   * @param prefix The prefix string.
+   */
+  prefix(prefix) {
+    const { source, offset } = this.ctx;
+    if (source.substring(offset, offset + prefix.length) === prefix) {
+      this.setOffset(offset + prefix.length);
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Trims leading whitespace.
+   * @returns The leading whitespace.
+   */
+  trim() {
+    const { source, offset } = this.ctx;
+    REGEX_NOT_WHITESPACE.lastIndex = offset;
+    const match = REGEX_NOT_WHITESPACE.exec(source);
+    if (match == null) {
+      this.setOffset(source.length);
+      return source.substring(offset);
+    }
+    this.setOffset(match.index);
+    return source.substring(offset, match.index);
+  }
+  /**
+   * Consumes the next few characters.
+   * @param length The number of characters to consume.
+   */
+  maybeNext(length) {
+    const { source, offset } = this.ctx;
+    const substring = source.substring(offset, offset + length);
+    this.setOffset(offset + length);
+    return substring;
+  }
+  /**
+   * Consumes the next few characters.
+   * If the end of the string is reached, this will throw an error.
+   *
+   * @param length The number of characters to consume.
+   */
+  next(length) {
+    const { source, offset } = this.ctx;
+    const substring = source.substring(offset, offset + length);
+    if (substring.length < length)
+      throw new QuerySyntaxError(this.ctx, "Unexpected end");
+    this.setOffset(offset + length);
+    return substring;
+  }
+  /**
+   * Takes the remaining text.
+   * @returns The remaining text.
+   */
+  remaining() {
+    const { source, offset } = this.ctx;
+    this.setOffset(source.length);
+    return source.substring(offset);
+  }
+  /**
+   * Finds and consumes the longest matching regular expression.
+   * @param regexps The regular expressions.
+   */
+  findLongestRegex(...regexps) {
+    const { source, offset } = this.ctx;
+    let longestLength = 0;
+    const result = [null, null];
+    for (const regexp of regexps) {
+      regexp.lastIndex = offset;
+      const matches2 = regexp.exec(source);
+      if (matches2 != null && matches2[0].length > longestLength) {
+        longestLength = matches2[0].length;
+        result[0] = matches2;
+        result[1] = regexp;
+      }
+    }
+    const resultMatches = result[0];
+    if (resultMatches != null) {
+      this.setOffset(resultMatches.index + resultMatches[0].length);
+    }
+    return result;
+  }
+  /**
+   * Finds and consumes the first matching regular expression.
+   * @param length The regular expressions.
+   */
+  findFirstRegex(...regexps) {
+    const { source, offset } = this.ctx;
+    let firstMatch = source.length + 1;
+    const result = [null, null];
+    for (const regexp of regexps) {
+      regexp.lastIndex = offset;
+      const matches2 = regexp.exec(source);
+      if (matches2 != null && matches2.index < firstMatch) {
+        firstMatch = matches2.index;
+        result[0] = matches2;
+        result[1] = regexp;
+      }
+    }
+    const resultMatches = result[0];
+    if (resultMatches != null) {
+      this.setOffset(resultMatches.index + resultMatches[0].length);
+    }
+    return result;
+  }
+};
+
+// src/callout-search.ts
+function calloutSearch(callouts, options) {
+  const preview = options?.preview;
+  const defaultCondition = options?.defaultCondition ?? matches;
+  const standardNormalization = combinedNormalization([
+    casefold,
+    unicode,
+    trimmed,
+    (v) => v.replace(/[ -_.]+/g, "-")
+  ]);
+  const standardSorting = combinedComparison([compareColor, compareId]);
+  const search = new SearchFactory(callouts).withColumn("id", "id", standardNormalization).withColumn("icon", "icon", standardNormalization).withColumn("from", sourceGetter, standardNormalization).withColumn("snippet", snippetGetter, standardNormalization).withMetadata((callout) => preview == null ? {} : { preview: preview(callout) }).withInclusiveDefaults(true).withSorting(standardSorting).build();
+  return (query) => {
+    const ops = parseQuery(query);
+    search.reset();
+    for (const op of ops) {
+      let field = op.field;
+      if (field === "" || field == null)
+        field = "id";
+      if (op.text === "" || op.text == null)
+        continue;
+      search.search(field, op.condition ?? defaultCondition, op.text, op.effect ?? filter);
+    }
+    return search.results;
+  };
+}
+function snippetGetter(callout) {
+  const values = [];
+  for (const source of callout.sources) {
+    if (source.type !== "snippet")
+      continue;
+    values.push(source.snippet);
+  }
+  return values;
+}
+function sourceGetter(callout) {
+  const sources = [];
+  for (const source of callout.sources) {
+    switch (source.type) {
+      case "builtin":
+        sources.push("obsidian");
+        sources.push("builtin");
+        sources.push("built-in");
+        break;
+      case "custom":
+        sources.push("custom");
+        sources.push("user");
+        sources.push("callout-manager");
+        break;
+      default:
+        sources.push(source.type);
+    }
+  }
+  return sources;
+}
+
 // src/panes/create-callout-pane.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian21 = require("obsidian");
+
+// src/util/validity-set.ts
+var import_obsidian10 = require("obsidian");
+var ValiditySet = class {
+  constructor(reducer) {
+    this._emitter = new import_obsidian10.Events();
+    this._reducer = reducer;
+    this._lastReducedValidity = null;
+    this._cachedValidity = {};
+  }
+  /**
+   * The current validity.
+   */
+  get valid() {
+    const { _lastReducedValidity } = this;
+    if (_lastReducedValidity == null)
+      throw new Error("No validity available.");
+    return _lastReducedValidity;
+  }
+  /**
+   * Runs the provided function when the reduced validity changes.
+   *
+   * @param callback The callback to run.
+   * @returns An event ref.
+   */
+  onChange(callback) {
+    if (this._lastReducedValidity != null) {
+      callback(this._lastReducedValidity);
+    }
+    return this._emitter.on("change", callback);
+  }
+  /**
+   * Updates the provided component's disabled state when the reduced validity changes.
+   *
+   * @param component The component to update.
+   * @returns An event ref.
+   */
+  onChangeUpdateDisabled(component) {
+    return this.onChange((valid) => {
+      component.setDisabled(!valid);
+    });
+  }
+  /**
+   * Adds a validity source.
+   *
+   * @param id The source's unique ID.
+   * @returns A function for updating the validity.
+   */
+  addSource(id) {
+    return (valid) => {
+      const cachedValidity = this._cachedValidity[id];
+      if (cachedValidity === valid)
+        return;
+      this._cachedValidity[id] = valid;
+      const newValidity = this._reducer({ ...this._cachedValidity });
+      if (newValidity !== this._lastReducedValidity) {
+        this._lastReducedValidity = newValidity;
+        this._emitter.trigger("change", newValidity);
+      }
+    };
+  }
+};
+((ValiditySet2) => {
+  function AllValid(states) {
+    return !Object.values(states).includes(false);
+  }
+  ValiditySet2.AllValid = AllValid;
+})(ValiditySet || (ValiditySet = {}));
 
 // src/panes/edit-callout-pane/index.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian20 = require("obsidian");
 
 // src/panes/edit-callout-pane/appearance-type.ts
 function determineAppearanceType(settings) {
-  var _a;
-  return (_a = determineNonComplexAppearanceType(settings)) != null ? _a : {
+  return determineNonComplexAppearanceType(settings) ?? {
     type: "complex",
     settings
   };
 }
 function determineNonComplexAppearanceType(settings) {
-  var _a, _b;
   const settingsWithColorSchemeCondition = [];
   const settingsWithNoCondition = [];
   for (const setting of settings) {
@@ -1821,13 +2806,13 @@ function determineNonComplexAppearanceType(settings) {
     }
     return { type: "unified", color: otherChangesColor, otherChanges };
   }
-  const colorDark = (_a = colorSchemeColor.dark) != null ? _a : colorSchemeColor.light;
-  const colorLight = (_b = colorSchemeColor.light) != null ? _b : colorSchemeColor.dark;
+  const colorDark = colorSchemeColor.dark ?? colorSchemeColor.light;
+  const colorLight = colorSchemeColor.light ?? colorSchemeColor.dark;
   return { type: "per-scheme", colorDark, colorLight, otherChanges };
 }
 
 // src/panes/edit-callout-pane/editor-complex.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 
 // src/panes/edit-callout-pane/appearance-editor.ts
 var AppearanceEditor = class {
@@ -1854,7 +2839,7 @@ var ComplexAppearanceEditor = class extends AppearanceEditor {
       text: "Alternatively, you can reset the callout by clicking the button below twice."
     });
     let resetButtonClicked = false;
-    const resetButton = new import_obsidian6.ButtonComponent(containerEl).setButtonText("Reset Callout").setClass("calloutmanager-edit-callout-appearance-reset").setWarning().onClick(() => {
+    const resetButton = new import_obsidian11.ButtonComponent(containerEl).setButtonText("Reset Callout").setClass("calloutmanager-edit-callout-appearance-reset").setWarning().onClick(() => {
       if (!resetButtonClicked) {
         resetButtonClicked = true;
         resetButton.setButtonText("Are you sure?");
@@ -1866,11 +2851,11 @@ var ComplexAppearanceEditor = class extends AppearanceEditor {
 };
 
 // src/ui/setting/callout-color.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 
 // src/ui/component/reset-button.ts
-var import_obsidian7 = require("obsidian");
-var ResetButtonComponent = class extends import_obsidian7.ExtraButtonComponent {
+var import_obsidian12 = require("obsidian");
+var ResetButtonComponent = class extends import_obsidian12.ExtraButtonComponent {
   constructor(containerEl) {
     super(containerEl);
     this.setIcon("lucide-undo");
@@ -1878,8 +2863,27 @@ var ResetButtonComponent = class extends import_obsidian7.ExtraButtonComponent {
   }
 };
 
+// src/default_colors.json
+var defaultColors = {
+  "82, 139, 212": "blue",
+  "83, 223, 221": "cyan",
+  "68, 207, 110": "green",
+  "233, 151, 63": "orange",
+  "251, 70, 76": "red",
+  "168, 130, 255": "purple",
+  "166, 189, 197": "gray",
+  "158, 158, 158": "light gray",
+  "208, 181, 48": "yellow",
+  "227, 107, 167": "pink",
+  "161, 106, 73": "brown",
+  "0, 0, 0": "black"
+};
+var default_colors_default = {
+  defaultColors
+};
+
 // src/ui/setting/callout-color.ts
-var CalloutColorSetting = class extends import_obsidian8.Setting {
+var CalloutColorSetting = class extends import_obsidian13.Setting {
   constructor(containerEl, callout) {
     super(containerEl);
     this.onChanged = void 0;
@@ -1888,18 +2892,21 @@ var CalloutColorSetting = class extends import_obsidian8.Setting {
     this.addColorPicker((picker) => {
       this.colorComponent = picker;
       picker.onChange(() => {
-        var _a;
         const { r, g, b } = this.getColor();
-        (_a = this.onChanged) == null ? void 0 : _a.call(this, `${r}, ${g}, ${b}`);
+        this.onChanged?.(`${r}, ${g}, ${b}`);
       });
     });
+    this.dropdownComponent = new import_obsidian13.DropdownComponent(this.controlEl).then((dropdown) => {
+      dropdown.addOptions(defaultColors);
+      dropdown.onChange((value) => {
+        this.setColorString(value);
+      });
+    });
+    this.components.push(this.dropdownComponent);
     this.components.push(
       new ResetButtonComponent(this.controlEl).then((btn) => {
         this.resetComponent = btn;
-        btn.onClick(() => {
-          var _a;
-          return (_a = this.onChanged) == null ? void 0 : _a.call(this, void 0);
-        });
+        btn.onClick(() => this.onChanged?.(void 0));
       })
     );
     this.setColor(void 0);
@@ -1912,11 +2919,10 @@ var CalloutColorSetting = class extends import_obsidian8.Setting {
    * @returns `this`, for chaining.
    */
   setColorString(color) {
-    var _a;
     if (color == null) {
       return this.setColor(void 0);
     }
-    return this.setColor((_a = parseColorRGB(`rgb(${color})`)) != null ? _a : { r: 0, g: 0, b: 0 });
+    return this.setColor(parseColorRGB(`rgb(${color})`) ?? { r: 0, g: 0, b: 0 });
   }
   /**
    * Sets the color.
@@ -1925,15 +2931,19 @@ var CalloutColorSetting = class extends import_obsidian8.Setting {
    * @returns `this`, for chaining.
    */
   setColor(color) {
-    var _a;
     const isDefault = this.isDefault = color == null;
     if (color == null) {
-      color = (_a = getColorFromCallout(this.callout)) != null ? _a : { r: 0, g: 0, b: 0 };
+      color = getColorFromCallout(this.callout) ?? { r: 0, g: 0, b: 0 };
     }
     if (color instanceof Array) {
       color = { r: color[0], g: color[1], b: color[2] };
     }
     this.colorComponent.setValueRgb(color);
+    if (`${color.r}, ${color.g}, ${color.b}` in defaultColors) {
+      this.dropdownComponent.setValue(`${color.r}, ${color.g}, ${color.b}`);
+    } else {
+      this.dropdownComponent.setValue("");
+    }
     this.resetComponent.setDisabled(isDefault).setTooltip(isDefault ? "" : "Reset Color");
     return this;
   }
@@ -1950,14 +2960,14 @@ var CalloutColorSetting = class extends import_obsidian8.Setting {
 };
 
 // src/ui/setting/callout-icon.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 
 // src/panes/select-icon-pane.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 
 // src/ui/component/icon-preview.ts
-var import_obsidian9 = require("obsidian");
-var IconPreviewComponent = class extends import_obsidian9.Component {
+var import_obsidian14 = require("obsidian");
+var IconPreviewComponent = class extends import_obsidian14.Component {
   constructor(containerEl) {
     super();
     this.componentEl = containerEl.createEl("button", { cls: "calloutmanager-icon-preview" });
@@ -1972,7 +2982,7 @@ var IconPreviewComponent = class extends import_obsidian9.Component {
    * @returns This, for chaining.
    */
   setIcon(icon) {
-    const iconSvg = (0, import_obsidian9.getIcon)(icon);
+    const iconSvg = (0, import_obsidian14.getIcon)(icon);
     this.componentEl.setAttribute("data-icon-id", icon);
     this.idEl.textContent = icon;
     this.iconEl.empty();
@@ -1997,18 +3007,17 @@ var IconPreviewComponent = class extends import_obsidian9.Component {
 var recentIcons = /* @__PURE__ */ new Set();
 var SelectIconPane = class extends UIPane {
   constructor(plugin, title, options) {
-    var _a;
     super();
     this.title = title;
     this.plugin = plugin;
     this.onChoose = options.onChoose;
-    this.previewLimit = (_a = options.limit) != null ? _a : 250;
+    this.previewLimit = options.limit ?? 250;
     this.previewLimitOverage = 0;
     this.searchQuery = "";
     this.searchResults = [];
     const usedIconIds = new Set(plugin.callouts.values().map((c) => c.icon));
     const usedIcons = this.usedIcons = /* @__PURE__ */ new Map();
-    this.allIcons = (0, import_obsidian10.getIconIds)().map((id) => {
+    this.allIcons = (0, import_obsidian15.getIconIds)().map((id) => {
       const icon = {
         id,
         searchId: id.trim().toLowerCase(),
@@ -2021,10 +3030,9 @@ var SelectIconPane = class extends UIPane {
       return icon;
     });
     this.compareIcons = ({ id: a, searchId: aLC, searchResult: aSR }, { id: b, searchId: bLC, searchResult: bSR }) => {
-      var _a2, _b;
       const recency = (recentIcons.has(b) ? 1 : 0) - (recentIcons.has(a) ? 1 : 0);
       const suggested = (usedIcons.has(b) ? 1 : 0) - (usedIcons.has(a) ? 1 : 0);
-      const searchRank = ((_a2 = bSR == null ? void 0 : bSR.score) != null ? _a2 : 0) - ((_b = aSR == null ? void 0 : aSR.score) != null ? _b : 0);
+      const searchRank = (bSR?.score ?? 0) - (aSR?.score ?? 0);
       const sum = recency + suggested + searchRank;
       if (sum !== 0)
         return sum;
@@ -2040,7 +3048,7 @@ var SelectIconPane = class extends UIPane {
     if (query === "") {
       this.resetSearchResults();
     } else {
-      const search = (0, import_obsidian10.prepareFuzzySearch)(query.trim().toLowerCase());
+      const search = (0, import_obsidian15.prepareFuzzySearch)(query.trim().toLowerCase());
       this.calculateSearchResults((icon) => search(icon.searchId));
     }
     this.display();
@@ -2108,7 +3116,7 @@ var SelectIconPane = class extends UIPane {
   /** @override */
   displayControls() {
     const { controlsEl } = this;
-    new import_obsidian10.TextComponent(controlsEl).setValue(this.searchQuery).setPlaceholder("Search icons...").onChange(this.search.bind(this));
+    new import_obsidian15.TextComponent(controlsEl).setValue(this.searchQuery).setPlaceholder("Search icons...").onChange(this.search.bind(this));
   }
   /** @override */
   onReady() {
@@ -2117,7 +3125,7 @@ var SelectIconPane = class extends UIPane {
 };
 
 // src/ui/setting/callout-icon.ts
-var CalloutIconSetting = class extends import_obsidian11.Setting {
+var CalloutIconSetting = class extends import_obsidian16.Setting {
   constructor(containerEl, callout, plugin, getNav) {
     super(containerEl);
     this.onChanged = void 0;
@@ -2128,20 +3136,14 @@ var CalloutIconSetting = class extends import_obsidian11.Setting {
       this.buttonComponent = btn;
       btn.onClick(() => {
         getNav().open(
-          new SelectIconPane(plugin, "Select Icon", { onChoose: (icon) => {
-            var _a;
-            return (_a = this.onChanged) == null ? void 0 : _a.call(this, icon);
-          } })
+          new SelectIconPane(plugin, "Select Icon", { onChoose: (icon) => this.onChanged?.(icon) })
         );
       });
     });
     this.components.push(
       new ResetButtonComponent(this.controlEl).then((btn) => {
         this.resetComponent = btn;
-        btn.onClick(() => {
-          var _a;
-          return (_a = this.onChanged) == null ? void 0 : _a.call(this, void 0);
-        });
+        btn.onClick(() => this.onChanged?.(void 0));
       })
     );
     this.setIcon(void 0);
@@ -2154,8 +3156,8 @@ var CalloutIconSetting = class extends import_obsidian11.Setting {
    */
   setIcon(icon) {
     const isDefault = this.isDefault = icon == null;
-    const iconName = this.iconName = icon != null ? icon : this.callout.icon;
-    const iconExists = (0, import_obsidian11.getIcon)(iconName) != null;
+    const iconName = this.iconName = icon ?? this.callout.icon;
+    const iconExists = (0, import_obsidian16.getIcon)(iconName) != null;
     if (iconExists) {
       this.buttonComponent.setIcon(iconName);
     } else {
@@ -2165,8 +3167,7 @@ var CalloutIconSetting = class extends import_obsidian11.Setting {
     return this;
   }
   getIcon() {
-    var _a;
-    return (_a = this.iconName) != null ? _a : this.callout.icon;
+    return this.iconName ?? this.callout.icon;
   }
   isDefaultIcon() {
     return this.isDefault;
@@ -2220,7 +3221,7 @@ var PerSchemeAppearanceEditor = class extends AppearanceEditor {
 };
 
 // src/panes/edit-callout-pane/editor-unified.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 var UnifiedAppearanceEditor = class extends AppearanceEditor {
   /** @override */
   toSettings() {
@@ -2232,7 +3233,7 @@ var UnifiedAppearanceEditor = class extends AppearanceEditor {
     if (color === void 0) {
       delete changes.color;
     }
-    return [{ changes }];
+    return Object.keys(changes).length === 0 ? [] : [{ changes }];
   }
   render() {
     const { plugin, containerEl, callout, setAppearance } = this;
@@ -2240,9 +3241,9 @@ var UnifiedAppearanceEditor = class extends AppearanceEditor {
     const colorScheme = getCurrentThemeID2(plugin.app);
     const otherColorScheme = colorScheme === "dark" ? "light" : "dark";
     new CalloutColorSetting(containerEl, callout).setName("Color").setDesc("Change the color of the callout.").setColorString(color).onChange((color2) => setAppearance({ type: "unified", otherChanges, color: color2 }));
-    new import_obsidian12.Setting(containerEl).setName(`Color Scheme`).setDesc(`Change the color of the callout for the ${otherColorScheme} color scheme.`).addButton(
+    new import_obsidian17.Setting(containerEl).setName(`Color Scheme`).setDesc(`Change the color of the callout for the ${otherColorScheme} color scheme.`).addButton(
       (btn) => btn.setClass("clickable-icon").setIcon("lucide-sun-moon").onClick(() => {
-        const currentColor = color != null ? color : callout.color;
+        const currentColor = color ?? callout.color;
         setAppearance({
           type: "per-scheme",
           colorDark: currentColor,
@@ -2252,6 +3253,58 @@ var UnifiedAppearanceEditor = class extends AppearanceEditor {
       })
     );
     new CalloutIconSetting(containerEl, callout, plugin, () => this.nav).setName("Icon").setDesc("Change the callout icon.").setIcon(otherChanges.icon).onChange((icon) => setAppearance({ type: "unified", color, otherChanges: { ...otherChanges, icon } }));
+  }
+};
+
+// src/panes/edit-callout-pane/misc-editor.ts
+var import_obsidian18 = require("obsidian");
+var MiscEditor = class {
+  constructor(plugin, callout, containerEl, viewOnly) {
+    this.plugin = plugin;
+    this.callout = callout;
+    this.containerEl = containerEl;
+    this.viewOnly = viewOnly;
+    this.renameSetting = this.createRenameSetting();
+  }
+  /**
+   * Renders the editors.
+   */
+  render() {
+    this.containerEl.empty();
+    if (this.viewOnly)
+      return;
+    if (this.renameSetting != null)
+      this.containerEl.appendChild(this.renameSetting.settingEl);
+  }
+  createRenameSetting() {
+    const { plugin, containerEl, callout } = this;
+    if (callout.sources.length !== 1 || callout.sources[0].type !== "custom")
+      return null;
+    const validity = new ValiditySet(ValiditySet.AllValid);
+    const desc = document.createDocumentFragment();
+    desc.createEl("p", { text: "Change the name of this callout." });
+    desc.createEl("p", { text: "This will not update any references in your notes!", cls: "mod-warning" });
+    let newIdComponent;
+    return new import_obsidian18.Setting(containerEl).setName(`Rename`).setDesc(desc).addText((cmp) => {
+      newIdComponent = cmp;
+      cmp.setValue(callout.id).setPlaceholder(callout.id);
+      const isUnusedId = validity.addSource("unused");
+      cmp.onChange((value) => {
+        const alreadyExists = plugin.callouts.has(value);
+        isUnusedId(!alreadyExists);
+        cmp.inputEl.classList.toggle("invalid", alreadyExists);
+      });
+      makeTextComponentValidateCalloutID(cmp, "id", validity);
+    }).addButton((btn) => {
+      validity.onChangeUpdateDisabled(btn);
+      btn.setIcon("lucide-clipboard-signature").setTooltip("Rename").then(({ buttonEl }) => buttonEl.classList.add("clickable-icon", "mod-warning")).onClick(() => {
+        if (!validity.valid)
+          return;
+        const newId = newIdComponent.getValue();
+        plugin.renameCustomCallout(callout.id, newId);
+        this.nav.replace(new EditCalloutPane(plugin, newId, this.viewOnly));
+      });
+    });
   }
 };
 
@@ -2307,12 +3360,11 @@ function appendColorInfo(el, callout) {
   el.appendText("the color ");
   el.createEl(
     "code",
-    { cls: "calloutmanager-edit-callout--callout-color", text: toHexRGB(calloutColor) },
+    { cls: "calloutmanager-edit-callout--callout-color", text: describeColor(calloutColor) },
     (colorEl) => colorEl.style.setProperty("--resolved-callout-color", callout.color)
   );
 }
 function appendSourceInfo(app2, el, source) {
-  var _a, _b;
   switch (source.type) {
     case "builtin":
       el.appendText("built-in callouts");
@@ -2329,15 +3381,24 @@ function appendSourceInfo(app2, el, source) {
       return true;
     case "theme": {
       el.appendText("theme ");
-      const themeName = (_b = (_a = getThemeManifest(app2, source.theme)) == null ? void 0 : _a.name) != null ? _b : source.theme;
+      const themeName = getThemeManifest(app2, source.theme)?.name ?? source.theme;
       el.createSpan({ cls: "calloutmanager-edit-callout--callout-source", text: themeName });
       return true;
     }
   }
 }
+function describeColor(color) {
+  const hexString = toHexRGB(color);
+  const rgbString = `${color.r}, ${color.g}, ${color.b}`;
+  const namedColor = default_colors_default.defaultColors[rgbString];
+  if (namedColor != null) {
+    return namedColor;
+  }
+  return hexString;
+}
 
 // src/panes/edit-callout-pane/section-preview.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian19 = require("obsidian");
 var EditCalloutPanePreview = class {
   constructor(plugin, callout, viewOnly) {
     this.previewMarkdown = "Lorem ipsum dolor sit amet.";
@@ -2351,7 +3412,7 @@ var EditCalloutPanePreview = class {
     });
     this.preview = new IsolatedCalloutPreviewComponent(this.sectionEl, {
       id: callout.id,
-      title: callout.id,
+      title: getTitleFromCallout(callout),
       icon: callout.icon,
       colorScheme: getCurrentThemeID2(plugin.app),
       content: (containerEl) => {
@@ -2371,7 +3432,7 @@ var EditCalloutPanePreview = class {
       }
       const height = contentEl.getBoundingClientRect().height;
       contentEl.empty();
-      new import_obsidian13.TextAreaComponent(contentEl).setValue(this.previewMarkdown).setPlaceholder("Preview Markdown...").then((c) => {
+      new import_obsidian19.TextAreaComponent(contentEl).setValue(this.previewMarkdown).setPlaceholder("Preview Markdown...").then((c) => {
         const inputEl = this.previewEditorEl = c.inputEl;
         inputEl.style.setProperty("height", `${height}px`);
         inputEl.classList.add("calloutmanager-preview-editor");
@@ -2390,11 +3451,10 @@ var EditCalloutPanePreview = class {
    * We need to do this after the preview is attached to DOM, as we can't get the correct icon until that happens.
    */
   refreshPreviewIcon() {
-    var _a;
     const { iconEl, calloutEl } = this.preview;
     if (window.document.contains(this.sectionEl)) {
       const icon = window.getComputedStyle(calloutEl).getPropertyValue("--callout-icon").trim();
-      const iconSvg = (_a = (0, import_obsidian13.getIcon)(icon)) != null ? _a : document.createElement("svg");
+      const iconSvg = (0, import_obsidian19.getIcon)(icon) ?? document.createElement("svg");
       iconEl.empty();
       iconEl.appendChild(iconSvg);
       this.calloutHasIconReady = true;
@@ -2409,7 +3469,7 @@ var EditCalloutPanePreview = class {
     const contentEl = this.preview.contentEl;
     contentEl.empty();
     try {
-      await import_obsidian13.MarkdownRenderer.renderMarkdown(markdown, contentEl, "", void 0);
+      await import_obsidian19.MarkdownRenderer.renderMarkdown(markdown, contentEl, "", void 0);
     } catch (ex) {
       contentEl.createEl("code").createEl("pre", { text: markdown });
     }
@@ -2445,17 +3505,26 @@ var EditCalloutPanePreview = class {
 var IMPOSSIBLE_CALLOUT_ID = "[not a real callout]";
 var EditCalloutPane = class extends UIPane {
   constructor(plugin, id, viewOnly) {
-    var _a, _b;
     super();
     this.plugin = plugin;
     this.viewOnly = viewOnly;
     this.title = { title: "Callout", subtitle: id };
-    this.callout = (_a = plugin.callouts.get(id)) != null ? _a : {
+    this.callout = plugin.callouts.get(id) ?? {
       sources: [{ type: "custom" }],
       ...plugin.calloutResolver.getCalloutProperties(IMPOSSIBLE_CALLOUT_ID),
       id
     };
     this.previewSection = new EditCalloutPanePreview(plugin, this.callout, false);
+    this.miscEditorContainerEl = document.createElement("div");
+    this.miscEditorContainerEl.classList.add(
+      "calloutmanager-edit-callout-section",
+      "calloutmanager-edit-callout-section--noborder",
+      "calloutmanager-edit-callout-misc"
+    );
+    this.miscEditor = new MiscEditor(plugin, this.callout, this.miscEditorContainerEl, viewOnly);
+    Object.defineProperty(this.miscEditor, "nav", {
+      get: () => this.nav
+    });
     this.appearanceEditorContainerEl = document.createElement("div");
     this.appearanceEditorContainerEl.classList.add(
       "calloutmanager-edit-callout-section",
@@ -2463,12 +3532,12 @@ var EditCalloutPane = class extends UIPane {
     );
     this.appearanceEditorContainerEl.createEl("h2", { text: "Appearance" });
     this.appearanceEditorEl = this.appearanceEditorContainerEl.createDiv();
-    this.changeSettings((_b = plugin.getCalloutSettings(id)) != null ? _b : []);
+    this.changeSettings(plugin.getCalloutSettings(id) ?? []);
   }
   changeAppearanceEditor(newAppearance) {
     const oldAppearance = this.appearance;
     this.appearance = newAppearance;
-    if (newAppearance.type !== (oldAppearance == null ? void 0 : oldAppearance.type)) {
+    if (newAppearance.type !== oldAppearance?.type) {
       this.appearanceEditor = new APPEARANCE_EDITORS[newAppearance.type]();
       Object.defineProperties(this.appearanceEditor, {
         nav: { get: () => this.nav },
@@ -2499,17 +3568,18 @@ var EditCalloutPane = class extends UIPane {
   }
   /** @override */
   display() {
-    const { containerEl, previewSection, appearanceEditorContainerEl } = this;
+    const { containerEl, previewSection, appearanceEditorContainerEl, miscEditorContainerEl } = this;
     containerEl.empty();
     previewSection.attach(containerEl);
     renderInfo(this.plugin.app, this.callout, containerEl);
+    containerEl.appendChild(miscEditorContainerEl);
     containerEl.appendChild(appearanceEditorContainerEl);
   }
   /** @override */
   displayControls() {
     const { callout, controlsEl } = this;
     if (!this.viewOnly && callout.sources.length === 1 && callout.sources[0].type === "custom") {
-      new import_obsidian14.ButtonComponent(controlsEl).setIcon("lucide-trash").setTooltip("Delete Callout").onClick(() => {
+      new import_obsidian20.ButtonComponent(controlsEl).setIcon("lucide-trash").setTooltip("Delete Callout").onClick(() => {
         this.plugin.removeCustomCallout(callout.id);
         this.nav.close();
       }).then(({ buttonEl }) => buttonEl.classList.add("clickable-icon", "mod-warning"));
@@ -2532,6 +3602,7 @@ var EditCalloutPane = class extends UIPane {
     this.changeAppearanceEditor(determineAppearanceType(settings));
     this.appearanceEditorEl.empty();
     this.appearanceEditor.render();
+    this.miscEditor.render();
     await this.previewSection.changeSettings(settings);
   }
 };
@@ -2547,28 +3618,25 @@ var CreateCalloutPane = class extends UIPane {
     super();
     this.title = { title: "Callouts", subtitle: "New Callout" };
     this.plugin = plugin;
+    this.validity = new ValiditySet(ValiditySet.AllValid);
     const btnCreate = this.btnCreate = document.createElement("button");
     btnCreate.textContent = "Create";
     btnCreate.addEventListener("click", (evt) => {
-      if (!this.areInputsValid()) {
+      if (!this.validity.valid) {
         return;
       }
-      const id = this.fieldIdEl.value;
+      const id = this.fieldIdComponent.getValue();
       this.plugin.createCustomCallout(id);
       this.nav.replace(new EditCalloutPane(this.plugin, id, false));
     });
-    this.fieldId = new import_obsidian15.Setting(document.createElement("div")).setHeading().setName("Callout Name").setDesc("This is how you will refer to your callout in Markdown.").addText((cmp) => {
-      cmp.setPlaceholder("my-awesome-callout").onChange(() => this.validateInputs()).then(({ inputEl }) => this.fieldIdEl = inputEl).then(({ inputEl }) => inputEl.setAttribute("pattern", "[a-z-]{1,}")).then(({ inputEl }) => inputEl.setAttribute("required", "required"));
+    this.fieldId = new import_obsidian21.Setting(document.createElement("div")).setHeading().setName("Callout Name").setDesc("This is how you will refer to your callout in Markdown.").addText((cmp) => {
+      this.fieldIdComponent = cmp;
+      cmp.setPlaceholder("my-awesome-callout");
+      makeTextComponentValidateCalloutID(cmp, "id", this.validity);
     });
-    this.validateInputs();
-  }
-  validateInputs() {
-    this.btnCreate.disabled = !this.areInputsValid();
-  }
-  areInputsValid() {
-    if (!this.fieldIdEl.validity.valid)
-      return false;
-    return true;
+    this.validity.onChange((valid) => {
+      this.btnCreate.disabled = !valid;
+    });
   }
   /** @override */
   display() {
@@ -2577,6 +3645,19 @@ var CreateCalloutPane = class extends UIPane {
     containerEl.createDiv().appendChild(this.btnCreate);
   }
 };
+function makeTextComponentValidateCalloutID(cmp, id, vs) {
+  cmp.then(({ inputEl }) => {
+    const update = vs.addSource(id);
+    inputEl.setAttribute("pattern", "^[a-z\\-]{1,}$");
+    inputEl.setAttribute("required", "required");
+    inputEl.addEventListener("change", onChange);
+    inputEl.addEventListener("input", onChange);
+    update(inputEl.validity.valid);
+    function onChange() {
+      update(inputEl.validity.valid);
+    }
+  });
+}
 
 // src/panes/manage-callouts-pane.ts
 var ManageCalloutsPane = class extends UIPane {
@@ -2584,200 +3665,137 @@ var ManageCalloutsPane = class extends UIPane {
     super();
     this.title = { title: "Callouts", subtitle: "Manage" };
     this.plugin = plugin;
-    this.searchQuery = "";
-    this.searchFilter = null;
-    this.previewCache = [];
     this.viewOnly = false;
+    this.searchQuery = "";
     const { searchErrorDiv, searchErrorQuery } = createEmptySearchResultDiv();
     this.searchErrorDiv = searchErrorDiv;
     this.searchErrorQuery = searchErrorQuery;
   }
   /**
-   * Change the search query.
+   * Change the search query and re-render the panel.
    * @param query The search query.
    */
   search(query) {
-    const split = query.split(":", 2);
-    let prefix = "id", search = query;
-    if (split.length === 2) {
-      prefix = split[0];
-      search = split[1].trim();
-    }
-    this.searchFilter = this.prepareSearch(search, prefix);
-    this.searchQuery = query;
-    this.searchErrorQuery.textContent = search;
+    this.doSearch(query);
     this.display();
   }
-  /**
-   * Prepares the search filter function.
-   *
-   * @param query The query.
-   * @param queryPrefix The query prefix (type of query).
-   *
-   * @returns The search filter function.
-   */
-  prepareSearch(query, queryPrefix) {
-    if (queryPrefix === "id") {
-      const fuzzy = (0, import_obsidian16.prepareFuzzySearch)(query.toLowerCase());
-      return (callout) => fuzzy(callout.id);
+  doSearch(query) {
+    try {
+      this.callouts = this.searchFn(query);
+      this.setSearchError?.(false);
+    } catch (ex) {
+      this.setSearchError?.(ex.message);
     }
-    if (queryPrefix === "icon") {
-      const fuzzy = (0, import_obsidian16.prepareFuzzySearch)(query.toLowerCase());
-      return (callout) => fuzzy(callout.icon.toLowerCase());
-    }
-    if (queryPrefix === "from") {
-      const queryLC = query.toLowerCase();
-      const queryIsBuiltin = queryLC === "obsidian" || queryLC === "builtin" || queryLC === "built-in";
-      const fuzzy = (0, import_obsidian16.prepareFuzzySearch)(queryLC);
-      const hasSnippetWithQueryAsId = this.plugin.callouts.snippets.keys().find((id) => id.toLowerCase() === queryLC) !== void 0;
-      return (callout) => {
-        let result = null;
-        if (query === "")
-          return { matches: [], score: 0 };
-        for (const source of callout.sources) {
-          if (hasSnippetWithQueryAsId) {
-            if (source.type === "snippet" && source.snippet.toLowerCase() === queryLC)
-              return { matches: [], score: -1 };
-            continue;
-          }
-          switch (source.type) {
-            case "builtin":
-              if (queryIsBuiltin)
-                return { matches: [], score: -1 };
-              break;
-            case "custom":
-              if (queryLC === "custom")
-                return { matches: [], score: -1 };
-              break;
-            case "theme":
-              if (queryLC === "theme")
-                return { matches: [], score: -1 };
-              break;
-            case "snippet": {
-              const snippetLC = source.snippet.toLowerCase();
-              if (snippetLC === queryLC)
-                return { matches: [], score: -1 };
-              const fuzzily = fuzzy(snippetLC);
-              if (fuzzily != null && (result == null || fuzzily.score < result.score)) {
-                result = fuzzily;
-              }
-            }
-          }
-        }
-        return result;
-      };
-    }
-    return () => null;
-  }
-  /**
-   * Filter and sort callout previews based on the fuzzy search query.
-   * If there is no search query, previews will be sorted based on color.
-   *
-   * @param previews The previews to filter and sort.
-   * @returns The filtered and sorted previews.
-   */
-  filterAndSort(previews) {
-    const { searchFilter } = this;
-    if (searchFilter == null) {
-      return previews.sort(comparePreviewByColor);
-    }
-    const filterMapped = [];
-    for (const preview of previews) {
-      const result = searchFilter(preview);
-      if (result != null) {
-        filterMapped.push([preview, result]);
-      }
-    }
-    filterMapped.sort(([aPreview, aResults], [bPreview, bResults]) => {
-      const scoreDiff = bResults.score - aResults.score;
-      if (scoreDiff != 0)
-        return scoreDiff;
-      return comparePreviewByColor(aPreview, bPreview);
-    });
-    return filterMapped.map(([preview, _]) => preview);
   }
   /**
    * Refresh the callout previews.
    * This regenerates the previews and their metadata from the list of callouts known to the plugin.
    */
-  refreshPreviews() {
-    var _a;
-    const editButtonContent = (_a = this.viewOnly ? (0, import_obsidian16.getIcon)("lucide-view") : (0, import_obsidian16.getIcon)("lucide-edit")) != null ? _a : document.createTextNode("Edit Callout");
-    const editButtonHandler = (evt) => {
-      let id = null;
-      for (let target = evt.targetNode; target != null && id == null; target = target == null ? void 0 : target.parentElement) {
-        if (target instanceof Element) {
-          id = target.getAttribute("data-callout-manager-callout");
-        }
+  invalidate() {
+    const { plugin, viewOnly } = this;
+    this.searchFn = calloutSearch(plugin.callouts.values(), {
+      preview: createPreviewFactory(viewOnly)
+    });
+    this.doSearch(this.searchQuery);
+  }
+  onCalloutButtonClick(evt) {
+    let id = null;
+    let action = null;
+    for (let target = evt.targetNode; target != null && (id == null || action == null); target = target?.parentElement) {
+      if (!(target instanceof Element))
+        continue;
+      if (id == null) {
+        id = target.getAttribute("data-callout-manager-callout");
       }
-      if (id != null) {
-        this.nav.open(new EditCalloutPane(this.plugin, id, this.viewOnly));
+      if (action == null) {
+        action = target.getAttribute("data-callout-manager-action");
       }
-    };
-    this.previewCache = [];
-    for (const callout of this.plugin.callouts.values()) {
-      const calloutContainerEl = document.createElement("div");
-      calloutContainerEl.classList.add("calloutmanager-preview-container");
-      calloutContainerEl.setAttribute("data-callout-manager-callout", callout.id);
-      this.previewCache.push(createPreview(callout, calloutContainerEl));
-      calloutContainerEl.classList.add("calloutmanager-preview-container-with-button");
-      const editButton = calloutContainerEl.createEl("button");
-      editButton.appendChild(editButtonContent.cloneNode(true));
-      editButton.addEventListener("click", editButtonHandler);
+    }
+    if (id == null || action == null) {
+      return;
+    }
+    if (action === "edit") {
+      this.nav.open(new EditCalloutPane(this.plugin, id, this.viewOnly));
+    } else if (action === "insert") {
+      const view = app.workspace.getActiveViewOfType(import_obsidian22.MarkdownView);
+      if (view) {
+        const cursor = view.editor.getCursor();
+        view.editor.replaceRange(
+          `> [!${id}]
+> Contents`,
+          cursor
+        );
+        view.editor.setCursor(cursor.line + 1, 10);
+        closeSettings(app);
+      }
     }
   }
   /** @override */
   display() {
+    const contentEl = document.createDocumentFragment().createDiv();
+    contentEl.addEventListener("click", this.onCalloutButtonClick.bind(this));
+    const { callouts } = this;
+    for (const callout of callouts) {
+      contentEl.appendChild(callout.preview);
+    }
+    if (callouts.length === 0) {
+      contentEl.appendChild(this.searchErrorDiv);
+    }
     const { containerEl } = this;
-    const previews = this.filterAndSort(this.previewCache);
     containerEl.empty();
-    for (const preview of previews) {
-      containerEl.appendChild(preview.calloutContainerEl);
-    }
-    if (previews.length === 0) {
-      containerEl.appendChild(this.searchErrorDiv);
-    }
+    containerEl.appendChild(contentEl);
   }
   /** @override */
   displayControls() {
     const { controlsEl } = this;
-    new import_obsidian16.TextComponent(controlsEl).setValue(this.searchQuery).setPlaceholder("Filter callouts...").onChange(this.search.bind(this));
+    const filter2 = new import_obsidian22.TextComponent(controlsEl).setValue(this.searchQuery).setPlaceholder("Filter callouts...").onChange(this.search.bind(this));
+    this.setSearchError = (message) => {
+      filter2.inputEl.classList.toggle("mod-error", !!message);
+      if (message) {
+        filter2.inputEl.setAttribute("aria-label", message);
+      } else {
+        filter2.inputEl.removeAttribute("aria-label");
+      }
+    };
     if (!this.viewOnly) {
-      new import_obsidian16.ButtonComponent(controlsEl).setIcon("lucide-plus").setTooltip("New Callout").onClick(() => this.nav.open(new CreateCalloutPane(this.plugin))).then(({ buttonEl }) => buttonEl.classList.add("clickable-icon"));
+      new import_obsidian22.ButtonComponent(controlsEl).setIcon("lucide-plus").setTooltip("New Callout").onClick(() => this.nav.open(new CreateCalloutPane(this.plugin))).then(({ buttonEl }) => buttonEl.classList.add("clickable-icon"));
     }
   }
   /** @override */
   restoreState(state) {
-    this.refreshPreviews();
+    this.invalidate();
   }
   /** @override */
   onReady() {
-    this.refreshPreviews();
+    this.invalidate();
   }
 };
-function createPreview(callout, calloutContainerEl) {
-  const { icon, id } = callout;
-  const color = getColorFromCallout(callout);
-  return {
-    sources: callout.sources,
-    icon,
-    id,
-    calloutContainerEl,
-    colorValid: color != null,
-    colorHue: color == null ? 0 : toHSV(color).h,
-    preview: new CalloutPreviewComponent(calloutContainerEl, {
-      id,
-      icon,
-      color: color != null ? color : void 0
-    })
+function createPreviewFactory(viewOnly) {
+  const editButtonContent = (viewOnly ? (0, import_obsidian22.getIcon)("lucide-view") : (0, import_obsidian22.getIcon)("lucide-edit")) ?? document.createTextNode("Edit Callout");
+  const insertButtonContent = (viewOnly ? (0, import_obsidian22.getIcon)("lucide-view") : (0, import_obsidian22.getIcon)("lucide-forward")) ?? document.createTextNode("Insert Callout");
+  return (callout) => {
+    const frag = document.createDocumentFragment();
+    const calloutContainerEl = frag.createDiv({
+      cls: ["calloutmanager-preview-container"],
+      attr: {
+        ["data-callout-manager-callout"]: callout.id
+      }
+    });
+    new CalloutPreviewComponent(calloutContainerEl, {
+      id: callout.id,
+      icon: callout.icon,
+      title: getTitleFromCallout(callout),
+      color: getColorFromCallout(callout) ?? void 0
+    });
+    calloutContainerEl.classList.add("calloutmanager-preview-container-with-button");
+    const editButton = calloutContainerEl.createEl("button");
+    editButton.setAttribute("data-callout-manager-action", "edit");
+    editButton.appendChild(editButtonContent.cloneNode(true));
+    const insertButton = calloutContainerEl.createEl("button");
+    insertButton.setAttribute("data-callout-manager-action", "insert");
+    insertButton.appendChild(insertButtonContent.cloneNode(true));
+    return calloutContainerEl;
   };
-}
-function comparePreviewByColor(a, b) {
-  if (a.colorValid && !b.colorValid)
-    return -1;
-  if (b.colorValid && !a.colorValid)
-    return 1;
-  return a.colorHue - b.colorHue;
 }
 function createEmptySearchResultDiv() {
   let searchErrorQuery;
@@ -2817,7 +3835,127 @@ function createEmptySearchResultDiv() {
 }
 
 // src/panes/manage-plugin-pane.ts
-var import_obsidian17 = require("obsidian");
+var import_obsidian24 = require("obsidian");
+
+// src/changelog.ts
+var import_obsidian23 = require("obsidian");
+
+// CHANGELOG.md
+var CHANGELOG_default = `# Version 1.1.0
+
+> [!new] In-App Changelogs  
+> Learn about plugin changes and new features straight from the horse's mouth.
+
+> [!new] Insert Callouts  
+> Goodbye to the days of needing to type callouts by hand, and hello to having more ways to suit your workflow. You now have the option to insert callouts directly from the "Manage Callouts" pane!
+>
+> Thank you, [**@decheine**](https://github.com/decheine)!
+
+> [!new] Color Dropdown  
+> Pick from a nifty dropdown instead of memorizing color values.
+>
+> Thank you, [**@decheine**](https://github.com/decheine)!
+
+> [!new] Rename Callouts  
+> You can now rename your custom callouts.
+
+> [!fix] More Robust Callout Detection  
+> The code monkey (developer) learned a couple new tricks, and now Callout Manager can detect Obsidian callouts on all platforms and versions without resorting to fallback lists.
+
+> [!fix] Integration with Completr  
+> You can now use [Completr](obsidian://show-plugin?id=obsidian-completr) to autocomplete callouts!
+
+# Version 1.0.1
+The first release available on Obsidian's community plugin browser!
+
+# Version 1.0.0
+
+> [!new] Callout Customization  
+> Change callouts to your heart's content!
+
+> [!new] Automatic Detection  
+> Browse and search through your one and only list of available callouts.
+`;
+
+// src/changelog.ts
+function getSections() {
+  const frag = document.createDocumentFragment();
+  const renderedEl = frag.createDiv();
+  import_obsidian23.MarkdownRenderer.renderMarkdown(CHANGELOG_default, renderedEl, "", null);
+  const sections = /* @__PURE__ */ new Map();
+  let heading = null;
+  let sectionContainer = frag.createEl("details");
+  let sectionSummary = sectionContainer.createEl("summary");
+  let sectionContents = [];
+  const addPreviousSection = () => {
+    if (heading != null && heading.textContent !== null) {
+      const headingText = heading.textContent;
+      const titleEl = sectionSummary.createEl("h2", {
+        cls: "calloutmanager-changelog-heading",
+        text: headingText
+      });
+      const contentsEl = sectionContainer.createDiv(
+        {
+          cls: "calloutmanager-changelog-section"
+        },
+        (el) => {
+          sectionContents.forEach((node) => el.appendChild(node));
+        }
+      );
+      Array.from(contentsEl.querySelectorAll(".callout[data-callout]")).forEach((el) => {
+        el.setAttribute("data-calloutmanager-changelog-callout", el.getAttribute("data-callout"));
+        el.removeAttribute("data-callout");
+      });
+      const version = /^\s*Version ([0-9.]+)\s*$/.exec(headingText)?.[1];
+      sections.set(version ?? heading.textContent, {
+        version,
+        contentsEl,
+        containerEl: sectionContainer,
+        titleEl
+      });
+    }
+    heading = null;
+    sectionContainer = frag.createEl("details");
+    sectionSummary = sectionContainer.createEl("summary");
+    sectionContents = [];
+  };
+  for (let node = renderedEl.firstChild; node != null; node = node?.nextSibling) {
+    if (node instanceof HTMLHeadingElement && node.tagName === "H1") {
+      addPreviousSection();
+      heading = node;
+      continue;
+    }
+    sectionContents.push(node);
+  }
+  addPreviousSection();
+  return sections;
+}
+
+// src/panes/changelog-pane.ts
+var ChangelogPane = class extends UIPane {
+  constructor(plugin) {
+    super();
+    this.title = "Changelog";
+    this.plugin = plugin;
+    const sections = getSections();
+    const frag = document.createDocumentFragment();
+    this.changelogEl = frag.createDiv({ cls: "calloutmanager-changelog" });
+    Array.from(sections.values()).forEach(({ version, containerEl: el }) => {
+      this.changelogEl.appendChild(el);
+      if (version === this.plugin.manifest.version) {
+        el.setAttribute("open", "");
+        el.setAttribute("data-current-version", "true");
+      }
+    });
+  }
+  /** @override */
+  display() {
+    const { containerEl } = this;
+    containerEl.appendChild(this.changelogEl);
+  }
+};
+
+// src/panes/manage-plugin-pane.ts
 var ManagePluginPane = class extends UIPane {
   constructor(plugin) {
     super();
@@ -2827,24 +3965,19 @@ var ManagePluginPane = class extends UIPane {
   /** @override */
   display() {
     const { containerEl, plugin } = this;
-    new import_obsidian17.Setting(containerEl).setName("Manage Callouts").setDesc("Create or edit Markdown callouts.").addButton((btn) => {
+    new import_obsidian24.Setting(containerEl).setName("Manage Callouts").setDesc("Create or edit Markdown callouts.").addButton((btn) => {
       btn.setButtonText("Manage Callouts");
       btn.onClick(() => this.nav.open(new ManageCalloutsPane(plugin)));
     });
-    containerEl.createEl("h2", { text: "Callout Detection" });
-    new import_obsidian17.Setting(containerEl).setName("Obsidian").setDesc(
+    new import_obsidian24.Setting(containerEl).setHeading().setName("Callout Detection");
+    new import_obsidian24.Setting(containerEl).setName("Obsidian").setDesc(
       (() => {
         const desc = document.createDocumentFragment();
         const container = desc.createDiv();
+        const method = plugin.cssWatcher.describeObsidianFetchMethod();
         container.createDiv({
-          text: plugin.settings.calloutDetection.obsidianFallbackForced ? "Include the built-in Obsidian callouts." : "Find built-in Obsidian callouts."
+          text: `Find built-in Obsidian callouts${method === "" ? "" : " "}${method}.`
         });
-        if (!plugin.cssWatcher.isObsidianStylesheetSupported() && !plugin.settings.calloutDetection.obsidianFallbackForced) {
-          container.createDiv({
-            cls: "mod-warning",
-            text: "Your current platform does not support automatic detection. A fallback list will be used."
-          });
-        }
         return desc;
       })()
     ).addToggle((setting) => {
@@ -2854,22 +3987,31 @@ var ManagePluginPane = class extends UIPane {
         plugin.refreshCalloutSources();
       });
     });
-    new import_obsidian17.Setting(containerEl).setName("Theme").setDesc("Find theme-provided callouts.").addToggle((setting) => {
+    new import_obsidian24.Setting(containerEl).setName("Theme").setDesc("Find theme-provided callouts.").addToggle((setting) => {
       setting.setValue(plugin.settings.calloutDetection.theme).onChange((v) => {
         plugin.settings.calloutDetection.theme = v;
         plugin.saveSettings();
         plugin.refreshCalloutSources();
       });
     });
-    new import_obsidian17.Setting(containerEl).setName("Snippet").setDesc("Find callouts in custom CSS snippets.").addToggle((setting) => {
+    new import_obsidian24.Setting(containerEl).setName("Snippet").setDesc("Find callouts in custom CSS snippets.").addToggle((setting) => {
       setting.setValue(plugin.settings.calloutDetection.snippet).onChange((v) => {
         plugin.settings.calloutDetection.snippet = v;
         plugin.saveSettings();
         plugin.refreshCalloutSources();
       });
     });
-    containerEl.createEl("h2", { text: "Reset" });
-    new import_obsidian17.Setting(containerEl).setName("Reset Callout Settings").setDesc("Reset all the changes you made to callouts.").addButton(
+    new import_obsidian24.Setting(containerEl).setHeading().setName("What's New").setDesc(`Version ${this.plugin.manifest.version}`).addExtraButton((btn) => {
+      btn.setIcon("lucide-more-horizontal").setTooltip("More Changelogs").onClick(() => this.nav.open(new ChangelogPane(plugin)));
+    });
+    const latestChanges = getSections().get(this.plugin.manifest.version);
+    if (latestChanges != null) {
+      const desc = document.createDocumentFragment();
+      desc.appendChild(latestChanges.contentsEl);
+      new import_obsidian24.Setting(containerEl).setDesc(desc).then((setting) => setting.controlEl.remove()).then((setting) => setting.settingEl.classList.add("calloutmanager-latest-changes"));
+    }
+    new import_obsidian24.Setting(containerEl).setHeading().setName("Reset");
+    new import_obsidian24.Setting(containerEl).setName("Reset Callout Settings").setDesc("Reset all the changes you made to callouts.").addButton(
       withConfirm((btn) => {
         btn.setButtonText("Reset").onClick(() => {
           this.plugin.settings.callouts.settings = {};
@@ -2879,7 +4021,7 @@ var ManagePluginPane = class extends UIPane {
         });
       })
     );
-    new import_obsidian17.Setting(containerEl).setName("Reset Custom Callouts").setDesc("Removes all the custom callouts you created.").addButton(
+    new import_obsidian24.Setting(containerEl).setName("Reset Custom Callouts").setDesc("Removes all the custom callouts you created.").addButton(
       withConfirm((btn) => {
         btn.setButtonText("Reset").onClick(() => {
           const { settings } = this.plugin;
@@ -2927,29 +4069,32 @@ function defaultSettings() {
       settings: {}
     },
     calloutDetection: {
-      obsidianFallbackForced: false,
       obsidian: true,
       theme: true,
       snippet: true
     }
   };
 }
-function mergeSettings(into, from) {
-  var _a;
-  return Object.assign(into, {
+function migrateSettings(into, from) {
+  const merged = Object.assign(into, {
     ...from,
     calloutDetection: {
       ...into.calloutDetection,
-      ...(_a = from == null ? void 0 : from.calloutDetection) != null ? _a : {}
+      ...from?.calloutDetection ?? {}
     }
   });
+  delete merged.calloutDetection.obsidianFallbackForced;
+  return merged;
 }
 
 // src/main.ts
-var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
+var CalloutManagerPlugin = class extends import_obsidian25.Plugin {
+  constructor() {
+    super(...arguments);
+    this.apiReadyWait = new Promise((resolve, reject) => this.apiReadySignal = resolve);
+  }
   /** @override */
   async onload() {
-    this.apiHandles = /* @__PURE__ */ new Map();
     await this.loadSettings();
     await this.saveSettings();
     const { settings } = this;
@@ -2957,7 +4102,7 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     this.register(() => this.calloutResolver.unload());
     this.callouts = new CalloutCollection((id) => {
       const { icon, color } = this.calloutResolver.getCalloutProperties(id);
-      console.debug("Resolved Callout:", id, { icon, color });
+      //console.debug("Resolved Callout:", id, { icon, color });
       return {
         id,
         icon,
@@ -2969,14 +4114,16 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     this.cssApplier.setAttribute("data-callout-manager", "style-overrides");
     this.register(this.cssApplier);
     this.applyStyles();
-    this.cssWatcher = new StylesheetWatcher(this.app, settings.calloutDetection.obsidianFallbackForced);
+    this.cssWatcher = new StylesheetWatcher(this.app);
     this.cssWatcher.on("add", this.updateCalloutSource.bind(this));
     this.cssWatcher.on("change", this.updateCalloutSource.bind(this));
     this.cssWatcher.on("remove", this.removeCalloutSource.bind(this));
-    this.cssWatcher.on("checkComplete", () => this.maybeRefreshCalloutBuiltinsWithFallback());
+    this.cssWatcher.on("checkComplete", () => {
+      this.ensureChangedCalloutsKnown();
+    });
     this.cssWatcher.on("checkComplete", (anyChanges) => {
       if (anyChanges) {
-        this.emitApiEventChange();
+        this.api.emitEventForCalloutChange();
       }
     });
     this.app.workspace.onLayoutReady(() => {
@@ -2997,9 +4144,14 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
         this.settingTab.openWithPane(new ManageCalloutsPane(this));
       }
     });
+    this.api = new CalloutManagerAPIs(this);
+    this.apiReadySignal();
+    this.addRibbonIcon("lucide-gallery-vertical", "Insert Callout", () => {
+      this.settingTab.openWithPane(new ManageCalloutsPane(this));
+    });
   }
   async loadSettings() {
-    this.settings = mergeSettings(defaultSettings(), await this.loadData());
+    this.settings = migrateSettings(defaultSettings(), await this.loadData());
   }
   async saveSettings() {
     await this.saveData(this.settings);
@@ -3014,6 +4166,7 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     switch (ss.type) {
       case "obsidian":
         if (calloutDetection.obsidian === true && !calloutDetection.obsidianFallbackForced) {
+          callouts.push("note");
           this.callouts.builtin.set(callouts);
         }
         return;
@@ -3038,30 +4191,90 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     this.callouts.theme.delete();
     this.callouts.builtin.set([]);
     this.cssWatcher.checkForChanges(true).then(() => {
-      this.maybeRefreshCalloutBuiltinsWithFallback();
+      this.ensureChangedCalloutsKnown();
     });
+  }
+  /**
+   * Ensures that any callouts which have changed settings are detected by the plugin.
+   *
+   * If a non-builtin callout was configured by the user and then removed, this plugin should consider
+   * the callout to be custom so it can be seen in the list.
+   */
+  ensureChangedCalloutsKnown() {
+    let hasAddedCallout = false;
+    const { settings, callouts } = this;
+    for (const [id, changes] of Object.entries(settings.callouts.settings)) {
+      if (!callouts.has(id) && changes.length > 0) {
+        hasAddedCallout = true;
+        callouts.custom.add(id);
+      }
+    }
+    if (hasAddedCallout) {
+      this.saveCustomCallouts();
+      this.api.emitEventForCalloutChange();
+    }
+  }
+  saveCustomCallouts() {
+    const { callouts, settings } = this;
+    settings.callouts.custom = callouts.custom.keys();
+    return this.saveSettings();
   }
   /**
    * Create a custom callout and add it to Obsidian.
    * @param id The custom callout ID.
    */
   createCustomCallout(id) {
-    const { callouts, settings } = this;
+    const { callouts } = this;
     callouts.custom.add(id);
+    this.saveCustomCallouts();
+    this.api.emitEventForCalloutChange(id);
+  }
+  /**
+   * Rename a custom callout.
+   *
+   * @param oldId The old callout ID.
+   * @param newId The new callout ID.
+   * @throws If the callout has any other sources than "custom".
+   * @throws If the old ID does not exist.
+   * @throws If the new ID already exists.
+   */
+  renameCustomCallout(oldId, newId) {
+    const { callouts, settings } = this;
+    const callout = callouts.get(oldId);
+    if (callout == null)
+      throw new Error(`Callout '${oldId}' does not exist.`);
+    if (callouts.get(newId) != null)
+      throw new Error(`Callout '${newId}' already exists.`);
+    if (callout.sources.length !== 1 || callout.sources[0].type !== "custom") {
+      throw new Error(`Cannot rename non-custom callout '${oldId}'.`);
+    }
+    callouts.custom.delete(oldId);
+    callouts.custom.add(newId);
     settings.callouts.custom = callouts.custom.keys();
-    this.saveSettings();
-    this.emitApiEventChange(id);
+    settings.callouts.settings[newId] = settings.callouts.settings[oldId];
+    delete settings.callouts.settings[oldId];
+    this.applyStyles();
+    this.saveCustomCallouts();
+    this.api.emitEventForCalloutChange(oldId);
+    this.api.emitEventForCalloutChange(newId);
   }
   /**
    * Delete a custom callout.
+   * If there are no other sources for the callout, its settings will be purged.
+   *
    * @param id The custom callout ID.
    */
   removeCustomCallout(id) {
     const { callouts, settings } = this;
     callouts.custom.delete(id);
     settings.callouts.custom = callouts.custom.keys();
+    const calloutInstance = callouts.get(id);
+    if (calloutInstance == null || calloutInstance.sources.length < 1) {
+      delete settings.callouts.settings[id];
+      this.applyStyles();
+    }
     this.saveSettings();
-    this.emitApiEventChange(id);
+    this.api.emitEventForCalloutChange(id);
   }
   /**
    * Gets the custom settings for a callout.
@@ -3084,7 +4297,7 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
    */
   setCalloutSettings(id, settings) {
     const calloutSettings = this.settings.callouts.settings;
-    if (settings === void 0) {
+    if (settings === void 0 || settings.length < 1) {
       delete calloutSettings[id];
     } else {
       calloutSettings[id] = settings;
@@ -3092,7 +4305,7 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     this.saveSettings();
     this.applyStyles();
     this.callouts.invalidate(id);
-    this.emitApiEventChange(id);
+    this.api.emitEventForCalloutChange(id);
   }
   /**
    * Generates the stylesheet for the user's custom callout settings and applies it to the page and the callout
@@ -3107,19 +4320,6 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
     const stylesheet = css.join("\n\n");
     this.cssApplier.css = stylesheet;
     this.calloutResolver.customStyleEl.textContent = stylesheet;
-  }
-  /**
-   * If the fallback list is forced or obsidian stylesheet detection is unsupported,
-   * add the embedded fallback list to the callout collection.
-   */
-  maybeRefreshCalloutBuiltinsWithFallback() {
-    const { calloutDetection } = this.settings;
-    if (!calloutDetection.obsidian) {
-      return;
-    }
-    if (calloutDetection.obsidianFallbackForced || !this.cssWatcher.isObsidianStylesheetSupported()) {
-      this.callouts.builtin.set(callout_fallback_obsidian_default);
-    }
   }
   /**
    * Takes in a stylesheet from the watcher and removes its callouts from the callout collection.
@@ -3147,33 +4347,21 @@ var CalloutManagerPlugin = class extends import_obsidian18.Plugin {
    *
    * @internal
    */
-  newApiHandle(version, consumerPlugin, cleanupFunc) {
-    if (version !== "v1")
-      throw new Error(`Unsupported Callout Manager API: ${version}`);
-    if (consumerPlugin == null) {
-      return new CalloutManagerAPI_V1(this, void 0);
-    }
-    const existing = this.apiHandles.get(consumerPlugin);
-    if (existing != null) {
-      return existing;
-    }
-    consumerPlugin.register(cleanupFunc);
-    const handle = new CalloutManagerAPI_V1(this, consumerPlugin);
-    this.apiHandles.set(consumerPlugin, handle);
-    return handle;
+  async newApiHandle(version, consumerPlugin, cleanupFunc) {
+    await this.apiReadyWait;
+    return this.api.newHandle(version, consumerPlugin, cleanupFunc);
   }
+  /**
+   * Destroys an API handle created by {@link newApiHandle}.
+   *
+   * @param version The API version.
+   * @param consumerPlugin The plugin using the API.
+   *
+   * @internal
+   */
   destroyApiHandle(version, consumerPlugin) {
     if (version !== "v1")
       throw new Error(`Unsupported Callout Manager API: ${version}`);
-    const handle = this.apiHandles.get(consumerPlugin);
-    if (handle == null)
-      return;
-    handle.destroy();
-    this.apiHandles.delete(consumerPlugin);
-  }
-  emitApiEventChange(callout) {
-    for (const handle of this.apiHandles.values()) {
-      handle._emit("change");
-    }
+    return this.api.destroyHandle(version, consumerPlugin);
   }
 };

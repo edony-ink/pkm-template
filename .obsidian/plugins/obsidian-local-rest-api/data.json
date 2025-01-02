@@ -1,0 +1,12 @@
+{
+  "port": 27124,
+  "insecurePort": 27123,
+  "enableInsecureServer": false,
+  "apiKey": "",
+  "crypto": {
+    "cert": "",
+    "privateKey": "",
+    "publicKey": ""
+  },
+  "enableSecureServer": false
+}
